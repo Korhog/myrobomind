@@ -24,29 +24,24 @@ namespace MyRoboMind
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public MainPage()
+        rMindBaseElement Create(rMindBaseController controller, double x, double y)
         {
-            this.InitializeComponent();
-
-            var controller = new rMindBaseController();
-            controller.Subscribe(canvas, scroll);
-
-            rMindBaseElement container;
-
-            container = new rMindBaseElement(controller);
-            controller.Add(container);
-            container.Translate(new rMind.Types.Vector2(20, 20));
-
-            container = new rMindBaseElement(controller);
-            controller.Add(container);
-            container.Translate(new rMind.Types.Vector2(20, 70));
+            var container = new rMindBaseElement(controller);
+            container.CreateNode();
+            container.Translate(new rMind.Types.Vector2(x, y));
+            return container;
         }
 
 
-
-        private void Rectangle_PointerEntered(object sender, PointerRoutedEventArgs e)
+        public MainPage()
         {
+            InitializeComponent();
 
+            var controller = new rMindBaseController();
+            controller.Subscribe(canvas, scroll);  
+
+            controller.Add(Create(controller, 10, 10));
+            controller.Add(Create(controller, 210, 210));
         }
     }
 }

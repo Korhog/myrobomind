@@ -8,10 +8,10 @@ namespace rMind.Types
 {
     public struct Vector2
     {
-        public float X;
-        public float Y;
+        public double X;
+        public double Y;
 
-        public Vector2(float x, float y)
+        public Vector2(double x, double y)
         {
             X = x;
             Y = y;
@@ -20,6 +20,11 @@ namespace rMind.Types
         public static Vector2 operator + (Vector2 a, Vector2 b)
         {
             return new Vector2(a.X + b.X, a.Y + b.Y);
-        } 
+        }
+
+        public static Vector2 operator -(Vector2 a, Vector2 b)
+        {
+            return new Vector2(a.X - b.X, a.Y - b.Y);
+        }
     }
 }

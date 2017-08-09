@@ -8,10 +8,12 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Rectangle Width="20" Height="20" PointerEntered="Rectangle_PointerEntered"/>
         <ScrollViewer x:Name="scroll">
-            <Canvas x:Name="canvas" Background="Transparent" UseLayoutRounding="True"/>
+            <Canvas Width="2000" Height="1500" x:Name="canvas" Background="Transparent" UseLayoutRounding="True">
+                <Canvas.RenderTransform>
+                    <ScaleTransform x:Name="scale"/>
+                </Canvas.RenderTransform>
+            </Canvas>
         </ScrollViewer>
-
     </Grid>
 </Page>

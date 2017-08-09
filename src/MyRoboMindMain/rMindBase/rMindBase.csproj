@@ -106,6 +106,10 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Elements\rMindBaseItem.cs" />
+    <Compile Include="Elements\rMindBaseWire.cs" />
+    <Compile Include="Elements\rMindBaseWireDot.cs" />
+    <Compile Include="Elements\rMindItemUI.cs" />
     <Compile Include="Interfaces\IDrawContainer.cs" />
     <Compile Include="Interfaces\IDrawElement.cs" />
     <Compile Include="Elements\rMindBaseController.cs" />

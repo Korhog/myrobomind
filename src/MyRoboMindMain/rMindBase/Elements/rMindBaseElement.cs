@@ -2,6 +2,8 @@
 using rMind.Types;
 using rMind.Theme;
 
+using System.Collections.Generic;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -9,102 +11,144 @@ using System;
 
 namespace rMind.Elements
 {
+    using Nodes;
     /// <summary>
     /// Base scheme element 
     /// </summary>
-    public class rMindBaseElement : IDrawContainer
-    {
-        rMindBaseController m_parent;  
-        public rMindBaseController Parent { get { return m_parent; } }
-
-        // Graphics
-        protected Grid m_template; // main container for any elements
-        public Grid Template { get { return m_template; } }
-
+    public class rMindBaseElement : rMindBaseItem, IDrawContainer
+    {   
         // Properties
-        public Vector2 m_position;
-        public Vector2 Position { get { return m_position; } }
+        protected bool m_selected;
+        protected Dictionary<string, rMindBaseNode> m_nodes_link;
 
-
-        public rMindBaseElement(rMindBaseController parent)
+        public rMindBaseElement(rMindBaseController parent) : base(parent)
         {
-            m_parent = parent;
-            m_template = new Grid
-            {
-                Width = 80,
-                Height = 50,
-                
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-            };
+            m_nodes_link = new Dictionary<string, rMindBaseNode>();
 
-            SubscribeInput();
             Init();
+            SubscribeInput();
         }
 
         public void Delete()
         {
+            UnsubscribeInput();
             m_parent.Remove(this);
         }
 
-        public virtual void Init()
+        public override void Init()
         {
+            base.Init();
+            Template.Width = 220;
+            Template.Height = 160;
             Template.Background = rMindScheme.Get().MainContainerBrush();
             Template.BorderBrush = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.Black);
         }
 
-        public virtual void SetPosition(Vector2 newPos)
-        {
-            m_position = newPos;
-            SetPosition(newPos.X, newPos.Y);
-        }
-
-        public virtual void SetPosition(float x, float y)
-        {
-            Canvas.SetLeft(m_template, x);
-            Canvas.SetTop(m_template, y);
-        }
-
-        public void Translate(Vector2 vector)
-        {
-            SetPosition(Position + vector);
-        }
-
-        // input 
+        #region input        
         private void onPointerEnter(object sender, PointerRoutedEventArgs e)
         {
+            e.Handled = true;
             Parent.SetOveredItem(this);
-            Template.BorderThickness = new Thickness(4);
+            if (m_selected)
+                return;
+
+            Template.BorderThickness = new Thickness(4);            
         }
+
 
         private void onPointerExit(object sender, PointerRoutedEventArgs e)
         {
+            e.Handled = true;
             Parent.SetOveredItem(null);
-            Template.BorderThickness = new Thickness(0);
+            if (m_selected)
+                return;
+
+            Template.BorderThickness = new Thickness(0);            
         }
 
         private void onPointerUp(object sender, PointerRoutedEventArgs e)
         {
+            e.Handled = true;
             if (Parent.CheckIsOvered(this))
             {
+                Parent.SetDragItem(null, e);
                 SetSelected(true);
                 Parent.SetSelectedItem(this, e.KeyModifiers == Windows.System.VirtualKeyModifiers.Shift);
-            }
+            }            
+        }
+
+        private void onPointerPress(object sender, PointerRoutedEventArgs e)
+        {
+            e.Handled = true;
+            if (Parent.CheckIsOvered(this))
+            {
+                Parent.SetDragItem(this, e);
+            }            
         }
 
         void SubscribeInput()
         {
             Template.PointerEntered += onPointerEnter;
             Template.PointerExited += onPointerExit;
+            Template.PointerPressed += onPointerPress;
             Template.PointerReleased += onPointerUp;
         }
 
+        void UnsubscribeInput()
+        {
+            Template.PointerEntered -= onPointerEnter;
+            Template.PointerExited -= onPointerExit;            
+            Template.PointerPressed -= onPointerPress;
+            Template.PointerReleased -= onPointerUp;
+        }
+        #endregion
+
+        #region nodes
+
+        /// <summary> create new node for connection </summary>
+        public virtual rMindBaseNode CreateNode()
+        {
+            var node = new rMindBaseNode(this);
+            Template.Children.Add(node.Template);
+
+            return node;
+        }        
+
+        public void RemoveNode(string ids)
+        {
+            if (!m_nodes_link.ContainsKey(ids))
+                return;
+
+            var node = m_nodes_link[ids];
+            RemoveNode(node);
+        }
+
+        public void RemoveNode(rMindBaseNode node)
+        {
+            RenameNodes();
+        }
+
+        /// <summary> update IDSs nodes after remove </summary>
+        void RenameNodes()
+        {
+
+        }
+
+
+        #endregion
+
         public void SetSelected(bool state)
         {
+            m_selected = state;
             if (state)
                 Template.BorderThickness = new Thickness(8);            
             else
-                Template.BorderThickness = new Thickness(4);
+                Template.BorderThickness = Parent.CheckIsOvered(this) ? new Thickness(4) : new Thickness(0);
+        }
+
+        public override Vector2 GetOffset()
+        {
+            return Position;           
         }
     }
 }

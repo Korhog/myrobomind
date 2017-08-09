@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{585CFFF6-E1A1-4464-85F0-9F31ADC43D60}</ProjectGuid>
+    <ProjectGuid>{DDE69CFE-2F1D-46ED-A414-EB48870FF997}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>rMindData</RootNamespace>
-    <AssemblyName>rMindData</AssemblyName>
+    <RootNamespace>rMindBaseControls</RootNamespace>
+    <AssemblyName>rMindBaseControls</AssemblyName>
     <DefaultLanguage>ru-RU</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16232.0</TargetPlatformVersion>
@@ -106,25 +106,17 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Model\Entities\Class\rMindClass.cs" />
-    <Compile Include="Model\Entities\Class\rMindVariable.cs" />
-    <Compile Include="Model\Entities\ICodeGeneratable.cs" />
-    <Compile Include="Model\Entities\rMindBaseEntity.cs" />
-    <Compile Include="Model\Entities\Types\rMindDataType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="rMindContextDB.cs" />
-    <Compile Include="rMindStorage.cs" />
-    <EmbeddedResource Include="Properties\rMindData.rd.xml" />
+    <EmbeddedResource Include="Properties\rMindBaseControls.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite">
-      <Version>1.1.2</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.2.3</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Base\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
