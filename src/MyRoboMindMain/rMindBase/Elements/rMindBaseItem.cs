@@ -11,14 +11,9 @@ namespace rMind.Elements
         protected rMindBaseController m_parent;
         public rMindBaseController Parent { get { return m_parent; } }
 
-        public rMindBaseItem(rMindBaseController parent)
+        public rMindBaseItem(rMindBaseController parent) : base()
         {
             m_parent = parent;
-            m_template = new Grid
-            {
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-            };
         }
         
         public virtual void Init()

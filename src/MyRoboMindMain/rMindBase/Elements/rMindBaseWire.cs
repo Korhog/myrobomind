@@ -30,7 +30,8 @@ namespace rMind.Elements
             m_line = new Polyline()
             {                
                 Stroke = new SolidColorBrush(Windows.UI.Colors.Blue),
-                StrokeThickness = 2
+                StrokeThickness = 2,
+                IsHitTestVisible = false
             };
         }
 
@@ -56,5 +57,10 @@ namespace rMind.Elements
 
         
         public Vector2 GetOffset() { return new Vector2(0, 0); }
+
+        public void Delete()
+        {
+            
+        }
     }
 }

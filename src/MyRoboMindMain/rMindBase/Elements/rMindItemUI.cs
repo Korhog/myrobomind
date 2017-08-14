@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace rMind.Elements
 {
@@ -17,8 +18,13 @@ namespace rMind.Elements
         {
             m_template = new Grid()
             {
-                UseLayoutRounding = true
+                UseLayoutRounding = true,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center
             };
+
+            m_template.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+            m_template.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
         }
 
         public virtual Vector2 SetPosition(Vector2 newPos)

@@ -67,8 +67,7 @@ namespace rMind.Elements
         }
 
         private void onPointerUp(object sender, PointerRoutedEventArgs e)
-        {
-            e.Handled = true;
+        {            
             if (Parent.CheckIsOvered(this))
             {
                 Parent.SetDragItem(null, e);
@@ -109,6 +108,7 @@ namespace rMind.Elements
         public virtual rMindBaseNode CreateNode()
         {
             var node = new rMindBaseNode(this);
+            m_nodes_link["node" + m_nodes_link.Count.ToString()] = node;
             Template.Children.Add(node.Template);
 
             return node;
@@ -149,6 +149,19 @@ namespace rMind.Elements
         public override Vector2 GetOffset()
         {
             return Position;           
+        }
+
+        public override Vector2 SetPosition(Vector2 newPos)
+        {
+            var translation = base.SetPosition(newPos);
+
+            foreach (var node in m_nodes_link.Values)
+            {
+                node.Update();
+            }
+
+
+            return translation;
         }
     }
 }

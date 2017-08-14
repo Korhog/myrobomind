@@ -97,10 +97,10 @@ namespace rMind.Elements
             m_scroll = scroll;
             m_scale = scale;
 
-            // events
-            m_canvas.PointerReleased += onPointerUp;
+            // events            
             m_canvas.PointerMoved += onPointerMove;
 
+            m_scroll.PointerReleased += onPointerUp;
             m_scroll.PointerWheelChanged += onWheel;
 
             m_subscribed = true;
@@ -113,10 +113,10 @@ namespace rMind.Elements
         {
             if (m_subscribed)
             {
-                // events
-                m_canvas.PointerReleased -= onPointerUp;
+                // events                
                 m_canvas.PointerMoved -= onPointerMove;
 
+                m_scroll.PointerReleased -= onPointerUp;
                 m_scroll.PointerWheelChanged -= onWheel;
 
                 m_canvas = null;
@@ -164,6 +164,11 @@ namespace rMind.Elements
             m_overedItem = item;
         }
 
+        public void SetOveredNode(rMindBaseNode node)
+        {
+            m_items_state.OveredNode = node;
+        }
+
         public void SetDragItem(rMindBaseElement item, PointerRoutedEventArgs e)
         {
             m_items_state.DragedItem = item;
@@ -175,14 +180,33 @@ namespace rMind.Elements
             m_items_state.StartPosition = item.Position;
         }
 
+        public void SetDragWireDot(rMindBaseWireDot item, PointerRoutedEventArgs e)
+        {
+            m_items_state.DragedWireDot = item;
+            if (item == null)
+                return;
+            
+            var p = e.GetCurrentPoint(m_canvas);
+            item.SetPosition(new Vector2(p.Position.X - 6, p.Position.Y - 6));
+            m_items_state.StartPointerPosition = new Vector2(p.Position.X, p.Position.Y);
+            m_items_state.StartPosition = item.Position;
+        }
+
         // input
         private void onPointerUp(object sender, PointerRoutedEventArgs e)
         {
+            if (m_items_state.IsDragDot() && m_items_state.OveredNode != null)
+            {
+                m_items_state.OveredNode.Attach(m_items_state.DragedWireDot);
+                SetDragWireDot(null, e);
+            }
+
             m_items_state.DragedItem = null;
         }
 
         private void onPointerMove(object sender, PointerRoutedEventArgs e)
         {
+            e.Handled = true;                 
             if (m_items_state.IsDragDot())
             {
                 DragWireDot(e);
@@ -231,7 +255,7 @@ namespace rMind.Elements
         /// <summary>
         /// Create new wire
         /// </summary>
-        public virtual void CreateWire()
+        public virtual rMindBaseWire CreateWire()
         {
             var wire = new rMindBaseWire(this);
             wire.A.Translate(new Vector2(20, 50));
@@ -241,10 +265,10 @@ namespace rMind.Elements
             {
                 m_canvas.Children.Add(wire.Line);
                 m_canvas.Children.Add(wire.A.Template);
-                m_canvas.Children.Add(wire.B.Template);
-
-                m_items_state.DragedWireDot = wire.A;
+                m_canvas.Children.Add(wire.B.Template);                
             }
+
+            return wire;
         }
     }
 }

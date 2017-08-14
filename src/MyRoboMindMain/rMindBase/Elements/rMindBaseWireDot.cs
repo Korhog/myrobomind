@@ -31,7 +31,8 @@ namespace rMind.Elements
             {
                 Fill = new SolidColorBrush(Colors.Red),
                 Width = 12,
-                Height = 12
+                Height = 12,
+                IsHitTestVisible = false
             };
             m_template.Children.Add(m_area);
             SubscribeInput();
@@ -63,7 +64,7 @@ namespace rMind.Elements
 
         private void onPointerUp(object sender, PointerRoutedEventArgs e)
         {
-            e.Handled = true;           
+            // e.Handled = true;           
         }
 
         private void onPointerPress(object sender, PointerRoutedEventArgs e)
@@ -95,5 +96,13 @@ namespace rMind.Elements
             return pos;
         }
 
+        public rMindBaseWireDot SetNode(rMindBaseNode node)
+        {
+            m_node = node;
+            if (node != null)
+                Wire.Update();
+
+            return this;
+        }
     }
 }
