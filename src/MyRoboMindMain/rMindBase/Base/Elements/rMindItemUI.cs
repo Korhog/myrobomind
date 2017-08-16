@@ -29,16 +29,18 @@ namespace rMind.Elements
 
         public virtual Vector2 SetPosition(Vector2 newPos)
         {
-            var translation = newPos - m_position;
             m_position = newPos;
-            SetPosition(newPos.X, newPos.Y);
+
+            Canvas.SetLeft(m_template, newPos.X);
+            Canvas.SetTop(m_template, newPos.Y);
+
+            var translation = newPos - m_position;                     
             return translation;
         }
 
-        public virtual void SetPosition(double x, double y)
+        public virtual Vector2 SetPosition(double x, double y)
         {
-            Canvas.SetLeft(m_template, x);
-            Canvas.SetTop(m_template, y);
+            return SetPosition(new Vector2(x, y));
         }
 
         public virtual void Translate(Vector2 vector)
@@ -52,5 +54,7 @@ namespace rMind.Elements
         }
 
         public string IDS;
+
+        public virtual void SetEnabledHitTest(bool state) { }
     }
 }

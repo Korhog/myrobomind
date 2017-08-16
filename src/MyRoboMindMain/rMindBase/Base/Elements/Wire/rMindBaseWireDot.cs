@@ -27,11 +27,12 @@ namespace rMind.Elements
 
         public virtual void Init()
         {
-            m_area = new Ellipse()
+            m_area = new Rectangle()
             {
-                Fill = new SolidColorBrush(Colors.Red),
+                Fill = new SolidColorBrush(Colors.Black),
                 Width = 12,
                 Height = 12,
+                Margin = new Windows.UI.Xaml.Thickness(-6),
                 IsHitTestVisible = false
             };
             m_template.Children.Add(m_area);
@@ -69,7 +70,9 @@ namespace rMind.Elements
 
         private void onPointerPress(object sender, PointerRoutedEventArgs e)
         {
-            e.Handled = true;           
+            e.Handled = true;
+            Detach();
+            GetController().SetDragWireDot(this, e);
         }
 
         void SubscribeInput()
@@ -103,6 +106,16 @@ namespace rMind.Elements
                 Wire.Update();
 
             return this;
+        }
+
+        public void Detach()
+        {
+            Node?.Detach(this);
+        }
+
+        public override void SetEnabledHitTest(bool state)
+        {
+            m_area.IsHitTestVisible = state;
         }
     }
 }

@@ -63,9 +63,10 @@ namespace rMind.Nodes
                 Fill = new SolidColorBrush(Colors.DarkGray),
                 RadiusX = 0,
                 RadiusY = 0,
-                StrokeThickness = 1
+                StrokeThickness = 2
             };
 
+            m_template.Margin = new Windows.UI.Xaml.Thickness(2);
             m_template.Children.Add(m_area);
             SubscribeInput();
         }
@@ -80,16 +81,16 @@ namespace rMind.Nodes
             var localOffset = Parent.GetOffset();
 
             var rd = Parent.Template.RowDefinitions;
-            var h = rd.Where(row => rd.IndexOf(row) <= Grid.GetRow(Template))
+            var h = rd.Where(row => rd.IndexOf(row) < Grid.GetRow(Template))
                 .Select(row => row.ActualHeight)
-                .Sum();
+                .Sum() + rd[Grid.GetRow(Template)].ActualHeight / 2;
 
             var cd = Parent.Template.ColumnDefinitions;
-            var w = cd.Where(col => cd.IndexOf(col) <= Grid.GetColumn(Template))
+            var w = cd.Where(col => cd.IndexOf(col) < Grid.GetColumn(Template))
                 .Select(col => col.ActualWidth)
-                .Sum();
+                .Sum() + cd[Grid.GetColumn(Template)].ActualWidth / 2;
 
-            return localOffset + new Types.Vector2(w/2, h/2);
+            return localOffset + new Types.Vector2(w, h);
         }
 
         #region input        
@@ -97,6 +98,10 @@ namespace rMind.Nodes
         {
             e.Handled = true;
             GetController().SetOveredNode(this);
+
+            if (m_attach_mode == rMindNodeAttachMode.Single && m_attached_dots.Count > 0)
+                return;
+
             Glow(true);
         }
 
@@ -152,6 +157,9 @@ namespace rMind.Nodes
 
         protected virtual bool ValidateAttach(rMindBaseWireDot dot)
         {
+            if (m_attach_mode == rMindNodeAttachMode.Single && m_attached_dots.Count > 0)
+                return false;
+
             return true;
         }
         /// <summary> Attach wire dot </summary>
@@ -172,7 +180,7 @@ namespace rMind.Nodes
         /// <param name="dot">rMindBaseWireDot</param>
         public void Detach(rMindBaseWireDot dot)
         {
-
+            m_attached_dots.Remove(dot);
         }
 
         /// <summary> Update attached dots </summary>
@@ -186,6 +194,12 @@ namespace rMind.Nodes
 
         #endregion
 
+
+        public void SetCell(int col, int row)
+        {
+            Grid.SetColumn(Template, col);
+            Grid.SetRow(Template, row);
+        }
     }
 
 }

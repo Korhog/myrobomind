@@ -49,8 +49,8 @@ namespace rMind.Elements
         public virtual void Update()
         {
             var points = new PointCollection();
-            points.Add(new Point(A.Position.X + 6, A.Position.Y + 6));
-            points.Add(new Point(B.Position.X + 6, B.Position.Y + 6));
+            points.Add(new Point(A.Position.X, A.Position.Y));
+            points.Add(new Point(B.Position.X, B.Position.Y));
 
             m_line.Points = points;
         }
@@ -60,7 +60,17 @@ namespace rMind.Elements
 
         public void Delete()
         {
-            
+            A.Detach();
+            B.Detach();
+
+            GetController()?.RemoveWire(this);
+        }   
+        
+        public void SetEnabledHitTest(bool state)
+        {
+            Line.IsHitTestVisible = state;
+            A.SetEnabledHitTest(state);
+            B.SetEnabledHitTest(state);
         }
     }
 }

@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 using rMind.Elements;
+using rMind.Elements.Debug;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
 
@@ -38,10 +39,21 @@ namespace MyRoboMind
             InitializeComponent();
 
             var controller = new rMindBaseController();
-            controller.Subscribe(canvas, scroll);  
+            controller.Subscribe(canvas, scroll);
 
-            controller.Add(Create(controller, 10, 10));
-            controller.Add(Create(controller, 210, 210));
+            controller.AddElement(Create(controller, 10, 10));
+            controller.AddElement(Create(controller, 210, 210));
+
+            controller.AddElement(new rMindDebugContainer(controller));
+
+            var container = new rMind.Content.rMindRowContainer(controller);
+            for (int i = 0; i < 5; i++)
+            {
+                container.AddRow();
+            }
+
+            container.SetPosition(250, 120);
+            controller.AddElement(container);
         }
     }
 }

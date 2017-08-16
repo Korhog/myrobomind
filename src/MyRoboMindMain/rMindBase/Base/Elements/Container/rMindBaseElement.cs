@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Input;
 using System;
 
@@ -16,8 +17,9 @@ namespace rMind.Elements
     /// Base scheme element 
     /// </summary>
     public class rMindBaseElement : rMindBaseItem, IDrawContainer
-    {   
+    {
         // Properties
+        protected Border m_base;
         protected bool m_selected;
         protected Dictionary<string, rMindBaseNode> m_nodes_link;
 
@@ -32,16 +34,19 @@ namespace rMind.Elements
         public void Delete()
         {
             UnsubscribeInput();
-            m_parent.Remove(this);
+            m_parent.RemoveElement(this);
         }
 
         public override void Init()
         {
             base.Init();
-            Template.Width = 220;
-            Template.Height = 160;
-            Template.Background = rMindScheme.Get().MainContainerBrush();
-            Template.BorderBrush = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.Black);
+
+            m_base = new Border()
+            {
+                Background = rMindScheme.Get().MainContainerBrush()
+            };
+
+            Template.Children.Add(m_base);
         }
 
         #region input        
@@ -50,9 +55,7 @@ namespace rMind.Elements
             e.Handled = true;
             Parent.SetOveredItem(this);
             if (m_selected)
-                return;
-
-            Template.BorderThickness = new Thickness(4);            
+                return;        
         }
 
 
@@ -61,9 +64,7 @@ namespace rMind.Elements
             e.Handled = true;
             Parent.SetOveredItem(null);
             if (m_selected)
-                return;
-
-            Template.BorderThickness = new Thickness(0);            
+                return;         
         }
 
         private void onPointerUp(object sender, PointerRoutedEventArgs e)
@@ -87,18 +88,18 @@ namespace rMind.Elements
 
         void SubscribeInput()
         {
-            Template.PointerEntered += onPointerEnter;
-            Template.PointerExited += onPointerExit;
-            Template.PointerPressed += onPointerPress;
-            Template.PointerReleased += onPointerUp;
+            m_base.PointerEntered += onPointerEnter;
+            m_base.PointerExited += onPointerExit;
+            m_base.PointerPressed += onPointerPress;
+            m_base.PointerReleased += onPointerUp;
         }
 
         void UnsubscribeInput()
         {
-            Template.PointerEntered -= onPointerEnter;
-            Template.PointerExited -= onPointerExit;            
-            Template.PointerPressed -= onPointerPress;
-            Template.PointerReleased -= onPointerUp;
+            m_base.PointerEntered -= onPointerEnter;
+            m_base.PointerExited -= onPointerExit;
+            m_base.PointerPressed -= onPointerPress;
+            m_base.PointerReleased -= onPointerUp;
         }
         #endregion
 
@@ -140,10 +141,6 @@ namespace rMind.Elements
         public void SetSelected(bool state)
         {
             m_selected = state;
-            if (state)
-                Template.BorderThickness = new Thickness(8);            
-            else
-                Template.BorderThickness = Parent.CheckIsOvered(this) ? new Thickness(4) : new Thickness(0);
         }
 
         public override Vector2 GetOffset()
