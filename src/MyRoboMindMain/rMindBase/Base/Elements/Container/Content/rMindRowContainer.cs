@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using Windows.UI;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Controls;
 using System.Threading.Tasks;
 
@@ -48,6 +52,18 @@ namespace rMind.Content
 
             CreateNode().SetCell(0, idx_row);
             CreateNode().SetCell(2, idx_row);
+
+            var rect = new Rectangle()
+            {
+                Height = 20,
+                Margin = new Thickness(2),
+                Fill = new SolidColorBrush(Colors.CadetBlue),
+                IsHitTestVisible = false
+            };
+
+            Grid.SetColumn(rect, 1);
+            Grid.SetRow(rect, idx_row);
+            Template.Children.Add(rect);
 
             Grid.SetRowSpan(m_base, m_rows.Count);
 
