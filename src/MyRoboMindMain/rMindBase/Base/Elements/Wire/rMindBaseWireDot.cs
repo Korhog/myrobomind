@@ -17,7 +17,7 @@ namespace rMind.Elements
         rMindBaseNode m_node = null;
         public rMindBaseNode Node { get { return m_node; } }
 
-        protected Shape m_area;
+        protected Rectangle m_area;
 
         public rMindBaseWireDot(rMindBaseWire parent) 
         {
@@ -33,7 +33,9 @@ namespace rMind.Elements
                 Width = 12,
                 Height = 12,
                 Margin = new Windows.UI.Xaml.Thickness(-6),
-                IsHitTestVisible = false
+                IsHitTestVisible = false,
+                RadiusX = 3,
+                RadiusY = 3
             };
             m_template.Children.Add(m_area);
             SubscribeInput();
@@ -103,13 +105,28 @@ namespace rMind.Elements
         {
             m_node = node;
             if (node != null)
+            {
+                var r = node.ConnectionType == rMindNodeConnectionType.Container ? 6 : 0;
+
+                m_area.RadiusX = r;
+                m_area.RadiusY = r;
+
                 Wire.Update();
+            }
+            else
+            {
+                m_area.RadiusX = 3;
+                m_area.RadiusY = 3;            
+            }
 
             return this;
         }
 
         public void Detach()
         {
+            m_area.RadiusX = 3;
+            m_area.RadiusY = 3;
+
             Node?.Detach(this);
         }
 

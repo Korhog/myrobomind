@@ -8,6 +8,7 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Button Content="+" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Click"/>
         <ScrollViewer x:Name="scroll">
             <Canvas Width="2000" Height="1500" x:Name="canvas" Background="Transparent" UseLayoutRounding="True">
                 <Canvas.RenderTransform>

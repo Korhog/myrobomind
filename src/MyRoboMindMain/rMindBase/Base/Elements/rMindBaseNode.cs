@@ -34,18 +34,50 @@ namespace rMind.Nodes
         Multi
     }
 
+    public enum rMindNodeConnectionType
+    {
+        None,
+        Container,
+        Value
+    }
+
+    public struct rMindNodeDesc
+    {
+        public rMindNodeType NodeType;
+        public rMindNodeOriantation NodeOrientation;
+        public rMindNodeAttachMode AttachMode;
+        public rMindNodeConnectionType ConnectionType;
+    }
+
     public class rMindBaseNode : rMindItemUI, IDrawElement
     {
         rMindNodeType m_node_type = rMindNodeType.None;
         rMindNodeOriantation m_node_orientation = rMindNodeOriantation.None;
         rMindNodeAttachMode m_attach_mode = rMindNodeAttachMode.Single;
+        rMindNodeConnectionType m_connection_type = rMindNodeConnectionType.Container;
 
         public rMindNodeAttachMode AttachMode { get { return m_attach_mode; } set { m_attach_mode = value; } }
+        public rMindNodeConnectionType ConnectionType {
+            get { return m_connection_type; }
+            set { SetConnectionType(value); }
+        }
+
+        protected virtual void SetConnectionType(rMindNodeConnectionType connectionType)
+        {
+            if (m_connection_type == connectionType)
+                return;
+
+            m_connection_type = connectionType;
+            var r = m_connection_type == rMindNodeConnectionType.Container ? 10 : 0;
+
+            m_area.RadiusX = r;
+            m_area.RadiusY = r;
+        }
 
         rMindBaseElement m_parent;
         public rMindBaseElement Parent { get { return m_parent; } }
 
-        protected Shape m_area;        
+        protected Rectangle m_area;        
 
         public rMindBaseNode(rMindBaseElement parent) : base()
         {            
@@ -56,13 +88,15 @@ namespace rMind.Nodes
 
         public void Init()
         {
+            var r = m_connection_type == rMindNodeConnectionType.Container ? 10 : 0;
+
             m_area = new Rectangle {
                 Width = 20,
                 Height = 20,
                 Stroke = new SolidColorBrush(Colors.Black),
                 Fill = new SolidColorBrush(Colors.DarkGray),
-                RadiusX = 0,
-                RadiusY = 0,
+                RadiusX = r,
+                RadiusY = r,
                 StrokeThickness = 2
             };
 

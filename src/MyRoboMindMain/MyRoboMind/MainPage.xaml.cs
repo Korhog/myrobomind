@@ -47,13 +47,39 @@ namespace MyRoboMind
             controller.AddElement(new rMindDebugContainer(controller));
 
             var container = new rMind.Content.rMindRowContainer(controller);
-            for (int i = 0; i < 5; i++)
-            {
-                container.AddRow();
+            container.Static = false;
+            for (int i = 0; i < 2; i++)
+            {                 
+                container.AddRow(
+                    new rMind.Content.Row.rMindRow {
+                        InputNodeType = rMind.Nodes.rMindNodeConnectionType.Value,
+                        
+                    } 
+                );
+
+                container.AddRow(
+                    new rMind.Content.Row.rMindRow
+                    {                        
+                        OutputNodeType = rMind.Nodes.rMindNodeConnectionType.Container
+                    }
+                );
+
+                container.AddRow(
+                    new rMind.Content.Row.rMindRow
+                    {
+                        InputNodeType = rMind.Nodes.rMindNodeConnectionType.Value,
+                        OutputNodeType = rMind.Nodes.rMindNodeConnectionType.Container
+                    }
+                );
             }
 
             container.SetPosition(250, 120);
             controller.AddElement(container);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

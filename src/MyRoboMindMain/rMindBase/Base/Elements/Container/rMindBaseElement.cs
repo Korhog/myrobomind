@@ -108,12 +108,24 @@ namespace rMind.Elements
         /// <summary> create new node for connection </summary>
         public virtual rMindBaseNode CreateNode()
         {
-            var node = new rMindBaseNode(this);
+            var desc = new rMindNodeDesc();
+            return CreateNode(desc);
+
+
+        }
+
+        public virtual rMindBaseNode CreateNode(rMindNodeDesc desc)
+        {
+            var node = new rMindBaseNode(this)
+            {
+                ConnectionType = desc.ConnectionType
+            };
+
             m_nodes_link["node" + m_nodes_link.Count.ToString()] = node;
             Template.Children.Add(node.Template);
 
             return node;
-        }        
+        }
 
         public void RemoveNode(string ids)
         {
