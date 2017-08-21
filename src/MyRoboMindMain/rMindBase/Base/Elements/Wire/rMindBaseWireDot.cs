@@ -73,8 +73,8 @@ namespace rMind.Elements
         private void onPointerPress(object sender, PointerRoutedEventArgs e)
         {
             e.Handled = true;
-            Detach();
             GetController().SetDragWireDot(this, e);
+            Detach();            
         }
 
         void SubscribeInput()
@@ -127,7 +127,18 @@ namespace rMind.Elements
             m_area.RadiusX = 3;
             m_area.RadiusY = 3;
 
-            Node?.Detach(this);
+
+            if (Node != null)
+            {
+                var node = Node;
+                m_node = null;
+                node?.Detach(this);
+
+                if (GetController()?.CheckIsDraggedDot(this) == false)
+                {
+                    Wire.Delete();
+                }
+            }
         }
 
         public override void SetEnabledHitTest(bool state)

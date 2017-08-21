@@ -51,6 +51,34 @@ namespace rMind.Nodes
 
     public class rMindBaseNode : rMindItemUI, IDrawElement
     {
+        int m_row = 0;
+        int m_col = 0;
+
+        public int Column {
+            get
+            {
+                return m_col;
+            }
+            set
+            {
+                m_col = value;
+                Grid.SetColumn(m_template, m_col);
+            }
+        }
+
+        public int Row
+        {
+            get
+            {
+                return m_row;
+            }
+            set
+            {
+                m_row = value;
+                Grid.SetRow(m_template, m_row);
+            }
+        }
+
         rMindNodeType m_node_type = rMindNodeType.None;
         rMindNodeOriantation m_node_orientation = rMindNodeOriantation.None;
         rMindNodeAttachMode m_attach_mode = rMindNodeAttachMode.Single;
@@ -68,7 +96,7 @@ namespace rMind.Nodes
                 return;
 
             m_connection_type = connectionType;
-            var r = m_connection_type == rMindNodeConnectionType.Container ? 10 : 0;
+            var r = m_connection_type == rMindNodeConnectionType.Container ? 10 : 3;
 
             m_area.RadiusX = r;
             m_area.RadiusY = r;
@@ -88,7 +116,7 @@ namespace rMind.Nodes
 
         public void Init()
         {
-            var r = m_connection_type == rMindNodeConnectionType.Container ? 10 : 0;
+            var r = m_connection_type == rMindNodeConnectionType.Container ? 10 : 3;
 
             m_area = new Rectangle {
                 Width = 20,
@@ -100,7 +128,7 @@ namespace rMind.Nodes
                 StrokeThickness = 2
             };
 
-            m_template.Margin = new Windows.UI.Xaml.Thickness(2);
+            m_template.Margin = new Windows.UI.Xaml.Thickness(2, 6, 2, 6);
             m_template.Children.Add(m_area);
             SubscribeInput();
         }
@@ -210,10 +238,18 @@ namespace rMind.Nodes
             Update();            
         }
 
+        /// <summary> Отсоединение всех узлов </summary>        
+        public void Detach()
+        {
+            while(m_attached_dots.Count > 0)            
+                Detach(m_attached_dots[0]);
+        }
+
         /// <summary> Detach wire dot </summary>
         /// <param name="dot">rMindBaseWireDot</param>
         public void Detach(rMindBaseWireDot dot)
         {
+            dot.Detach();
             m_attached_dots.Remove(dot);
         }
 
@@ -231,8 +267,9 @@ namespace rMind.Nodes
 
         public void SetCell(int col, int row)
         {
-            Grid.SetColumn(Template, col);
-            Grid.SetRow(Template, row);
+            Column = col;
+            Row = row;
+            Update();
         }
     }
 

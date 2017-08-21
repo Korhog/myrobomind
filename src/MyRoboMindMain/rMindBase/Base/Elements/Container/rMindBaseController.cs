@@ -25,6 +25,11 @@ namespace rMind.Elements
             return m_items_state.DragedItem == item;
         }
 
+        public bool CheckIsDraggedDot(rMindBaseWireDot dot)
+        {
+            return m_items_state.DragedWireDot == dot;
+        }
+
         /// <summary>
         /// Add new element
         /// </summary>

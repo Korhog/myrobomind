@@ -29,12 +29,13 @@ namespace rMind.Elements
 
         public virtual Vector2 SetPosition(Vector2 newPos)
         {
+            var translation = newPos - m_position;
+
             m_position = newPos;
 
             Canvas.SetLeft(m_template, newPos.X);
             Canvas.SetTop(m_template, newPos.Y);
-
-            var translation = newPos - m_position;                     
+                              
             return translation;
         }
 

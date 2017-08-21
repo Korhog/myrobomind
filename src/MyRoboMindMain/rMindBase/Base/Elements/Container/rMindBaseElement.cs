@@ -2,6 +2,7 @@
 using rMind.Types;
 using rMind.Theme;
 
+using System.Linq;
 using System.Collections.Generic;
 
 using Windows.UI.Xaml;
@@ -121,7 +122,8 @@ namespace rMind.Elements
                 ConnectionType = desc.ConnectionType
             };
 
-            m_nodes_link["node" + m_nodes_link.Count.ToString()] = node;
+            node.IDS = "node" + m_nodes_link.Count.ToString();
+            m_nodes_link[node.IDS] = node;
             Template.Children.Add(node.Template);
 
             return node;
@@ -138,13 +140,29 @@ namespace rMind.Elements
 
         public void RemoveNode(rMindBaseNode node)
         {
-            RenameNodes();
+            if (node == null)
+                return;
+
+            if (m_nodes_link.ContainsKey(node.IDS) )
+            {
+                node.Detach();
+                m_nodes_link.Remove(node.IDS);
+                UpdateNodes();
+
+                Template.Children.Remove(node.Template);
+            }
         }
 
         /// <summary> update IDSs nodes after remove </summary>
-        void RenameNodes()
+        void UpdateNodes()
         {
-
+            var nodes = m_nodes_link.Values.ToList();
+            m_nodes_link.Clear();
+            foreach(var node in nodes)
+            {
+                node.IDS = "node" + m_nodes_link.Count.ToString();
+                m_nodes_link[node.IDS] = node;    
+            }
         }
 
 

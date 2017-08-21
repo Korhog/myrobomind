@@ -36,6 +36,36 @@ namespace rMind.Content
             set { SetStatic(value); }
         }
 
+        protected virtual int GetRowIndex(rMindRow row)
+        {
+            return m_rows.IndexOf(row);
+        }
+
+        protected virtual void SetDeleteButtons(bool visible)
+        {
+            foreach (var row in m_rows)
+            {
+                if (visible)
+                {
+                    if (row.DeleteButton == null)
+                    {
+                        row.DeleteButton.Click += OnDeleteRowClick;
+                        Grid.SetColumn(row.DeleteButton, 1);
+                    }
+                    Grid.SetRow(row.DeleteButton, GetRowIndex(row));
+                    Template.Children.Add(row.DeleteButton);
+                    row.Content.Margin = new Thickness(10, 2, 2, 2);
+                }
+                else
+                {
+                    if (row.DeleteButton == null)
+                        continue;
+                    Template.Children.Remove(row.DeleteButton);
+                    row.Content.Margin = new Thickness(2);
+                }
+            }
+        } 
+
         protected virtual void SetStatic(bool state)
         {
             if (state == m_static) return;
@@ -52,8 +82,6 @@ namespace rMind.Content
             {  
                 if (m_add_button == null)
                 {
-                    //< FontIcon FontFamily = "Segoe MDL2 Assets" Glyph = "&#xE109;" />
-
                     m_add_button = new Button()
                     {
                         Content = new FontIcon()
@@ -77,6 +105,8 @@ namespace rMind.Content
                 Grid.SetRow(m_add_button, Template.RowDefinitions.Count - 1);
                 Template.Children.Add(m_add_button);
             }
+            // Удаляем или добавляем кнопки
+            SetDeleteButtons(!state);
         }
 
         protected virtual void OnAddRowClick(object sender, RoutedEventArgs e)
@@ -87,9 +117,18 @@ namespace rMind.Content
             });
         }
 
+        protected virtual void OnDeleteRowClick(object sender, RoutedEventArgs e)
+        {
+            rMindRow row = (sender as Button)?.Tag as rMindRow;
+            if (row == null)
+                return;
+
+            RemoveRow(row);
+        }
+
         public rMindRowContainer(rMindBaseController parent) : base(parent)
         {
-            Template.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(40) });
+            Template.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(80) });
             Template.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
 
             Grid.SetColumnSpan(m_base, 3);
@@ -112,33 +151,43 @@ namespace rMind.Content
                 Template.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             }
 
-            //
-            var idx_row = m_rows.IndexOf(row);
+            // Получаем строчку грида
+            var idx_row = GetRowIndex(row);
 
-            
             if (row.InputNodeType != Nodes.rMindNodeConnectionType.None)
-            {                
-                CreateNode(new Nodes.rMindNodeDesc { ConnectionType = row.InputNodeType})
-                    .SetCell(0, idx_row);
+            {
+                row.InputNode = CreateNode(new Nodes.rMindNodeDesc { ConnectionType = row.InputNodeType });
+                row.InputNode.SetCell(0, idx_row);
             }
                
             if (row.OutputNodeType != Nodes.rMindNodeConnectionType.None)
             {
-                CreateNode(new Nodes.rMindNodeDesc { ConnectionType = row.OutputNodeType })
-                    .SetCell(2, idx_row);
-            }            
+                row.OutputNode = CreateNode(new Nodes.rMindNodeDesc { ConnectionType = row.OutputNodeType });
+                row.OutputNode.SetCell(2, idx_row);
+            }
 
-            var rect = new Rectangle()
+            row.Content = new Rectangle()
             {
-                Height = 20,
-                Margin = new Thickness(2),
+                Margin = m_static ? new Thickness(2) : new Thickness(10, 2, 2, 2),
                 Fill = new SolidColorBrush(Colors.CadetBlue),
                 IsHitTestVisible = false
             };
 
-            Grid.SetColumn(rect, 1);
-            Grid.SetRow(rect, idx_row);
-            Template.Children.Add(rect);
+            Grid.SetColumn(row.Content, 1);
+            Grid.SetRow(row.Content, idx_row);
+            Template.Children.Add(row.Content);
+
+            if (!m_static)
+            {
+                row.DeleteButton.Click += OnDeleteRowClick;
+                Grid.SetColumn(row.DeleteButton, 1);
+
+                Grid.SetRow(row.DeleteButton, idx_row);
+                Template.Children.Add(row.DeleteButton);
+            }
+
+            if (m_rows.Count == 1)
+                m_base.Visibility = Visibility.Visible;
 
             Grid.SetRowSpan(m_base, m_rows.Count);
 
@@ -148,6 +197,40 @@ namespace rMind.Content
             }
 
             return row;
+        }
+
+        public virtual void RemoveRow(rMindRow row)
+        {
+            if (!m_static)
+            {
+                Template.Children.Remove(row.DeleteButton);
+            }
+
+            RemoveNode(row.InputNode);
+            RemoveNode(row.OutputNode);
+
+            Template.Children.Remove(row.Content);
+            Template.RowDefinitions.Remove(Template.RowDefinitions[GetRowIndex(row)]);
+
+            m_rows.Remove(row);
+
+            UpdateRowsIndexes();
+        }
+        /// <summary> Обновляем индексы всех строк. </summary>
+        protected void UpdateRowsIndexes()
+        {
+            foreach (var row in m_rows)
+                row.SetRowIndex(GetRowIndex(row));
+
+            if (!m_static)
+            {
+                if (m_rows.Count == 0)                
+                    m_base.Visibility = Visibility.Collapsed;                
+                else
+                    Grid.SetRowSpan(m_base, m_rows.Count);
+
+                Grid.SetRow(m_add_button, Template.RowDefinitions.Count - 1);
+            }
         }
     }
 }
