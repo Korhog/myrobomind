@@ -105,6 +105,16 @@ namespace rMind.Elements
         // input
         private void onPointerUp(object sender, PointerRoutedEventArgs e)
         {
+            var point = e.GetCurrentPoint(m_canvas);
+            if (point.Properties.PointerUpdateKind == Windows.UI.Input.PointerUpdateKind.MiddleButtonReleased)
+            {
+                if (m_overedItem != null)
+                {
+                    m_overedItem.Delete();
+                }
+            }
+
+
             if (m_items_state.IsDragDot())
             { 
                 if (m_items_state.OveredNode == null)
@@ -121,6 +131,7 @@ namespace rMind.Elements
             }
 
             m_items_state.DragedItem = null;
+
         }
 
         private void onPointerMove(object sender, PointerRoutedEventArgs e)

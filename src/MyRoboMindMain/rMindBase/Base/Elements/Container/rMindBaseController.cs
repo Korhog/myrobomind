@@ -50,8 +50,17 @@ namespace rMind.Elements
         /// </summary>
         public virtual void RemoveElement(rMindBaseElement item)
         {
+            if (CheckIsOvered(item))
+                m_overedItem = null;
+
             if (m_items.Contains(item))
+            {
+                if (m_selectedItems.Contains(item))
+                    m_selectedItems.Remove(item);
+
+                m_canvas.Children.Remove(item.Template);
                 m_items.Remove(item);
+            }
         }
 
         public void SetSelectedItem(rMindBaseElement item, bool multi = false)

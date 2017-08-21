@@ -35,6 +35,11 @@ namespace rMind.Elements
         public void Delete()
         {
             UnsubscribeInput();
+            foreach(var node in m_nodes_link.Values)
+            {
+                node.Detach();
+            }
+
             m_parent.RemoveElement(this);
         }
 
