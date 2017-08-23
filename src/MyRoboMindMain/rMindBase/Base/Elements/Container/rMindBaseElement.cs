@@ -195,5 +195,13 @@ namespace rMind.Elements
 
             return translation;
         }
+
+        protected CornerRadius m_border_radius;
+        protected virtual void SetBorderRadius(CornerRadius value)
+        {
+            m_border_radius = value;
+            m_base.CornerRadius = value;
+        }
+        public CornerRadius BorderRadius { get { return m_border_radius; } set { SetBorderRadius(value); } }
     }
 }

@@ -106,8 +106,14 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Base\Elements\Container\Content\rMindRowContainer.cs" />
+    <Compile Include="Base\Elements\Container\Content\Quad\rMindHorizontalLine.cs" />
+    <Compile Include="Base\Elements\Container\Content\Quad\rMindLine.cs" />
+    <Compile Include="Base\Elements\Container\Content\Quad\rMindVerticalLine.cs" />
+    <Compile Include="Base\Elements\Container\Content\Row\rMindHeaderRowContainer.cs" />
+    <Compile Include="Base\Elements\Container\Content\Quad\rMindQuadContainer.cs" />
+    <Compile Include="Base\Elements\Container\Content\Row\rMindRowContainer.cs" />
     <Compile Include="Base\Elements\Container\Content\Row\rMindRow.cs" />
+    <Compile Include="Base\Elements\Container\Content\Row\rMindValueRow.cs" />
     <Compile Include="Base\Elements\Container\rMindBaseController.cs" />
     <Compile Include="Base\Elements\Container\rMindBaseItem.cs" />
     <Compile Include="Base\Elements\rMindDebugContainer.cs" />

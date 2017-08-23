@@ -3,8 +3,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
-using rMind.Types;
-
 namespace rMind.Elements
 {
     using Types;
@@ -72,6 +70,9 @@ namespace rMind.Elements
             m_scroll.PointerReleased += onPointerUp;
             m_scroll.PointerWheelChanged += onWheel;
 
+            m_scroll.PointerExited += onPointerUp;
+
+
             m_subscribed = true;
         }
 
@@ -87,6 +88,8 @@ namespace rMind.Elements
 
                 m_scroll.PointerReleased -= onPointerUp;
                 m_scroll.PointerWheelChanged -= onWheel;
+
+                m_scroll.PointerExited -= onPointerUp;
 
                 m_canvas = null;
                 m_scroll = null;

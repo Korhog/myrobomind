@@ -41,6 +41,12 @@ namespace rMind.Content
             return m_rows.IndexOf(row);
         }
 
+        protected virtual int GetBaseRowSpan()
+        {
+            return m_rows.Count;
+        }
+
+
         protected virtual void SetDeleteButtons(bool visible)
         {
             foreach (var row in m_rows)
@@ -127,14 +133,20 @@ namespace rMind.Content
         }
 
         public rMindRowContainer(rMindBaseController parent) : base(parent)
+        { 
+            m_rows = new List<rMindRow>(); 
+        }
+
+        public override void Init()
         {
+            base.Init();
+
             Template.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(80) });
             Template.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
 
             Grid.SetColumnSpan(m_base, 3);
-
-            m_rows = new List<rMindRow>(); 
         }
+
 
         public virtual rMindRow AddRow()
         {
@@ -189,7 +201,7 @@ namespace rMind.Content
             if (m_rows.Count == 1)
                 m_base.Visibility = Visibility.Visible;
 
-            Grid.SetRowSpan(m_base, m_rows.Count);
+            Grid.SetRowSpan(m_base, GetBaseRowSpan());
 
             if (!m_static)
             {
@@ -227,7 +239,7 @@ namespace rMind.Content
                 if (m_rows.Count == 0)                
                     m_base.Visibility = Visibility.Collapsed;                
                 else
-                    Grid.SetRowSpan(m_base, m_rows.Count);
+                    Grid.SetRowSpan(m_base, GetBaseRowSpan());
 
                 Grid.SetRow(m_add_button, Template.RowDefinitions.Count - 1);
             }

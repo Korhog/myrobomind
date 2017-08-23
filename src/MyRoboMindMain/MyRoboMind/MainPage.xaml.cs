@@ -25,6 +25,8 @@ namespace MyRoboMind
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        rMindBaseController controller;
+
         rMindBaseElement Create(rMindBaseController controller, double x, double y)
         {
             var container = new rMindBaseElement(controller);
@@ -38,48 +40,26 @@ namespace MyRoboMind
         {
             InitializeComponent();
 
-            var controller = new rMindBaseController();
-            controller.Subscribe(canvas, scroll);
+            controller = new rMindBaseController();
+            controller.Subscribe(canvas, scroll);           
+        }
 
-            controller.AddElement(Create(controller, 10, 10));
-            controller.AddElement(Create(controller, 210, 210));
-
-            controller.AddElement(new rMindDebugContainer(controller));
-
-            var container = new rMind.Content.rMindRowContainer(controller);
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var container = new rMind.Content.rMindHeaderRowContainer(controller);
             container.Static = false;
-            for (int i = 0; i < 2; i++)
-            {                 
-                container.AddRow(
-                    new rMind.Content.Row.rMindRow {
-                        InputNodeType = rMind.Nodes.rMindNodeConnectionType.Value,
-                        
-                    } 
-                );
-
-                container.AddRow(
-                    new rMind.Content.Row.rMindRow
-                    {                        
-                        OutputNodeType = rMind.Nodes.rMindNodeConnectionType.Container
-                    }
-                );
-
-                container.AddRow(
-                    new rMind.Content.Row.rMindRow
-                    {
-                        InputNodeType = rMind.Nodes.rMindNodeConnectionType.Value,
-                        OutputNodeType = rMind.Nodes.rMindNodeConnectionType.Container
-                    }
-                );
-            }
+            container.BorderRadius = new CornerRadius(3);
 
             container.SetPosition(250, 120);
             controller.AddElement(container);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_B_Click(object sender, RoutedEventArgs e)
         {
-
+            var container = new rMind.Content.rMindQuadContainer(controller);
+            container.BorderRadius = new CornerRadius(3);
+            container.SetPosition(250, 120);
+            controller.AddElement(container);
         }
     }
 }
