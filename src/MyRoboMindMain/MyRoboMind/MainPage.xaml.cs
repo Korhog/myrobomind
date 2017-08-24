@@ -64,32 +64,35 @@ namespace MyRoboMind
             rMindHorizontalLine hline;
 
             vline = container.CreateLine<rMindVerticalLine>() as rMindVerticalLine;
+            vline = container.CreateLine<rMindVerticalLine>() as rMindVerticalLine;
             vline.AddTopNode();
             vline.AddTopNode();
-
-            vline.AddBottomNode();
-            vline.AddBottomNode();            
-
-            hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
-            hline.AddLeftNode();
-            hline.AddLeftNode();
-
-            hline.AddBottomNode();
-            hline.AddBottomNode();
-
+            vline = container.CreateLine<rMindVerticalLine>() as rMindVerticalLine;
+            vline.AddTopNode();
+            vline.AddTopNode();
             vline = container.CreateLine<rMindVerticalLine>() as rMindVerticalLine;
             vline.AddTopNode();
             vline.AddTopNode();
 
-            vline.AddBottomNode();
-            vline.AddBottomNode();
+            vline = container.CreateLine<rMindVerticalLine>() as rMindVerticalLine;
 
             hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
-            hline.AddLeftNode();
-            hline.AddLeftNode();
+            hline.AddLeftNode(); hline.AddRightNode();
+            hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
+            hline.AddLeftNode(); hline.AddRightNode();
+            hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
+            hline.AddLeftNode(); hline.AddRightNode();
+            hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
+            hline.AddLeftNode(); hline.AddRightNode();
+            hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
+            hline.AddLeftNode(); hline.AddRightNode();
+            hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
+            hline.AddLeftNode(); hline.AddRightNode();
+            hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
+            hline.AddLeftNode(); hline.AddRightNode();
+            hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
+            hline.AddLeftNode(); hline.AddRightNode();
 
-            hline.AddBottomNode();
-            hline.AddBottomNode();
 
             container.SetPosition(250, 120);
             controller.AddElement(container);

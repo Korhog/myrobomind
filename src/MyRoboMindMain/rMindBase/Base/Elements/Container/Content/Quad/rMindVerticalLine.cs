@@ -30,7 +30,11 @@ namespace rMind.Content.Quad
                  * если количество верхних узлов равно максимальному количеству по линиям
                  * добавляем новую строку.
                  */
-                m_parent.Template.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                m_parent.Template.RowDefinitions.Add(new RowDefinition() {
+                    Height = GridLength.Auto,
+                    MinHeight = 24
+                });
+
                 foreach (var line in m_parent.VLines)
                     line.ShiftNodes(1);
 
@@ -40,23 +44,43 @@ namespace rMind.Content.Quad
                         n.Row += 1;
                 }
 
-                m_parent.UpdateBase();
+                currentCount++;                
             }
             else
             {
                 ShiftNodes(1);
-            }
-
+            }            
+            
             var node = m_parent.CreateNode();
             node.SetCell(m_parent.GetLineIndex(this), 0);
-            TopNodes.Add(node);            
+            node.NodeOrientation = rMindNodeOriantation.Top;
+            TopNodes.Add(node);
 
-            return null;
+            m_parent.UpdateBase();
+
+            return node;
         }
 
         public rMindBaseNode AddBottomNode()
         {
-            return null;
+            int currentCount = m_parent.VLines.Max(line => line.BottomNodes.Count);
+            if (BottomNodes.Count + 1 > currentCount)
+            {
+                m_parent.Template.RowDefinitions.Add(new RowDefinition() {
+                    Height = GridLength.Auto,
+                    MinHeight = 24
+                });
+            }
+
+            var node = m_parent.CreateNode();
+            var offset = m_parent.GetNodeOffset();
+            var idx = offset.Row + offset.HLines + BottomNodes.Count;    
+
+            node.SetCell(m_parent.GetLineIndex(this), idx);
+            node.NodeOrientation = rMindNodeOriantation.Bottom;
+            BottomNodes.Add(node);
+
+            return node;
         }
 
         public override void ShiftNodes(int offset)

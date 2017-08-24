@@ -102,6 +102,38 @@ namespace rMind.Nodes
             m_area.RadiusY = r;
         }
 
+        public rMindNodeOriantation NodeOrientation
+        {
+            get { return m_node_orientation; }
+            set { SetNodeOrientation(value); }
+        }
+
+        protected virtual void SetNodeOrientation(rMindNodeOriantation orientation)
+        {
+            m_node_orientation = orientation;
+            Windows.UI.Xaml.Thickness thickness;
+            switch(orientation)
+            {
+                case rMindNodeOriantation.Left:
+                    thickness = new Windows.UI.Xaml.Thickness(2, 6, 2, 6);
+                    break;
+                case rMindNodeOriantation.Right:
+                    thickness = new Windows.UI.Xaml.Thickness(2, 6, 2, 6);
+                    break;
+                case rMindNodeOriantation.Top:
+                    thickness = new Windows.UI.Xaml.Thickness(6, 2, 6, 2);
+                    break;
+                case rMindNodeOriantation.Bottom:
+                    thickness = new Windows.UI.Xaml.Thickness(6, 2, 6, 2);
+                    break;
+                default:
+                    thickness = new Windows.UI.Xaml.Thickness(2, 6, 2, 6);
+                    break;
+            }
+
+            m_template.Margin = thickness;
+        }
+
         rMindBaseElement m_parent;
         public rMindBaseElement Parent { get { return m_parent; } }
 

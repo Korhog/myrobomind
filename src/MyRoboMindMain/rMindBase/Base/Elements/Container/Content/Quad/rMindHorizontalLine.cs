@@ -30,7 +30,11 @@ namespace rMind.Content.Quad
                  * если количество верхних узлов равно максимальному количеству по линиям
                  * добавляем новую строку.
                  */
-                m_parent.Template.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+                m_parent.Template.ColumnDefinitions.Add(new ColumnDefinition() {
+                    Width = GridLength.Auto,
+                    MinWidth = 24
+                });
+
                 foreach (var line in m_parent.HLines)
                     line.ShiftNodes(1);
 
@@ -38,9 +42,7 @@ namespace rMind.Content.Quad
                 {
                     foreach (var n in line.TopNodes.Union(line.BottomNodes))
                         n.Column += 1;
-                }
-
-                m_parent.UpdateBase();
+                }                
             }
             else
             {
@@ -49,14 +51,33 @@ namespace rMind.Content.Quad
 
             var node = m_parent.CreateNode();
             node.SetCell(0, m_parent.GetLineIndex(this));
+            node.NodeOrientation = rMindNodeOriantation.Left;
             LeftNodes.Add(node);
 
-            return null;
+            m_parent.UpdateBase();
+
+            return node;
         }
 
-        public rMindBaseNode AddBottomNode()
+        public rMindBaseNode AddRightNode()
         {
-            return null;
+            int currentCount = m_parent.HLines.Max(line => line.RightNodes.Count);
+            if (RightNodes.Count + 1 > currentCount)
+            {
+                m_parent.Template.ColumnDefinitions.Add(new ColumnDefinition() {
+                    Width = GridLength.Auto,
+                    MinWidth = 24
+                });
+            }
+
+            var node = m_parent.CreateNode();
+
+            var offset = m_parent.GetNodeOffset();
+            node.SetCell(offset.Column + offset.VLines + RightNodes.Count, m_parent.GetLineIndex(this));
+            node.NodeOrientation = rMindNodeOriantation.Right;
+            RightNodes.Add(node);
+
+            return node;
         }
 
         public override void ShiftNodes(int offset)

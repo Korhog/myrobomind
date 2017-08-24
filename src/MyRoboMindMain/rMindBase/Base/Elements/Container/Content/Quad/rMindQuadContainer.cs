@@ -41,8 +41,8 @@ namespace rMind.Content
         public override void Init()
         {
             base.Init();
-            //m_base.Width = 200;
-            //m_base.Height = 200;
+            Template.ColumnDefinitions[0].MinWidth = 24;
+            Template.RowDefinitions[0].MinHeight = 24;            
         }
 
         /// <summary>
@@ -61,24 +61,32 @@ namespace rMind.Content
 
         public rMindLine CreateLine<T>()
         {
+            rMindLine line = null;
             if (typeof(T) == typeof(rMindHorizontalLine))
-                return CreateHorizontalLine();
+            {
+                line = CreateHorizontalLine();
+            }
 
             if (typeof(T) == typeof(rMindVerticalLine))
-                return CreateVerticalLine();
+                line = CreateVerticalLine();
 
-            return null;
+            UpdateBase();
+            return line;
         }       
 
         protected virtual rMindVerticalLine CreateVerticalLine()
         {
             var line = new rMindVerticalLine(this);
 
-            bool first = m_vertical_lines.Count == 0;
+            bool first = m_horizontal_lines.Count == 0 && m_vertical_lines.Count == 0;
             if (!first)
             {
-                Template.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
-                foreach(var l in HLines)
+                Template.ColumnDefinitions.Add(new ColumnDefinition() {
+                    Width = GridLength.Auto,
+                    MinWidth = 24,
+                });               
+
+                foreach (var l in HLines)
                 {
                     foreach (var node in l.RightNodes)
                         node.Column += 1;
@@ -86,7 +94,6 @@ namespace rMind.Content
             }
 
             m_vertical_lines.Add(line);
-            UpdateBase();
             return line;
         }
 
@@ -94,34 +101,45 @@ namespace rMind.Content
         {
             var line = new rMindHorizontalLine(this);
 
-            bool first = m_horizontal_lines.Count == 0;
+            bool first = m_horizontal_lines.Count == 0 && m_vertical_lines.Count == 0;
             if(!first)
             {
-                Template.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                Template.RowDefinitions.Add(new RowDefinition() {
+                    Height = GridLength.Auto,
+                    MinHeight = 24
+                });
+
                 foreach (var l in VLines)
                 {
                     foreach (var node in l.BottomNodes)
                         node.Row += 1;
                 }
-            }
+            }           
 
             m_horizontal_lines.Add(line);
-            UpdateBase();
             return line;
         }
 
         public void RemoveLine(rMindLine line)
         {
+            if (line is rMindHorizontalLine)
+            {
+                RemoveHorizontalLine(line as rMindHorizontalLine);
+            }
 
+            if (line is rMindVerticalLine)
+            {
+                RemoveVerticalLine(line as rMindVerticalLine);
+            }
         }
 
 
-        protected virtual void RemoveVerticalLine()
+        protected virtual void RemoveVerticalLine(rMindVerticalLine line)
         {
 
         }
 
-        protected virtual void RemoveHorizontalLine()
+        protected virtual void RemoveHorizontalLine(rMindHorizontalLine line)
         {
 
         }
