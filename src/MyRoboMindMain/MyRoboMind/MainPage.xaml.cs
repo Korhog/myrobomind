@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 using rMind.Elements;
+using rMind.Content.Quad;
 using rMind.Elements.Debug;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
@@ -58,6 +59,38 @@ namespace MyRoboMind
         {
             var container = new rMind.Content.rMindQuadContainer(controller);
             container.BorderRadius = new CornerRadius(3);
+
+            rMindVerticalLine vline;
+            rMindHorizontalLine hline;
+
+            vline = container.CreateLine<rMindVerticalLine>() as rMindVerticalLine;
+            vline.AddTopNode();
+            vline.AddTopNode();
+
+            vline.AddBottomNode();
+            vline.AddBottomNode();            
+
+            hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
+            hline.AddLeftNode();
+            hline.AddLeftNode();
+
+            hline.AddBottomNode();
+            hline.AddBottomNode();
+
+            vline = container.CreateLine<rMindVerticalLine>() as rMindVerticalLine;
+            vline.AddTopNode();
+            vline.AddTopNode();
+
+            vline.AddBottomNode();
+            vline.AddBottomNode();
+
+            hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
+            hline.AddLeftNode();
+            hline.AddLeftNode();
+
+            hline.AddBottomNode();
+            hline.AddBottomNode();
+
             container.SetPosition(250, 120);
             controller.AddElement(container);
         }

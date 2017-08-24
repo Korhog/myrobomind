@@ -56,5 +56,8 @@ namespace rMind.Content.Quad
         /// </summary>
         /// <param name="size"></param>
         public virtual void SetContentLength(int size) { }
+
+        public virtual void ShiftNodes(int offset) { }
+
     }
 }
