@@ -44,13 +44,11 @@ namespace rMind.Content.Quad
                         n.Column += 1;
                 }                
             }
-            else
-            {
-                ShiftNodes(1);
-            }
 
             var node = m_parent.CreateNode();
-            node.SetCell(0, m_parent.GetLineIndex(this));
+
+            int idx = currentCount - LeftNodes.Count - 1;
+            node.SetCell(idx > 0 ? idx : 0, m_parent.GetLineIndex(this));
             node.NodeOrientation = rMindNodeOriantation.Left;
             LeftNodes.Add(node);
 
@@ -84,6 +82,19 @@ namespace rMind.Content.Quad
         {
             foreach (var node in LeftNodes.Union(RightNodes))
                 node.Column += 1;
+        }
+
+        protected override void RemoveANode(rMindBaseNode node)
+        {
+            int oldCount = m_parent.HLines.Max(line => line.LeftNodes.Count);
+            var listIdx = LeftNodes.IndexOf(node);            
+            LeftNodes.Remove(node);
+            int newCount = m_parent.HLines.Max(line => line.LeftNodes.Count);          
+
+            if (oldCount > newCount) // Необходимо убрать строку.
+            {
+
+            }
         }
     }
 

@@ -42,17 +42,16 @@ namespace rMind.Content.Quad
                 {
                     foreach (var n in line.LeftNodes.Union(line.RightNodes))
                         n.Row += 1;
-                }
-
-                currentCount++;                
-            }
-            else
-            {
-                ShiftNodes(1);
-            }            
+                }      
+            } 
             
             var node = m_parent.CreateNode();
-            node.SetCell(m_parent.GetLineIndex(this), 0);
+
+            int idx = currentCount - TopNodes.Count - 1;
+            //if (idx == 0)
+            //    ShiftNodes(1);
+
+            node.SetCell(m_parent.GetLineIndex(this), idx > 0 ? idx : 0);
             node.NodeOrientation = rMindNodeOriantation.Top;
             TopNodes.Add(node);
 

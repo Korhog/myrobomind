@@ -59,5 +59,23 @@ namespace rMind.Content.Quad
 
         public virtual void ShiftNodes(int offset) { }
 
+        public void RemoveNode(rMindBaseNode node)
+        {
+            if (NodesA.Contains(node))
+            {
+                RemoveANode(node);
+                return;
+            }
+
+            if (NodesB.Contains(node))
+            {
+                RemoveBNode(node);
+            }
+        }
+
+        protected virtual void RemoveANode(rMindBaseNode node) { }
+
+        protected virtual void RemoveBNode(rMindBaseNode node) { }
+
     }
 }
