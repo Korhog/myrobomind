@@ -81,12 +81,16 @@ namespace MyRoboMind
             hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
             hline.AddLeftNode(); hline.AddRightNode();
 
+
             hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
-            hline.AddLeftNode(); hline.AddLeftNode(); hline.AddRightNode();
-            container.RemoveLine(hline);
+            var nodeA = hline.AddLeftNode();
+            var nodeB = hline.AddLeftNode(); hline.AddRightNode();
+            var tempLineN = hline;
             
             hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
             hline.AddLeftNode(); hline.AddRightNode();
+            var tempLineR = hline;
+
             hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
             hline.AddLeftNode(); hline.AddRightNode();
             hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
@@ -96,6 +100,10 @@ namespace MyRoboMind
 
             container.SetPosition(250, 120);
             controller.AddElement(container);
+
+            //container.RemoveLine(tempLineR);
+            tempLineN.RemoveNode(nodeA);
+            tempLineN.RemoveNode(nodeB);
         }
     }
 }

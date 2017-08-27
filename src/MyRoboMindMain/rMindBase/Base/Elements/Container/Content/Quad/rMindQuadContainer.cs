@@ -141,7 +141,11 @@ namespace rMind.Content
 
         protected virtual void RemoveHorizontalLine(rMindHorizontalLine line)
         {
-
+            var nodes = line.LeftNodes.Union(line.RightNodes);
+            foreach(var node in nodes)
+            {
+                line.RemoveNode(node);
+            }
         }
 
         public virtual int GetLineIndex(rMindLine line)

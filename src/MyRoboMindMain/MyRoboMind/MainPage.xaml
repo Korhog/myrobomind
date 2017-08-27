@@ -9,7 +9,14 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">        
         <ScrollViewer x:Name="scroll">
-            <Canvas Width="2000" Height="1500" x:Name="canvas" Background="Transparent" UseLayoutRounding="True">
+            <Canvas 
+                Width="2000" 
+                Height="1500" 
+                x:Name="canvas" 
+                Background="Transparent" 
+                UseLayoutRounding="True"
+                ManipulationMode="All"
+                >
                 <Canvas.RenderTransform>
                     <ScaleTransform x:Name="scale"/>
                 </Canvas.RenderTransform>

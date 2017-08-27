@@ -86,15 +86,54 @@ namespace rMind.Content.Quad
 
         protected override void RemoveANode(rMindBaseNode node)
         {
-            int oldCount = m_parent.HLines.Max(line => line.LeftNodes.Count);
-            var listIdx = LeftNodes.IndexOf(node);            
-            LeftNodes.Remove(node);
-            int newCount = m_parent.HLines.Max(line => line.LeftNodes.Count);          
-
-            if (oldCount > newCount) // Необходимо убрать строку.
+            var outMax = m_parent.HLines.Where(x => x != this).Max(x => x.LeftNodes.Count);            
+            if (LeftNodes.Count > outMax)
             {
+                /* Если количество занимаемых колонок больше, чем у остальных строк
+                 * Нужно удалять колонку грида и сдвинуть все узлы. Кроме своих.
+                 */
+                var nodes = m_parent.HLines.Where(x => x != this).Select(x => x as rMindLine)
+                    .Union(m_parent.VLines.Select(x => x as rMindLine))
+                    .Select(x => x.NodesA.Union(x.NodesB));
 
+                foreach(var arr in nodes)
+                {
+                    foreach(var n in arr)
+                    {
+                        n.Column--;
+                    }
+                }
+
+                // Среди своих узлов удаляем только те, что правее
+                var offsetNodes = LeftNodes.Union(RightNodes).Where(x => x.Column > node.Column);
+                foreach (var n in offsetNodes)
+                    n.Column--;
+
+                if (m_parent.Template.ColumnDefinitions.Count > 1)
+                {
+                    m_parent.Template.ColumnDefinitions.Remove(
+                        m_parent.Template.ColumnDefinitions.Last()
+                    );
+                }
             }
+            else
+            {
+                var offsetNodes = LeftNodes.Where(x => x.Column < node.Column);
+                foreach (var n in offsetNodes)
+                    n.Column++;
+            }
+
+            LeftNodes.Remove(node);
+            m_parent.UpdateBase();
+            m_parent.RemoveNode(node);
+        }
+
+        protected override void RemoveBNode(rMindBaseNode node)
+        {
+            var outMax = m_parent.HLines.Where(x => x != this).Max(x => x.RightNodes.Count);
+            //var offsetNodes = LeftNodes.Union(RightNodes).Where(x => x.Column > node.Column);
+
+            m_parent.RemoveNode(node);
         }
     }
 

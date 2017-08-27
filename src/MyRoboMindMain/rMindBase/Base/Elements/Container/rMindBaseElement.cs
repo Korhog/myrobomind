@@ -116,8 +116,6 @@ namespace rMind.Elements
         {
             var desc = new rMindNodeDesc();
             return CreateNode(desc);
-
-
         }
 
         public virtual rMindBaseNode CreateNode(rMindNodeDesc desc)

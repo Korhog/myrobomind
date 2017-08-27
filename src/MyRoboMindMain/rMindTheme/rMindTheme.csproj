@@ -107,6 +107,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Color\IColorScheme.cs" />
+    <Compile Include="Color\rMindColors.cs" />
     <Compile Include="Color\rMindSchemeDark.cs" />
     <Compile Include="Color\rMindSchemeLight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

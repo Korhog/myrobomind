@@ -21,7 +21,7 @@ namespace rMind.Content.Quad
         protected List<rMindBaseNode> m_a_node_list;
         protected List<rMindBaseNode> m_b_node_list;
 
-        protected List<rMindBaseNode> NodesA
+        public List<rMindBaseNode> NodesA
         {
             get
             {
@@ -32,7 +32,7 @@ namespace rMind.Content.Quad
                 return m_a_node_list;
             }
         }
-        protected List<rMindBaseNode> NodesB
+        public List<rMindBaseNode> NodesB
         {
             get
             {
