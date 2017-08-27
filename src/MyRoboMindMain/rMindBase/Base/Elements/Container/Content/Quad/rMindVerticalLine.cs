@@ -87,5 +87,70 @@ namespace rMind.Content.Quad
             foreach (var node in TopNodes.Union(BottomNodes))
                 node.Row += 1;
         }
+
+        protected override void RemoveANode(rMindBaseNode node)
+        {
+            var outMax = m_parent.VLines.Where(x => x != this).Max(x => x.TopNodes.Count);
+            if (TopNodes.Count > outMax)
+            {
+                /* Если количество занимаемых колонок больше, чем у остальных строк
+                 * Нужно удалять колонку грида и сдвинуть все узлы. Кроме своих.
+                 */
+                var nodes = m_parent.VLines.Where(x => x != this).Select(x => x as rMindLine)
+                    .Union(m_parent.HLines.Select(x => x as rMindLine))
+                    .Select(x => x.NodesA.Union(x.NodesB));
+
+                foreach (var arr in nodes)
+                {
+                    foreach (var n in arr)
+                    {
+                        n.Row--;
+                    }
+                }
+
+                // Среди своих узлов удаляем только те, что правее
+                var offsetNodes = TopNodes.Union(BottomNodes).Where(x => x.Row > node.Row);
+                foreach (var n in offsetNodes)
+                    n.Row--;
+
+                if (m_parent.Template.RowDefinitions.Count > 1)
+                {
+                    m_parent.Template.RowDefinitions.Remove(
+                        m_parent.Template.RowDefinitions.Last()
+                    );
+                }
+            }
+            else
+            {
+                var offsetNodes = TopNodes.Where(x => x.Row < node.Row);
+                foreach (var n in offsetNodes)
+                    n.Row++;
+            }
+
+            TopNodes.Remove(node);
+            m_parent.UpdateBase();
+            m_parent.RemoveNode(node);
+        }
+
+        protected override void RemoveBNode(rMindBaseNode node)
+        {
+            var outMax = m_parent.VLines.Where(x => x != this).Max(x => x.BottomNodes.Count);
+            if (BottomNodes.Count > outMax)
+            {
+                if (m_parent.Template.RowDefinitions.Count > 1)
+                {
+                    m_parent.Template.RowDefinitions.Remove(
+                        m_parent.Template.RowDefinitions.Last()
+                    );
+                }
+            }
+
+            var offsetNodes = BottomNodes.Where(x => x.Row > node.Row);
+            foreach (var n in offsetNodes)
+                n.Row--;
+
+            BottomNodes.Remove(node);
+            m_parent.RemoveNode(node);
+        }
     }
 }

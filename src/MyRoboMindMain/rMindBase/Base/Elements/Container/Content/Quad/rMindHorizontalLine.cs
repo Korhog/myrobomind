@@ -131,8 +131,21 @@ namespace rMind.Content.Quad
         protected override void RemoveBNode(rMindBaseNode node)
         {
             var outMax = m_parent.HLines.Where(x => x != this).Max(x => x.RightNodes.Count);
-            //var offsetNodes = LeftNodes.Union(RightNodes).Where(x => x.Column > node.Column);
+            if (RightNodes.Count > outMax)
+            {
+                if (m_parent.Template.ColumnDefinitions.Count > 1)
+                {
+                    m_parent.Template.ColumnDefinitions.Remove(
+                        m_parent.Template.ColumnDefinitions.Last()
+                    );
+                }
+            }
 
+            var offsetNodes = RightNodes.Where(x => x.Column > node.Column);
+            foreach (var n in offsetNodes)
+                n.Column--;
+
+            RightNodes.Remove(node);
             m_parent.RemoveNode(node);
         }
     }
