@@ -133,19 +133,54 @@ namespace rMind.Content
             }
         }
 
+        protected virtual void OffsetNodes(bool row, int idx)
+        {
+            var nodes = VLines.Select(x => x as rMindLine)
+                .Union(HLines.Select(x => x as rMindLine))
+                .Select(x => x.NodesA.Union(x.NodesB));
+
+            nodes = row ?
+                nodes.Select(x => x.Where(y => y.Row > idx)) :
+                nodes.Select(x => x.Where(y => y.Column > idx));
+
+            foreach (var arr in nodes)
+            {
+                foreach (var n in arr)
+                {
+                    if (row)
+                        n.Row--;
+                    else
+                        n.Column--;
+                }
+            }
+        }
 
         protected virtual void RemoveVerticalLine(rMindVerticalLine line)
         {
-
+            var removeNodes = line.TopNodes.Union(line.BottomNodes).ToList();
+            var colIdx = GetLineIndex(line);
+            RemoveNodes(removeNodes);
+            // Собираем узлы ниже
+            OffsetNodes(false, colIdx);
+            if (Template.ColumnDefinitions.Count > 1)
+                Template.ColumnDefinitions.Remove(
+                    Template.ColumnDefinitions.Last()
+                );
+            VLines.Remove(line);
         }
 
         protected virtual void RemoveHorizontalLine(rMindHorizontalLine line)
         {
-            var nodes = line.LeftNodes.Union(line.RightNodes);
-            foreach(var node in nodes)
-            {
-                line.RemoveNode(node);
-            }
+            var removeNodes = line.LeftNodes.Union(line.RightNodes).ToList();
+            var rowIdx = GetLineIndex(line);
+            RemoveNodes(removeNodes);
+            // Собираем узлы ниже
+            OffsetNodes(true, rowIdx);
+            if (Template.RowDefinitions.Count > 1)
+                Template.RowDefinitions.Remove(
+                    Template.RowDefinitions.Last()
+                );
+            HLines.Remove(line);
         }
 
         public virtual int GetLineIndex(rMindLine line)

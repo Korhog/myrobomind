@@ -64,46 +64,17 @@ namespace MyRoboMind
             rMindHorizontalLine hline;
 
             vline = container.CreateLine<rMindVerticalLine>() as rMindVerticalLine;
-            vline = container.CreateLine<rMindVerticalLine>() as rMindVerticalLine;
             vline.AddTopNode(); vline.AddBottomNode();
             vline = container.CreateLine<rMindVerticalLine>() as rMindVerticalLine;
-            vline.AddTopNode(); vline.AddBottomNode(); 
-            vline.AddTopNode(); vline.AddBottomNode();
-            vline = container.CreateLine<rMindVerticalLine>() as rMindVerticalLine;
-            vline.AddTopNode(); vline.AddBottomNode();
-
-            vline = container.CreateLine<rMindVerticalLine>() as rMindVerticalLine;
-
-            hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
-            hline.AddLeftNode(); hline.AddRightNode();
-            hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
-            hline.AddLeftNode(); hline.AddRightNode();
-            hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
-            hline.AddLeftNode(); hline.AddRightNode();
-
-
-            hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
-            var nodeA = hline.AddLeftNode();
-            var nodeB = hline.AddLeftNode(); hline.AddRightNode();
-            var tempLineN = hline;
-            
-            hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
-            hline.AddLeftNode(); hline.AddRightNode();
-            var tempLineR = hline;
-
-            hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
-            hline.AddLeftNode(); hline.AddRightNode();
+            vline.AddTopNode(); vline.AddBottomNode();   
+ 
             hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
             hline.AddLeftNode(); hline.AddRightNode();
             hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
             hline.AddLeftNode(); hline.AddRightNode();
 
             container.SetPosition(250, 120);
-            controller.AddElement(container);
-
-            //container.RemoveLine(tempLineR);
-            tempLineN.RemoveNode(nodeA);
-            tempLineN.RemoveNode(nodeB);
+            controller.AddElement(container);            
         }
     }
 }

@@ -156,6 +156,14 @@ namespace rMind.Elements
             }
         }
 
+        public void RemoveNodes(List<rMindBaseNode> nodes)
+        {
+            foreach (var node in nodes)
+            {
+                RemoveNode(node);
+            }
+        }
+
         /// <summary> update IDSs nodes after remove </summary>
         void UpdateNodes()
         {
