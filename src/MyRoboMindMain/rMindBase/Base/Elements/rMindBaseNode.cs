@@ -41,6 +41,40 @@ namespace rMind.Nodes
         Value
     }
 
+    public class rMindNodeTheme
+    {
+        public SolidColorBrush BaseFill;
+        public SolidColorBrush BaseStroke;
+        public SolidColorBrush OveredFill;
+        public SolidColorBrush OveredStroke;
+
+        public static rMindNodeTheme Theme(Color color)
+        {
+            var colors = ColorContainer.rMindColors.GetInstance();
+
+            return new rMindNodeTheme
+            {
+                BaseFill = colors.GetSolidBrush(Colors.DarkGray),
+                BaseStroke = colors.GetSolidBrush(Colors.Black),
+                OveredFill = colors.GetSolidBrush(Colors.DarkGray),
+                OveredStroke = colors.GetSolidBrush(Colors.YellowGreen)
+            };
+        }
+
+        public static rMindNodeTheme Theme()
+        {
+            var colors = ColorContainer.rMindColors.GetInstance();
+
+            return new rMindNodeTheme
+            {
+                BaseFill = colors.GetSolidBrush(Colors.DarkGray),
+                BaseStroke = colors.GetSolidBrush(Colors.Black),
+                OveredFill = colors.GetSolidBrush(Colors.DarkGray),
+                OveredStroke = colors.GetSolidBrush(Colors.YellowGreen)
+            };
+        }
+    }
+
     public struct rMindNodeDesc
     {
         public rMindNodeType NodeType;
@@ -51,6 +85,21 @@ namespace rMind.Nodes
 
     public class rMindBaseNode : rMindItemUI, IDrawElement
     {
+        rMindNodeTheme m_theme;
+        public rMindNodeTheme Theme { 
+            get
+            {
+                if (m_parent.NodeTheme != null)
+                    return m_parent.NodeTheme;
+                return m_theme;
+            }
+            set
+            {
+                m_theme = value;
+                UpdateAccentColor();
+            }
+        }
+
         int m_row = 0;
         int m_col = 0;
 
@@ -79,7 +128,7 @@ namespace rMind.Nodes
             }
         }
 
-        protected bool m_use_accent_color = true;
+        protected bool m_use_accent_color = false;
         public bool UseAccentColor {
             get { return m_use_accent_color; }
             set
@@ -153,7 +202,8 @@ namespace rMind.Nodes
         protected Rectangle m_area;        
 
         public rMindBaseNode(rMindBaseElement parent) : base()
-        {            
+        {
+            m_theme = rMindNodeTheme.Theme();
             m_parent = parent;
             m_attached_dots = new List<rMindBaseWireDot>();
             Init();
@@ -257,7 +307,8 @@ namespace rMind.Nodes
 
         protected override void Glow(bool state)
         {
-            m_area.Stroke = state ? new SolidColorBrush(Colors.YellowGreen) : new SolidColorBrush(Colors.Black);
+
+            m_area.Stroke = state ? Theme.OveredStroke : Theme.BaseStroke;
         }
 
         #region attached dots
@@ -322,29 +373,10 @@ namespace rMind.Nodes
         public virtual void UpdateAccentColor()
         {
             var colors = ColorContainer.rMindColors.GetInstance();
+            var theme = Theme;
 
-            if (m_use_accent_color)
-            {
-                if (m_parent.AccentColor == null)
-                    return;
-
-                m_area.Stroke = colors.GetSolidBrush(
-                    ColorContainer.rMindColors.ColorBrigness(
-                        m_parent.AccentColor, 60, false
-                    )
-                );
-
-                m_area.Fill = colors.GetSolidBrush(
-                    ColorContainer.rMindColors.ColorBrigness(
-                        m_parent.AccentColor, 30, false
-                    )
-                ); ;
-            }
-            else
-            {
-                m_area.Stroke = colors.GetSolidBrush(Colors.Black);
-                m_area.Fill = colors.GetSolidBrush(Colors.DarkGray);
-            }
+            m_area.Fill = theme.BaseFill;
+            m_area.Stroke = theme.BaseStroke;
         }
     }
 

@@ -27,6 +27,9 @@
             <Button Content="Unsubscribe" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Unsubscribe" Margin="10"/>
             <Button Content="+" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Click" Margin="10"/>
             <Button Content="B+" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_B_Click" Margin="10"/>
-        </StackPanel>        
+            <Button Content="Shades" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Shades_Click" Margin="10"/>
+            <StackPanel x:Name="shades"/>
+        </StackPanel>  
+        
     </Grid>
 </Page>

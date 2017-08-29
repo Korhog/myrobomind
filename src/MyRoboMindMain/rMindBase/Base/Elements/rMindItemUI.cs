@@ -7,6 +7,7 @@ namespace rMind.Elements
 
     public class rMindItemUI
     {
+        protected bool m_has_translate;
         protected Vector2 m_position;
         public Vector2 Position { get { return m_position; } }
 
@@ -35,7 +36,8 @@ namespace rMind.Elements
 
             Canvas.SetLeft(m_template, newPos.X);
             Canvas.SetTop(m_template, newPos.Y);
-                              
+
+            m_has_translate = true;
             return translation;
         }
 

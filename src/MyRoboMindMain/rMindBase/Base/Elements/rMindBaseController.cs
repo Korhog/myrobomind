@@ -111,6 +111,11 @@ namespace rMind.Elements
         // input
         private void onPointerUp(object sender, PointerRoutedEventArgs e)
         {
+            if (m_overedItem == null && e.KeyModifiers != Windows.System.VirtualKeyModifiers.Shift)
+            {
+                SetSelectedItem(null);   
+            }
+
             var point = e.GetCurrentPoint(m_canvas);
             if (point.Properties.PointerUpdateKind == Windows.UI.Input.PointerUpdateKind.MiddleButtonReleased)
             {

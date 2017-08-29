@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
@@ -47,11 +48,17 @@ namespace MyRoboMind
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            var rand = new Random();
             var container = new rMind.Content.rMindHeaderRowContainer(controller);
-            container.AccentColor = rMind.ColorContainer.rMindColors.ColorRandom();
+            container.AccentColor = rMind.ColorContainer.rMindColors.ColorRandom(100, 200);
             container.BorderThickness = new Thickness(1);
-            container.Static = false;
-            container.BorderRadius = new CornerRadius(0);
+            var cnt = rand.Next(1, 5);
+            for (int i = 0; i < cnt; i++)
+            {
+                container.AddRow();
+            }            
+            //container.Static = false;
+            container.BorderRadius = new CornerRadius(3);
 
             container.SetPosition(250, 120);
             controller.AddElement(container);
@@ -88,6 +95,26 @@ namespace MyRoboMind
         private void Button_Unsubscribe(object sender, RoutedEventArgs e)
         {
             controller.Unsubscribe();
+        }
+
+        private void Button_Shades_Click(object sender, RoutedEventArgs e)
+        {
+            shades.Children.Clear();
+
+            var shadeList = rMind.ColorForge.ColorHelper.GetColorShades(
+                rMind.ColorContainer.rMindColors.ColorRandom(),
+                6
+            );
+
+            foreach (var color in shadeList)
+            {
+                shades.Children.Add(new Rectangle()
+                {
+                    Width = 100,
+                    Height = 20,
+                    Fill = new SolidColorBrush(color)
+                });
+            }
         }
     }
 }

@@ -22,9 +22,21 @@ namespace rMind.Elements
     /// </summary>
     public class rMindBaseElement : rMindBaseItem, IDrawContainer
     {
-        // Properties
+        rMindNodeTheme m_node_theme = null;
+        public rMindNodeTheme NodeTheme
+        {
+            get { return m_node_theme; }
+            set
+            {
+                m_node_theme = value;
+                foreach (var node in m_nodes_link.Values)
+                    node.UpdateAccentColor();
+            }
+        }
+        // Properties        
         protected Color m_accent_color;
         protected Border m_base;
+        protected Border m_selector;
         protected bool m_selected;
         protected Dictionary<string, rMindBaseNode> m_nodes_link;
 
@@ -56,7 +68,17 @@ namespace rMind.Elements
                 Background = rMindScheme.Get().MainContainerBrush()
             };
 
+            m_selector = new Border()
+            {
+                Background = rMindColors.GetInstance().GetSolidBrush(rMindColors.GetSelectorBrush()),
+                IsHitTestVisible = false,
+                Visibility = Visibility.Collapsed
+            };
+
             Template.Children.Add(m_base);
+            Template.Children.Add(m_selector);
+
+            Canvas.SetZIndex(m_selector, 10);
         }
 
         #region input        
@@ -82,8 +104,11 @@ namespace rMind.Elements
             if (Parent.CheckIsOvered(this))
             {
                 Parent.SetDragItem(null, e);
-                SetSelected(true);
-                Parent.SetSelectedItem(this, e.KeyModifiers == Windows.System.VirtualKeyModifiers.Shift);
+                if (!m_has_translate)
+                {
+                    SetSelected(true);
+                    Parent.SetSelectedItem(this, e.KeyModifiers == Windows.System.VirtualKeyModifiers.Shift);
+                }
             }            
         }
 
@@ -91,9 +116,10 @@ namespace rMind.Elements
         {
             e.Handled = true;
             if (Parent.CheckIsOvered(this))
-            {
+            {                
                 Parent.SetDragItem(this, e);
-            }            
+            }
+            m_has_translate = false;
         }
 
         void SubscribeInput()
@@ -186,6 +212,7 @@ namespace rMind.Elements
         public void SetSelected(bool state)
         {
             m_selected = state;
+            m_selector.Visibility = state ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public override Vector2 GetOffset()
@@ -202,7 +229,6 @@ namespace rMind.Elements
                 node.Update();
             }
 
-
             return translation;
         }
 
@@ -212,6 +238,7 @@ namespace rMind.Elements
         {
             m_border_radius = value;
             m_base.CornerRadius = value;
+            m_selector.CornerRadius = value;
         }
         public CornerRadius BorderRadius { get { return m_border_radius; } set { SetBorderRadius(value); } }
 
@@ -232,16 +259,10 @@ namespace rMind.Elements
 
         protected virtual void SetAccentColor(Color color)
         {
-            var colors = rMindColors.GetInstance();
-
             m_accent_color = color;
-            m_base.Background = rMindColors.GetInstance().GetSolidBrush(color);
-
-            m_base.BorderBrush = colors.GetSolidBrush(
-                rMindColors.ColorBrigness(m_accent_color, 80, false)
-            );
+            var shades = ColorForge.ColorHelper.GetColorShades(color, 8);
+            m_base.Background = rMindColors.GetInstance().GetSolidBrush(shades[7]);
+            m_base.BorderBrush = rMindColors.GetInstance().GetSolidBrush(shades[5]);
         }
-
-
     }
 }

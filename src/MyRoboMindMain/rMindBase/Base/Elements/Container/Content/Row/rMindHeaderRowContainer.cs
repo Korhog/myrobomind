@@ -15,7 +15,14 @@ namespace rMind.Content
     public class rMindHeaderRowContainer : rMindRowContainer
     {
         Border m_header_rect;
-        
+
+        public struct rMindHeaderRowContainerTheme
+        {
+            public Color MainColor;
+            public Color BorderColor;
+            public Color HeaderColor;
+        }
+
         public Color HeaderColor {
             get
             {
@@ -23,17 +30,11 @@ namespace rMind.Content
             }
             set
             {
-                var colors = rMindColors.GetInstance();
-
-                m_header_rect.Background = colors.GetSolidBrush(value);
-                m_header_rect.BorderBrush = colors.GetSolidBrush(
-                    rMindColors.ColorBrigness(value, 80, false)
-                );
-
-                var brigness = rMindColors.Brigness(value);
-                m_header_label.Foreground = colors.GetSolidBrush(
-                     rMindColors.ColorBrigness(value, 40, brigness < 130)
-                );
+                /*
+                var shades = ColorForge.ColorHelper.GetColorShades(m_accent_color, 6);
+                m_header_rect.Background = rMindColors.GetInstance().GetSolidBrush(shades[3]);
+                m_header_rect.BorderBrush = rMindColors.GetInstance().GetSolidBrush(shades[2]);
+                */
             }
         }
 
@@ -104,8 +105,11 @@ namespace rMind.Content
         protected override void SetAccentColor(Color color)
         {
             base.SetAccentColor(color);
-            var colors = rMindColors.GetInstance();
-            HeaderColor = rMindColors.ColorBrigness(m_accent_color, 80, false); 
+            var shades = ColorForge.ColorHelper.GetColorShades(m_accent_color, 8);
+
+            m_header_rect.Background = rMindColors.GetInstance().GetSolidBrush(shades[6]);            
+            m_header_rect.BorderBrush = rMindColors.GetInstance().GetSolidBrush(shades[5]);
+            m_header_label.Foreground = rMindColors.GetInstance().GetSolidBrush(shades[3]);            
         }
 
         protected override void SetBorderThickness(Thickness value)

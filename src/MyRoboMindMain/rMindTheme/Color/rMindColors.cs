@@ -49,6 +49,11 @@ namespace rMind.ColorContainer
             return brush;
         }
 
+        public static Color GetSelectorBrush()
+        {
+            return ColorHelper.FromArgb(120, 255, 0, 0);
+        }
+
         static byte Clamp(byte value, byte min, byte max)
         {
             if (value < min) return (byte)min;
@@ -78,15 +83,15 @@ namespace rMind.ColorContainer
         /// <param name="color"></param>
         /// <param name="brigness">range -100 : 100</param>
         /// <returns></returns>
-        public static Color ColorBrigness(Color color, int brigness)
+        public static Color ColorBrigness(Color color, int brigness, bool ligth = false)
         {
             var A = color.A;
 
             var brig = brigness / 100.0f;
 
-            var R = ChannelBrigness(color.R, brig, light);
-            var G = ChannelBrigness(color.G, brig, light);
-            var B = ChannelBrigness(color.B, brig, light);
+            var R = ChannelBrigness(color.R, brig, true);
+            var G = ChannelBrigness(color.G, brig, true);
+            var B = ChannelBrigness(color.B, brig, true);
 
             return ColorHelper.FromArgb(A, R, G, B);
         }
@@ -100,15 +105,20 @@ namespace rMind.ColorContainer
             return Math.Sqrt(R * R * .241 + G * G * .691 + B * B * 0.068);
         }
 
-        public static Color ColorRandom()
+        public static Color ColorRandom(byte min, byte max)
         {
             var rand = rMindColors.GetInstance().m_random;
 
-            var R = (byte)rand.Next(0, 255);
-            var G = (byte)rand.Next(0, 255);
-            var B = (byte)rand.Next(0, 255);
+            var R = (byte)rand.Next(min, max);
+            var G = (byte)rand.Next(min, max);
+            var B = (byte)rand.Next(min, max);
 
             return ColorHelper.FromArgb(255, R, G, B);
-        }         
+        }
+
+        public static Color ColorRandom()
+        {
+            return ColorRandom(0, 255);
+        }
     }
 }

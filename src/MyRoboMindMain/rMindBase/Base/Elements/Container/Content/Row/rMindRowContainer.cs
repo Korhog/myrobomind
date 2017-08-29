@@ -147,6 +147,7 @@ namespace rMind.Content
             m_base.BorderBrush = ColorContainer.rMindColors.GetInstance().GetSolidBrush(Colors.Black);
 
             Grid.SetColumnSpan(m_base, 3);
+            Grid.SetColumnSpan(m_selector, 3);
         }
 
 
@@ -204,6 +205,7 @@ namespace rMind.Content
                 m_base.Visibility = Visibility.Visible;
 
             Grid.SetRowSpan(m_base, GetBaseRowSpan());
+            Grid.SetRowSpan(m_selector, GetBaseRowSpan());
 
             if (!m_static)
             {
@@ -250,8 +252,17 @@ namespace rMind.Content
         protected override void SetAccentColor(Color color)
         {
             base.SetAccentColor(color);
-            foreach (var node in m_nodes_link.Values)
-                node.UpdateAccentColor();
+
+            var shades = ColorForge.ColorHelper.GetColorShades(m_accent_color, 8);
+            var colors = ColorContainer.rMindColors.GetInstance();
+
+            NodeTheme = new rMind.Nodes.rMindNodeTheme()
+            {
+                BaseFill = colors.GetSolidBrush(shades[3]),
+                BaseStroke = colors.GetSolidBrush(shades[1]),
+                OveredFill = colors.GetSolidBrush(shades[5]),
+                OveredStroke = colors.GetSolidBrush(shades[3])
+            }; 
         }
     }
 }

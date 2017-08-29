@@ -74,7 +74,7 @@ namespace rMind.Elements
                 m_selectedItems.Clear();
                 return;
             }
-            if (!multi)
+            if (!multi && !m_selectedItems.Contains(item))
             {
                 foreach (var it in m_selectedItems)
                 {

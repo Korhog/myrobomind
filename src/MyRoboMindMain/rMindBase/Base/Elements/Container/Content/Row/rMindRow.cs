@@ -9,8 +9,8 @@ namespace rMind.Content.Row
 
     public class rMindRow
     {
-        public rMindNodeConnectionType InputNodeType { get; set; } = rMindNodeConnectionType.None;
-        public rMindNodeConnectionType OutputNodeType { get; set; } = rMindNodeConnectionType.None;
+        public rMindNodeConnectionType InputNodeType { get; set; } = rMindNodeConnectionType.Container;
+        public rMindNodeConnectionType OutputNodeType { get; set; } = rMindNodeConnectionType.Container;
 
         public rMindBaseNode InputNode { get; set; }
         public rMindBaseNode OutputNode { get; set; }
