@@ -48,8 +48,10 @@ namespace MyRoboMind
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var container = new rMind.Content.rMindHeaderRowContainer(controller);
+            container.AccentColor = rMind.ColorContainer.rMindColors.ColorRandom();
+            container.BorderThickness = new Thickness(1);
             container.Static = false;
-            container.BorderRadius = new CornerRadius(3);
+            container.BorderRadius = new CornerRadius(0);
 
             container.SetPosition(250, 120);
             controller.AddElement(container);
@@ -58,6 +60,7 @@ namespace MyRoboMind
         private void Button_B_Click(object sender, RoutedEventArgs e)
         {
             var container = new rMind.Content.rMindQuadContainer(controller);
+            container.AccentColor = Windows.UI.Colors.LightBlue;
             container.BorderRadius = new CornerRadius(3);
 
             rMindVerticalLine vline;
@@ -75,6 +78,16 @@ namespace MyRoboMind
 
             container.SetPosition(250, 120);
             controller.AddElement(container);            
+        }
+
+        private void Button_Subscribe(object sender, RoutedEventArgs e)
+        {
+            controller.Subscribe(canvas, scroll); 
+        }
+
+        private void Button_Unsubscribe(object sender, RoutedEventArgs e)
+        {
+            controller.Unsubscribe();
         }
     }
 }

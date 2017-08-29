@@ -144,6 +144,8 @@ namespace rMind.Content
             Template.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(80) });
             Template.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
 
+            m_base.BorderBrush = ColorContainer.rMindColors.GetInstance().GetSolidBrush(Colors.Black);
+
             Grid.SetColumnSpan(m_base, 3);
         }
 
@@ -243,6 +245,13 @@ namespace rMind.Content
 
                 Grid.SetRow(m_add_button, Template.RowDefinitions.Count - 1);
             }
+        }
+
+        protected override void SetAccentColor(Color color)
+        {
+            base.SetAccentColor(color);
+            foreach (var node in m_nodes_link.Values)
+                node.UpdateAccentColor();
         }
     }
 }

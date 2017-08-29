@@ -21,15 +21,20 @@ namespace rMind.Elements
             wire.A.Translate(new Vector2(20, 50));
             wire.B.Translate(new Vector2(10, 10));
 
+            Draw(wire);
+
+            m_wire_list.Add(wire);
+            return wire;
+        }
+
+        protected virtual void Draw(rMindBaseWire wire)
+        {
             if (m_subscribed)
             {
                 m_canvas.Children.Add(wire.Line);
                 m_canvas.Children.Add(wire.A.Template);
-                m_canvas.Children.Add(wire.B.Template);                
+                m_canvas.Children.Add(wire.B.Template);
             }
-
-            m_wire_list.Add(wire);
-            return wire;
         }
 
         public virtual void RemoveWire(rMindBaseWire wire)
@@ -37,7 +42,7 @@ namespace rMind.Elements
             m_canvas.Children.Remove(wire.A.Template);
             m_canvas.Children.Remove(wire.B.Template);
             m_canvas.Children.Remove(wire.Line);
-            m_wire_list.Add(wire);
+            m_wire_list.Remove(wire);
         }
 
         public void SetDragWireDot(rMindBaseWireDot item, PointerRoutedEventArgs e)

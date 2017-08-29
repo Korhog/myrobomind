@@ -136,6 +136,10 @@
       <Project>{709002b9-916f-481f-981b-6f4f0c2b51db}</Project>
       <Name>rMindBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\rMindTheme\rMindTheme.csproj">
+      <Project>{458f5c99-d7e2-481a-baef-db0d694a0f8a}</Project>
+      <Name>rMindTheme</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

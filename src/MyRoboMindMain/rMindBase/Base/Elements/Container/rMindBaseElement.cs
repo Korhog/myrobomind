@@ -5,14 +5,17 @@ using rMind.Theme;
 using System.Linq;
 using System.Collections.Generic;
 
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Input;
 using System;
 
 namespace rMind.Elements
 {
+    using ColorContainer;
     using Nodes;
     /// <summary>
     /// Base scheme element 
@@ -20,6 +23,7 @@ namespace rMind.Elements
     public class rMindBaseElement : rMindBaseItem, IDrawContainer
     {
         // Properties
+        protected Color m_accent_color;
         protected Border m_base;
         protected bool m_selected;
         protected Dictionary<string, rMindBaseNode> m_nodes_link;
@@ -203,11 +207,41 @@ namespace rMind.Elements
         }
 
         protected CornerRadius m_border_radius;
+        
         protected virtual void SetBorderRadius(CornerRadius value)
         {
             m_border_radius = value;
             m_base.CornerRadius = value;
         }
         public CornerRadius BorderRadius { get { return m_border_radius; } set { SetBorderRadius(value); } }
+
+        protected Thickness m_border_thickness;
+
+        protected virtual void SetBorderThickness(Thickness value)
+        {
+            m_border_thickness = value;
+            m_base.BorderThickness = value;
+        }
+
+        public Thickness BorderThickness { get { return m_border_thickness; } set { SetBorderThickness(value); } }
+
+        public Color AccentColor {
+            get { return m_accent_color; }
+            set { SetAccentColor(value); }
+        }
+
+        protected virtual void SetAccentColor(Color color)
+        {
+            var colors = rMindColors.GetInstance();
+
+            m_accent_color = color;
+            m_base.Background = rMindColors.GetInstance().GetSolidBrush(color);
+
+            m_base.BorderBrush = colors.GetSolidBrush(
+                rMindColors.ColorBrigness(m_accent_color, 80, false)
+            );
+        }
+
+
     }
 }

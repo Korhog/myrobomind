@@ -79,6 +79,19 @@ namespace rMind.Nodes
             }
         }
 
+        protected bool m_use_accent_color = true;
+        public bool UseAccentColor {
+            get { return m_use_accent_color; }
+            set
+            {
+                if (m_use_accent_color == value)
+                    return;
+
+                m_use_accent_color = value;
+                UpdateAccentColor();                
+            }
+        }
+
         rMindNodeType m_node_type = rMindNodeType.None;
         rMindNodeOriantation m_node_orientation = rMindNodeOriantation.None;
         rMindNodeAttachMode m_attach_mode = rMindNodeAttachMode.Single;
@@ -150,15 +163,17 @@ namespace rMind.Nodes
         {
             var r = m_connection_type == rMindNodeConnectionType.Container ? 10 : 3;
 
+            var colors = rMind.ColorContainer.rMindColors.GetInstance();
+
             m_area = new Rectangle {
                 Width = 20,
                 Height = 20,
-                Stroke = new SolidColorBrush(Colors.Black),
-                Fill = new SolidColorBrush(Colors.DarkGray),
                 RadiusX = r,
                 RadiusY = r,
                 StrokeThickness = 2
             };
+
+            UpdateAccentColor();
 
             m_template.Margin = new Windows.UI.Xaml.Thickness(2, 6, 2, 6);
             m_template.Children.Add(m_area);
@@ -302,6 +317,34 @@ namespace rMind.Nodes
             Column = col;
             Row = row;
             Update();
+        }
+
+        public virtual void UpdateAccentColor()
+        {
+            var colors = ColorContainer.rMindColors.GetInstance();
+
+            if (m_use_accent_color)
+            {
+                if (m_parent.AccentColor == null)
+                    return;
+
+                m_area.Stroke = colors.GetSolidBrush(
+                    ColorContainer.rMindColors.ColorBrigness(
+                        m_parent.AccentColor, 60, false
+                    )
+                );
+
+                m_area.Fill = colors.GetSolidBrush(
+                    ColorContainer.rMindColors.ColorBrigness(
+                        m_parent.AccentColor, 30, false
+                    )
+                ); ;
+            }
+            else
+            {
+                m_area.Stroke = colors.GetSolidBrush(Colors.Black);
+                m_area.Fill = colors.GetSolidBrush(Colors.DarkGray);
+            }
         }
     }
 

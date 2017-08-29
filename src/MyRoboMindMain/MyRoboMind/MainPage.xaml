@@ -23,6 +23,8 @@
             </Canvas>
         </ScrollViewer>
         <StackPanel Margin="10">
+            <Button Content="Subscribe" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Subscribe" Margin="10"/>
+            <Button Content="Unsubscribe" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Unsubscribe" Margin="10"/>
             <Button Content="+" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Click" Margin="10"/>
             <Button Content="B+" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_B_Click" Margin="10"/>
         </StackPanel>        

@@ -74,6 +74,8 @@ namespace rMind.Elements
 
 
             m_subscribed = true;
+
+            DrawElements();
         }
 
         /// <summary>
@@ -83,6 +85,7 @@ namespace rMind.Elements
         {
             if (m_subscribed)
             {
+                m_canvas.Children.Clear();
                 // events                
                 m_canvas.PointerMoved -= onPointerMove;
 
@@ -93,13 +96,13 @@ namespace rMind.Elements
 
                 m_canvas = null;
                 m_scroll = null;
-            }
+            }            
             m_subscribed = false;
         }
 
         protected virtual void Draw(rMindBaseElement item)
         {
-            if (m_subscribed)
+            if (m_subscribed && !m_canvas.Children.Contains(item.Template))
             {
                 m_canvas.Children.Add(item.Template);
             }

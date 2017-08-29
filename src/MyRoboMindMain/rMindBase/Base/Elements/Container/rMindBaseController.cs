@@ -129,6 +129,18 @@ namespace rMind.Elements
 
             }
         }
+
+        protected virtual void DrawElements()
+        {
+            if (!m_subscribed)
+                return;
+
+            foreach (var e in m_items)
+                Draw(e);
+
+            foreach (var w in m_wire_list)
+                Draw(w);
+        }
     }
 }
 
