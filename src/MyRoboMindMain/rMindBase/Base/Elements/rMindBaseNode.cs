@@ -193,13 +193,14 @@ namespace rMind.Nodes
                     break;
             }
 
-            m_template.Margin = thickness;
+            Margin = thickness;
         }
 
         rMindBaseElement m_parent;
         public rMindBaseElement Parent { get { return m_parent; } }
 
-        protected Rectangle m_area;        
+        protected Rectangle m_area;
+        protected Rectangle m_hit_area;
 
         public rMindBaseNode(rMindBaseElement parent) : base()
         {
@@ -215,18 +216,26 @@ namespace rMind.Nodes
 
             var colors = rMind.ColorContainer.rMindColors.GetInstance();
 
+            m_hit_area = new Rectangle
+            {
+                Fill = new SolidColorBrush(Colors.Transparent)
+            };
+            m_template.Children.Add(m_hit_area);
+
             m_area = new Rectangle {
                 Width = 20,
                 Height = 20,
                 RadiusX = r,
                 RadiusY = r,
-                StrokeThickness = 2
+                StrokeThickness = 2,
+                IsHitTestVisible = false
             };
 
             UpdateAccentColor();
 
-            m_template.Margin = new Windows.UI.Xaml.Thickness(2, 6, 2, 6);
+            Margin = new Windows.UI.Xaml.Thickness(2, 6, 2, 6);
             m_template.Children.Add(m_area);
+
             SubscribeInput();
         }
 
@@ -290,18 +299,18 @@ namespace rMind.Nodes
 
         void SubscribeInput()
         {
-            m_area.PointerEntered += onPointerEnter;
-            m_area.PointerExited += onPointerExit;
-            m_area.PointerPressed += onPointerPress;
-            m_area.PointerReleased += onPointerUp;            
+            m_hit_area.PointerEntered += onPointerEnter;
+            m_hit_area.PointerExited += onPointerExit;
+            m_hit_area.PointerPressed += onPointerPress;
+            m_hit_area.PointerReleased += onPointerUp;            
         }
 
         void UnsubscribeInput()
         {
-            m_area.PointerEntered -= onPointerEnter;
-            m_area.PointerExited -= onPointerExit;
-            m_area.PointerPressed -= onPointerPress;
-            m_area.PointerReleased -= onPointerUp;            
+            m_hit_area.PointerEntered -= onPointerEnter;
+            m_hit_area.PointerExited -= onPointerExit;
+            m_hit_area.PointerPressed -= onPointerPress;
+            m_hit_area.PointerReleased -= onPointerUp;            
         }
         #endregion
 
@@ -377,6 +386,13 @@ namespace rMind.Nodes
 
             m_area.Fill = theme.BaseFill;
             m_area.Stroke = theme.BaseStroke;
+        }
+
+        Windows.UI.Xaml.Thickness Margin {
+            set
+            {
+                m_area.Margin = value;
+            }
         }
     }
 

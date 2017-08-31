@@ -116,6 +116,7 @@
     <Compile Include="Base\Elements\Container\Content\Row\rMindValueRow.cs" />
     <Compile Include="Base\Elements\Container\rMindBaseController.cs" />
     <Compile Include="Base\Elements\Container\rMindBaseItem.cs" />
+    <Compile Include="Base\Elements\Menu\rMindBaseController.cs" />
     <Compile Include="Base\Elements\rMindDebugContainer.cs" />
     <Compile Include="Base\Elements\Wire\rMindBaseController.cs" />
     <Compile Include="Base\Elements\Wire\rMindBaseWire.cs" />

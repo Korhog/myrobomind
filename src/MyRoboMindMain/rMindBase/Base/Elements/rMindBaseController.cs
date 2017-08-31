@@ -18,6 +18,8 @@ namespace rMind.Elements
         public rMindBaseNode OveredNode;
         public rMindBaseWireDot DragedWireDot;
         public bool IsDragDot() { return DragedWireDot != null; }
+
+        public rMindItemUI ActionItem;
     }
 
     /// <summary>
@@ -39,6 +41,9 @@ namespace rMind.Elements
         rMindControllesState m_items_state;
         List<rMindBaseElement> m_selectedItems;
         rMindBaseElement m_overedItem;
+
+        // Menu
+        MenuFlyout m_flyout;        
 
         public rMindBaseController()
         {
@@ -75,6 +80,7 @@ namespace rMind.Elements
 
             m_subscribed = true;
 
+            InitMenu();
             DrawElements();
         }
 
@@ -111,12 +117,20 @@ namespace rMind.Elements
         // input
         private void onPointerUp(object sender, PointerRoutedEventArgs e)
         {
+            var point = e.GetCurrentPoint(m_canvas);
+            if (point.Properties.PointerUpdateKind == Windows.UI.Input.PointerUpdateKind.RightButtonReleased)
+            {
+
+                m_flyout?.ShowAt(m_canvas, point.Position);
+                return;
+            }
+
+
             if (m_overedItem == null && e.KeyModifiers != Windows.System.VirtualKeyModifiers.Shift)
             {
                 SetSelectedItem(null);   
             }
 
-            var point = e.GetCurrentPoint(m_canvas);
             if (point.Properties.PointerUpdateKind == Windows.UI.Input.PointerUpdateKind.MiddleButtonReleased)
             {
                 if (m_overedItem != null)

@@ -7,29 +7,31 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">        
-        <ScrollViewer x:Name="scroll">
-            <Canvas 
-                Width="2000" 
-                Height="1500" 
-                x:Name="canvas" 
-                Background="Transparent" 
-                UseLayoutRounding="True"
-                ManipulationMode="All"
-                >
-                <Canvas.RenderTransform>
-                    <ScaleTransform x:Name="scale"/>
-                </Canvas.RenderTransform>
-            </Canvas>
-        </ScrollViewer>
-        <StackPanel Margin="10">
-            <Button Content="Subscribe" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Subscribe" Margin="10"/>
-            <Button Content="Unsubscribe" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Unsubscribe" Margin="10"/>
-            <Button Content="+" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Click" Margin="10"/>
-            <Button Content="B+" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_B_Click" Margin="10"/>
-            <Button Content="Shades" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Shades_Click" Margin="10"/>
-            <StackPanel x:Name="shades"/>
-        </StackPanel>  
-        
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Margin="10">
+                <Button Content="Subscribe" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Subscribe" Margin="10"/>
+                <Button Content="Unsubscribe" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Unsubscribe" Margin="10"/>
+                <Button Content="+" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Click" Margin="10"/>
+                <Button Content="B+" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_B_Click" Margin="10"/>
+                <Button Content="Shades" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Shades_Click" Margin="10"/>
+                <StackPanel x:Name="shades"/>
+            </StackPanel>
+            <ScrollViewer x:Name="scroll">
+                <Canvas 
+                    Width="2000" 
+                    Height="1500" 
+                    x:Name="canvas" 
+                    Background="Transparent" 
+                    UseLayoutRounding="True"
+                    ManipulationMode="All"
+                    >
+                    <Canvas.RenderTransform>
+                        <ScaleTransform x:Name="scale"/>
+                    </Canvas.RenderTransform>
+                </Canvas>
+            </ScrollViewer>
+        </StackPanel>
+
     </Grid>
 </Page>

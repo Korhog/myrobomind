@@ -19,7 +19,7 @@ namespace rMind.ColorContainer
 
         rMindColors()
         {
-            m_solid_brushes = new Dictionary<Windows.UI.Color, SolidColorBrush>();
+            m_solid_brushes = new Dictionary<Color, SolidColorBrush>();
             m_random = new Random();
         }
 
