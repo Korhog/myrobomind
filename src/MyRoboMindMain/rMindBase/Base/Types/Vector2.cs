@@ -26,5 +26,10 @@ namespace rMind.Types
         {
             return new Vector2(a.X - b.X, a.Y - b.Y);
         }
+
+        public static double Length(Vector2 vector)
+        {
+            return Math.Sqrt(Math.Pow(vector.X, 2) + Math.Pow(vector.Y, 2));
+        }        
     }
 }

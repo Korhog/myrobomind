@@ -67,19 +67,11 @@ namespace rMind.Elements
 
             m_canvas = canvas;
             m_scroll = scroll;
-            m_scale = scale;
-
-            // events            
-            m_canvas.PointerMoved += onPointerMove;
-
-            m_scroll.PointerReleased += onPointerUp;
-            m_scroll.PointerWheelChanged += onWheel;
-
-            m_scroll.PointerExited += onPointerUp;
-
+            m_scale = scale;   
 
             m_subscribed = true;
 
+            SubscribeInput();
             InitMenu();
             DrawElements();
         }
@@ -93,12 +85,7 @@ namespace rMind.Elements
             {
                 m_canvas.Children.Clear();
                 // events                
-                m_canvas.PointerMoved -= onPointerMove;
-
-                m_scroll.PointerReleased -= onPointerUp;
-                m_scroll.PointerWheelChanged -= onWheel;
-
-                m_scroll.PointerExited -= onPointerUp;
+                UnsubscribeInput();
 
                 m_canvas = null;
                 m_scroll = null;
@@ -112,66 +99,6 @@ namespace rMind.Elements
             {
                 m_canvas.Children.Add(item.Template);
             }
-        }        
-
-        // input
-        private void onPointerUp(object sender, PointerRoutedEventArgs e)
-        {
-            var point = e.GetCurrentPoint(m_canvas);
-            if (point.Properties.PointerUpdateKind == Windows.UI.Input.PointerUpdateKind.RightButtonReleased)
-            {
-
-                m_flyout?.ShowAt(m_canvas, point.Position);
-                return;
-            }
-
-
-            if (m_overedItem == null && e.KeyModifiers != Windows.System.VirtualKeyModifiers.Shift)
-            {
-                SetSelectedItem(null);   
-            }
-
-            if (point.Properties.PointerUpdateKind == Windows.UI.Input.PointerUpdateKind.MiddleButtonReleased)
-            {
-                if (m_overedItem != null)
-                {
-                    m_overedItem.Delete();
-                }
-            }
-
-
-            if (m_items_state.IsDragDot())
-            { 
-                if (m_items_state.OveredNode == null)
-                {
-                    m_items_state.DragedWireDot.Wire.Delete();
-                    m_items_state.DragedWireDot = null;
-                }
-                else
-                {
-                    m_items_state.OveredNode.Attach(m_items_state.DragedWireDot);
-                    m_items_state.DragedWireDot.Wire.SetEnabledHitTest(true);
-                    SetDragWireDot(null, e);
-                }
-            }
-
-            m_items_state.DragedItem = null;
-
-        }
-
-        private void onPointerMove(object sender, PointerRoutedEventArgs e)
-        {
-            e.Handled = true;                 
-            if (m_items_state.IsDragDot())
-            {
-                DragWireDot(e);
-            }
-
-
-            if (m_items_state.IsDrag())
-            {
-                DragContainer(e);
-            }
         }
 
         protected void DragWireDot(PointerRoutedEventArgs e)
@@ -180,11 +107,6 @@ namespace rMind.Elements
             Vector2 offset = new Vector2(p.Position.X, p.Position.Y) - m_items_state.StartPointerPosition;
             var item = m_items_state.DragedWireDot;
             item.SetPosition(m_items_state.StartPosition + offset);
-        }
-
-        private void onWheel(object sender, PointerRoutedEventArgs e)
-        {
-            e.Handled = true;
         }
     }
 }

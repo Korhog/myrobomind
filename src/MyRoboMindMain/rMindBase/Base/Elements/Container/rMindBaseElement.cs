@@ -114,7 +114,7 @@ namespace rMind.Elements
 
         private void onPointerPress(object sender, PointerRoutedEventArgs e)
         {
-            e.Handled = true;
+            //e.Handled = true;
             if (Parent.CheckIsOvered(this))
             {                
                 Parent.SetDragItem(this, e);
