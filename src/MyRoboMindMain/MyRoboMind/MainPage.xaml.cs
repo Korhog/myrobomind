@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+using rMind.CanvasEx;
 using rMind.Elements;
 using rMind.Content.Quad;
 using rMind.Elements.Debug;
@@ -28,6 +29,7 @@ namespace MyRoboMind
     public sealed partial class MainPage : Page
     {
         rMindBaseController controller;
+        rMindCanvasController canvas_controller;
 
         rMindBaseElement Create(rMindBaseController controller, double x, double y)
         {
@@ -43,7 +45,8 @@ namespace MyRoboMind
             InitializeComponent();
 
             controller = new rMindBaseController();
-            controller.Subscribe(canvas, scroll);           
+            canvas_controller = new rMindCanvasController(canvas, scroll, scale);
+            canvas_controller.SetController(controller);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -89,12 +92,12 @@ namespace MyRoboMind
 
         private void Button_Subscribe(object sender, RoutedEventArgs e)
         {
-            controller.Subscribe(canvas, scroll); 
+            canvas_controller.SetController(controller);
         }
 
         private void Button_Unsubscribe(object sender, RoutedEventArgs e)
         {
-            controller.Unsubscribe();
+            canvas_controller.SetController(null);
         }
 
         private void Button_Shades_Click(object sender, RoutedEventArgs e)

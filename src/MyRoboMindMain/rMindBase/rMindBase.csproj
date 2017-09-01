@@ -128,6 +128,7 @@
     <Compile Include="Base\Elements\Container\rMindBaseElement.cs" />
     <Compile Include="Base\Elements\rMindBaseNode.cs" />
     <Compile Include="Canvas\rMindCanvas.cs" />
+    <Compile Include="Canvas\rMindCanvasController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Base\Types\Vector2.cs" />
     <Compile Include="Template\rMindTemplate.cs" />
