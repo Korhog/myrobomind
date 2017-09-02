@@ -27,6 +27,16 @@ namespace rMind.Types
             return new Vector2(a.X - b.X, a.Y - b.Y);
         }
 
+        public static Vector2 operator *(Vector2 v, double x)
+        {
+            return new Vector2(v.X * x, v.Y * x);
+        }
+
+        public static Vector2 operator /(Vector2 v, double x)
+        {
+            return new Vector2(v.X / x, v.Y / x);
+        }    
+
         public static double Length(Vector2 vector)
         {
             return Math.Sqrt(Math.Pow(vector.X, 2) + Math.Pow(vector.Y, 2));

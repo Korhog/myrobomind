@@ -54,14 +54,14 @@ namespace rMind.Elements
         #region input        
         private void onPointerEnter(object sender, PointerRoutedEventArgs e)
         {
-            e.Handled = true;
+            //e.Handled = true;
             Glow(true);
         }
 
 
         private void onPointerExit(object sender, PointerRoutedEventArgs e)
         {
-            e.Handled = true;
+            //e.Handled = true;
             Glow(false);
         }
 
@@ -72,7 +72,7 @@ namespace rMind.Elements
 
         private void onPointerPress(object sender, PointerRoutedEventArgs e)
         {
-            e.Handled = true;
+            //e.Handled = true;
             GetController().SetDragWireDot(this, e);
             Detach();            
         }

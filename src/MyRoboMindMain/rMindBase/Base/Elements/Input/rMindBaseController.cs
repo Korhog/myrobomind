@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Input;
@@ -20,6 +21,9 @@ namespace rMind.Elements
     public struct ScaleData
     {
         public Vector2 BeginVector;
+        // vector from center of canvas to scale center
+        public Vector2 CenterVector;
+        public Vector2 CurrentScroll;
         public double BaseScale;
     }
 
@@ -28,7 +32,10 @@ namespace rMind.Elements
     /// </summary>
     public partial class rMindBaseController
     {
-        protected Dictionary<uint, Vector2> m_touch_list;
+        protected Dictionary<uint, PointerPoint> m_touch_list;
+        protected Vector2 m_first_touch;
+        /// <summary>center of canvas</summary>
+        protected Vector2 m_canvas_center;
         protected rMindManipulationMode m_manipulation_mode = rMindManipulationMode.None;
         protected ScaleData m_scale_data;
 
@@ -37,7 +44,7 @@ namespace rMind.Elements
         public void SubscribeInput()
         {
             if (m_touch_list == null)
-                m_touch_list = new Dictionary<uint, Vector2>();
+                m_touch_list = new Dictionary<uint, PointerPoint>();
 
             m_test = new TextBlock()
             {
@@ -48,7 +55,9 @@ namespace rMind.Elements
 
 
             // events            
-            m_canvas.PointerMoved += onPointerMove;
+            m_scroll.PointerMoved += onPointerMove;
+            m_scroll.DoubleTapped += (s, e) => { };
+            m_canvas_center = new Vector2(m_canvas.Width / 2.0, m_canvas.Height / 2.0);
 
             m_scroll.PointerReleased += onPointerUp;
             m_scroll.PointerPressed += onPointerPress;
@@ -60,7 +69,7 @@ namespace rMind.Elements
         public void UnsubscribeInput()
         {
             // events                
-            m_canvas.PointerMoved -= onPointerMove;
+            m_scroll.PointerMoved -= onPointerMove;
 
             m_scroll.PointerReleased -= onPointerUp;
             m_scroll.PointerPressed -= onPointerPress;
@@ -72,21 +81,12 @@ namespace rMind.Elements
         // input
         private void onPointerUp(object sender, PointerRoutedEventArgs e)
         {
-            var point = e.GetCurrentPoint(m_canvas);
-
-            if (point.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Touch && m_touch_list.ContainsKey(point.PointerId))
-            {
+            var point = e.GetCurrentPoint(m_scroll);
+            if (m_touch_list.ContainsKey(point.PointerId))
                 m_touch_list.Remove(point.PointerId);
-                if (m_manipulation_mode == rMindManipulationMode.Scale && m_touch_list.Count < 2)
-                {
-                    m_manipulation_mode = rMindManipulationMode.None;
-                }
-            }
-
 
             if (point.Properties.PointerUpdateKind == PointerUpdateKind.RightButtonReleased)
             {
-
                 m_flyout?.ShowAt(m_canvas, point.Position);
                 return;
             }
@@ -121,60 +121,56 @@ namespace rMind.Elements
             }
 
             m_items_state.DragedItem = null;
+            m_canvas.ManipulationMode = ManipulationModes.System;
+        }
 
+        protected bool CanControll()
+        {
+            if (m_overedItem == null && m_items_state.OveredNode == null && m_items_state.DragedWireDot == null)
+                return true;
+
+            return false;
         }
 
         private void onPointerPress(object sender, PointerRoutedEventArgs e)
         {
-            var point = e.GetCurrentPoint(m_scroll);
-            if (point.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Touch && !m_touch_list.ContainsKey(point.PointerId))
+            var pointer = e.GetCurrentPoint(m_scroll);
+            if (pointer.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Touch)
             {
-                m_touch_list[point.PointerId] = new Vector2(point.Position.X, point.Position.Y);
-                if (m_touch_list.Count > 1)
-                {
-                    m_manipulation_mode = rMindManipulationMode.Scale;
-                    var list = m_touch_list.Values
-                        .Take(2)                   
-                        .ToList();
+                m_touch_list[pointer.PointerId] = pointer;
+            };
+            
 
-                    m_scale_data.BeginVector = list[0] - list[1];
-                    m_scale_data.BaseScale = m_scale.ScaleX;
-                }
+            if (m_touch_list.Count > 1 || CanControll())
+            {
+                SetManipulation(true, e);
+                return;
+            }
+            SetManipulation(false, e);
+        }
+
+        protected virtual void SetManipulation(bool state, PointerRoutedEventArgs e)
+        {
+            if (state)
+            {
+                m_touch_list.Clear();
+                SetDragItem(null, e);
+                SetDragWireDot(null, e);
+                m_canvas.ManipulationMode = ManipulationModes.System;
+            }
+            else
+            {
+                m_canvas.ManipulationMode = ManipulationModes.All;
             }
         }
 
         private void onPointerMove(object sender, PointerRoutedEventArgs e)
         {
-            e.Handled = true;
-
-            if (m_manipulation_mode == rMindManipulationMode.Scale)
-            {
-                var point = e.GetCurrentPoint(m_scroll);
-                if (m_touch_list.ContainsKey(point.PointerId))
-                    m_touch_list[point.PointerId] = new Vector2(point.Position.X, point.Position.Y);
-
-                var vectors = m_touch_list.Values
-                    .Take(2)
-                    .ToList();
-
-                if (vectors.Count == 2)
-                {
-                    var vec = vectors[1] - vectors[0];
-                    var size = Vector2.Length(vec);
-                    var k = size / Vector2.Length(m_scale_data.BeginVector);
-
-                    var scale = m_scale_data.BaseScale * k;
-                    m_scale.ScaleX = scale;
-                    m_scale.ScaleY = scale;                    
-                }           
-                return;
-            }
-
+            e.Handled = true; 
             if (m_items_state.IsDragDot())
             {
                 DragWireDot(e);
             }
-
 
             if (m_items_state.IsDrag())
             {

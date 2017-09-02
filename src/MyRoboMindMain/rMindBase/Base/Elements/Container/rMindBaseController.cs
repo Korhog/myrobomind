@@ -141,6 +141,17 @@ namespace rMind.Elements
             foreach (var w in m_wire_list)
                 Draw(w);
         }
+
+        public virtual Vector2 GetScreenCenter(rMindBaseElement item = null)
+        {
+            if (!m_subscribed)
+                return new Vector2(0, 0);
+
+            return new Vector2(
+                (m_scroll.HorizontalOffset + m_scroll.ActualWidth / 2 - (item == null ? 0 : item.Width / 2)) / m_scroll.ZoomFactor,
+                (m_scroll.VerticalOffset + m_scroll.ActualHeight / 2 - (item == null ? 0 : item.Height / 2)) / m_scroll.ZoomFactor
+            );
+        }
     }
 }
 

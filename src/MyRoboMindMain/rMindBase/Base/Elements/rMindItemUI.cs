@@ -59,5 +59,8 @@ namespace rMind.Elements
         public string IDS;
 
         public virtual void SetEnabledHitTest(bool state) { }
+
+        public double Width { get { return m_template.ActualWidth; } }
+        public double Height { get { return m_template.ActualWidth; } }
     }
 }

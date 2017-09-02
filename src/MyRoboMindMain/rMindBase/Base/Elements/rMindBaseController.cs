@@ -67,13 +67,23 @@ namespace rMind.Elements
 
             m_canvas = canvas;
             m_scroll = scroll;
-            m_scale = scale;   
+            m_scale = scale;
+
+            ResroteControllerState();
 
             m_subscribed = true;
 
             SubscribeInput();
             InitMenu();
             DrawElements();
+        }
+
+        protected virtual void ResroteControllerState()
+        {
+            m_scroll.ChangeView(
+                -4000,
+                3000,
+                1);
         }
 
         /// <summary>

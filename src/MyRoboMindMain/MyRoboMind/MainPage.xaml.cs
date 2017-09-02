@@ -63,7 +63,7 @@ namespace MyRoboMind
             //container.Static = false;
             container.BorderRadius = new CornerRadius(3);
 
-            container.SetPosition(250, 120);
+            container.SetPosition(controller.GetScreenCenter(container));
             controller.AddElement(container);
         }
 
@@ -98,26 +98,6 @@ namespace MyRoboMind
         private void Button_Unsubscribe(object sender, RoutedEventArgs e)
         {
             canvas_controller.SetController(null);
-        }
-
-        private void Button_Shades_Click(object sender, RoutedEventArgs e)
-        {
-            shades.Children.Clear();
-
-            var shadeList = rMind.ColorForge.ColorHelper.GetColorShades(
-                rMind.ColorContainer.rMindColors.ColorRandom(),
-                6
-            );
-
-            foreach (var color in shadeList)
-            {
-                shades.Children.Add(new Rectangle()
-                {
-                    Width = 100,
-                    Height = 20,
-                    Fill = new SolidColorBrush(color)
-                });
-            }
         }
     }
 }

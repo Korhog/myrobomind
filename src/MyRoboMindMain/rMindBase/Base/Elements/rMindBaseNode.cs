@@ -276,19 +276,17 @@ namespace rMind.Nodes
 
         private void onPointerExit(object sender, PointerRoutedEventArgs e)
         {
-            e.Handled = true;
             GetController().SetOveredNode(null);
             Glow(false);
         }
 
         private void onPointerUp(object sender, PointerRoutedEventArgs e)
         {
-            // e.Handled = true;
+
         }
 
         private void onPointerPress(object sender, PointerRoutedEventArgs e)
         {
-            e.Handled = true;
             var wire = GetController()?.CreateWire();
             if (wire != null)
             {
