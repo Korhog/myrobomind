@@ -37,7 +37,7 @@
                 Grid.Column="1"
                 ZoomMode="Enabled"              
                 VerticalScrollBarVisibility="Visible" 
-                HorizontalScrollBarVisibility="Visible"
+                HorizontalScrollBarVisibility="Visible"                
                 x:Name="scroll" 
                 ManipulationMode="Scale">
             <Canvas 

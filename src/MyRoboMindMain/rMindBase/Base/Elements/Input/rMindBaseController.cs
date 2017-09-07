@@ -65,9 +65,15 @@ namespace rMind.Elements
 
             m_scroll.PointerExited += onPointerUp;
 
-            m_scroll.Loaded += (s, e) => {
-                m_scroll.ChangeView(2000, 2000, 1, true);
-            };
+            m_scroll.Loaded += onLoad; 
+        }
+
+        void onLoad(object sender, Windows.UI.Xaml.RoutedEventArgs args)
+        {
+            m_scroll.ChangeView(
+                (m_scroll.ExtentWidth - m_scroll.ViewportWidth) / 2.0,
+                (m_scroll.ExtentHeight - m_scroll.ViewportHeight) / 2.0,
+                1);
         }
 
         public void UnsubscribeInput()
@@ -78,6 +84,8 @@ namespace rMind.Elements
             m_scroll.PointerReleased -= onPointerUp;
             m_scroll.PointerPressed -= onPointerPress;
             m_scroll.PointerWheelChanged -= onWheel;
+
+            m_scroll.Loaded -= onLoad;
 
             m_scroll.PointerExited -= onPointerUp;
         }            
@@ -145,13 +153,20 @@ namespace rMind.Elements
                 m_touch_list[pointer.PointerId] = pointer;
             };          
 
-            if (m_touch_list.Count > 1 && CanControll())
+            if (m_touch_list.Count > 1 || CanControll())
             {
                 SetManipulation(true, e);
+                m_manipulation_mode = rMindManipulationMode.None;
                 return;
             }
 
-            if ((m_touch_list.Count == 1 || pointer.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse) && CanControll())
+            var mouseScroll = 
+                pointer.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse && 
+                pointer.Properties.IsRightButtonPressed;
+
+            SetManipulation(false, e);
+            
+            if ((m_touch_list.Count == 1 || mouseScroll) && CanControll())
             {
                 m_manipulation_mode = rMindManipulationMode.Scroll;
                 m_manipulation_data.BeginVector = new Vector2(pointer);
@@ -159,10 +174,7 @@ namespace rMind.Elements
                     m_scroll.HorizontalOffset,
                     m_scroll.VerticalOffset
                 );
-            }
-
-            SetManipulation(false, e);
-            
+            }            
         }
 
         protected virtual void SetManipulation(bool state, PointerRoutedEventArgs e)
@@ -176,12 +188,14 @@ namespace rMind.Elements
             }
             else
             {
-                m_canvas.ManipulationMode = ManipulationModes.All;
+                m_canvas.ManipulationMode = ManipulationModes.ScaleInertia;
             }
         }
 
         private void onPointerMove(object sender, PointerRoutedEventArgs e)
         {
+            e.Handled = true;
+            
             if (m_manipulation_mode == rMindManipulationMode.Scroll)
             {
                 var point = e.GetCurrentPoint(m_scroll);
@@ -193,9 +207,8 @@ namespace rMind.Elements
                     true
                 );
                 return;
-            }
+            }            
 
-            e.Handled = true; 
             if (m_items_state.IsDragDot())
             {
                 DragWireDot(e);

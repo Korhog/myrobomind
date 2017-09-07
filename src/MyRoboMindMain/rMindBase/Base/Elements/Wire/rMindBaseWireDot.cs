@@ -2,6 +2,7 @@
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
+using Windows.UI.Xaml.Controls;
 
 namespace rMind.Elements
 {
@@ -38,6 +39,7 @@ namespace rMind.Elements
                 RadiusY = 3
             };
             m_template.Children.Add(m_area);
+            Canvas.SetZIndex(m_template, 10);
             SubscribeInput();
         }
 

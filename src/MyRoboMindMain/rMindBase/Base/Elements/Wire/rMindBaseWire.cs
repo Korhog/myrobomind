@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Controls;
 using Windows.Foundation;
 
 namespace rMind.Elements
@@ -53,6 +54,7 @@ namespace rMind.Elements
 
             m_bezie_segment = new BezierSegment();
             m_bezie_figure.Segments.Add(m_bezie_segment);
+            Canvas.SetZIndex(Line, 10);
         }
 
         public rMindBaseController GetController()

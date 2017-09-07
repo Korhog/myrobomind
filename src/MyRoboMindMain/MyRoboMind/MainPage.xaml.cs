@@ -61,10 +61,9 @@ namespace MyRoboMind
                 container.AddRow();
             }            
             //container.Static = false;
-            container.BorderRadius = new CornerRadius(3);
-
-            container.SetPosition(controller.GetScreenCenter(container));
+            container.BorderRadius = new CornerRadius(3);            
             controller.AddElement(container);
+            container.SetPosition(controller.GetScreenCenter(container));
         }
 
         private void Button_B_Click(object sender, RoutedEventArgs e)
@@ -86,8 +85,8 @@ namespace MyRoboMind
             hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
             hline.AddLeftNode(); hline.AddRightNode();
 
-            container.SetPosition(250, 120);
-            controller.AddElement(container);            
+            controller.AddElement(container);
+            container.SetPosition(controller.GetScreenCenter(container));
         }
 
         private void Button_Subscribe(object sender, RoutedEventArgs e)
