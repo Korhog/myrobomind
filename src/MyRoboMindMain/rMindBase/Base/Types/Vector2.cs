@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Input;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,13 @@ namespace rMind.Types
         {
             X = x;
             Y = y;
-        } 
+        }
+
+        public Vector2(PointerPoint point)
+        {
+            X = point.Position.X;
+            Y = point.Position.Y;
+        }
 
         public static Vector2 operator + (Vector2 a, Vector2 b)
         {

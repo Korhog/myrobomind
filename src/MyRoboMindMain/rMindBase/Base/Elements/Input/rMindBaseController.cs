@@ -18,7 +18,7 @@ namespace rMind.Elements
         Scroll
     }
 
-    public struct ScaleData
+    public struct ManipulationData
     {
         public Vector2 BeginVector;
         // vector from center of canvas to scale center
@@ -37,7 +37,7 @@ namespace rMind.Elements
         /// <summary>center of canvas</summary>
         protected Vector2 m_canvas_center;
         protected rMindManipulationMode m_manipulation_mode = rMindManipulationMode.None;
-        protected ScaleData m_scale_data;
+        protected ManipulationData m_manipulation_data;
 
         TextBlock m_test;
 
@@ -126,6 +126,7 @@ namespace rMind.Elements
 
             m_items_state.DragedItem = null;
             m_canvas.ManipulationMode = ManipulationModes.System;
+            m_manipulation_mode = rMindManipulationMode.None;
         }
 
         protected bool CanControll()
@@ -142,15 +143,26 @@ namespace rMind.Elements
             if (pointer.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Touch)
             {
                 m_touch_list[pointer.PointerId] = pointer;
-            };
-            
+            };          
 
-            if (m_touch_list.Count > 1 || CanControll())
+            if (m_touch_list.Count > 1 && CanControll())
             {
                 SetManipulation(true, e);
                 return;
             }
+
+            if ((m_touch_list.Count == 1 || pointer.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse) && CanControll())
+            {
+                m_manipulation_mode = rMindManipulationMode.Scroll;
+                m_manipulation_data.BeginVector = new Vector2(pointer);
+                m_manipulation_data.CurrentScroll = new Vector2(
+                    m_scroll.HorizontalOffset,
+                    m_scroll.VerticalOffset
+                );
+            }
+
             SetManipulation(false, e);
+            
         }
 
         protected virtual void SetManipulation(bool state, PointerRoutedEventArgs e)
@@ -170,6 +182,19 @@ namespace rMind.Elements
 
         private void onPointerMove(object sender, PointerRoutedEventArgs e)
         {
+            if (m_manipulation_mode == rMindManipulationMode.Scroll)
+            {
+                var point = e.GetCurrentPoint(m_scroll);
+                var offset = new Vector2(point) - m_manipulation_data.BeginVector;
+                m_scroll.ChangeView(
+                    m_manipulation_data.CurrentScroll.X - offset.X,
+                    m_manipulation_data.CurrentScroll.Y - offset.Y,
+                    m_scroll.ZoomFactor,
+                    true
+                );
+                return;
+            }
+
             e.Handled = true; 
             if (m_items_state.IsDragDot())
             {

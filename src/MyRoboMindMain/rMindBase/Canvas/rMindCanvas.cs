@@ -22,11 +22,11 @@ namespace rMind.CanvasEx
         rMindBaseController m_current_controller;
         Canvas m_canvas;
         ScrollViewer m_scroll;
-        ScaleTransform m_scale;
+        ScaleTransform m_scale;       
 
         public rMindCanvas()
         {
-            this.DefaultStyleKey = typeof(rMindCanvas);
+            this.DefaultStyleKey = typeof(rMindCanvas);    
         }
 
         protected override void OnApplyTemplate()
