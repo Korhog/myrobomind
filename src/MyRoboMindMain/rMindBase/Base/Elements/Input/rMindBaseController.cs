@@ -64,6 +64,10 @@ namespace rMind.Elements
             m_scroll.PointerWheelChanged += onWheel;
 
             m_scroll.PointerExited += onPointerUp;
+
+            m_scroll.Loaded += (s, e) => {
+                m_scroll.ChangeView(2000, 2000, 1, true);
+            };
         }
 
         public void UnsubscribeInput()
