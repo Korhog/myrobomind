@@ -9,13 +9,15 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="50"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Background="{ThemeResource SystemAccentColorLight2}">            
+        <StackPanel Background="{ThemeResource SystemAccentColorDark2}">            
             <StackPanel.Resources>
                 <Style TargetType="Button">
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="Transparent"/>
                     <Setter Property="Height" Value="50"/>
                 </Style>
             </StackPanel.Resources>
@@ -37,7 +39,9 @@
                 Grid.Column="1"
                 ZoomMode="Enabled"              
                 VerticalScrollBarVisibility="Visible" 
-                HorizontalScrollBarVisibility="Visible"                
+                HorizontalScrollBarVisibility="Visible" 
+                IsHorizontalRailEnabled="False"
+                IsVerticalRailEnabled="False"
                 x:Name="scroll" 
                 ManipulationMode="Scale">
             <Canvas 

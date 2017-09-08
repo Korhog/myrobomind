@@ -145,30 +145,34 @@ namespace rMind.Elements
             if (pointer.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Touch)
             {
                 m_touch_list[pointer.PointerId] = pointer;
+            }
+            else
+            {
+                var mouseScroll =
+                    pointer.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse &&
+                    e.KeyModifiers == Windows.System.VirtualKeyModifiers.Control;
 
-                if (m_touch_list.Count > 1 || CanControll())
+                if (mouseScroll)
                 {
-                    SetManipulation(true, e);
-                    m_manipulation_mode = rMindManipulationMode.None;
+                    SetScrollMode(e);
                     return;
                 }
-            };
+            }
 
-            var mouseScroll =
-                pointer.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse &&
-                e.KeyModifiers == Windows.System.VirtualKeyModifiers.Control;
+            if (m_touch_list.Count == 2 || CanControll())
+            {
+                SetManipulation(true, e);
+                m_manipulation_mode = rMindManipulationMode.None;
+                return;
+            }
+
+            if (m_touch_list.Count == 1 && CanControll())
+            {
+                SetScrollMode(e);
+                return;
+            }
 
             SetManipulation(false, e);
-            
-            if ((m_touch_list.Count == 1 || mouseScroll) && CanControll())
-            {
-                m_manipulation_mode = rMindManipulationMode.Scroll;
-                m_manipulation_data.BeginVector = new Vector2(pointer);
-                m_manipulation_data.CurrentScroll = new Vector2(
-                    m_scroll.HorizontalOffset,
-                    m_scroll.VerticalOffset
-                );
-            }            
         }
 
         protected virtual void SetManipulation(bool state, PointerRoutedEventArgs e)
@@ -179,11 +183,25 @@ namespace rMind.Elements
                 SetDragItem(null, e);
                 SetDragWireDot(null, e);
                 m_canvas.ManipulationMode = ManipulationModes.System;
+                e.Handled = true;
             }
             else
             {
                 m_canvas.ManipulationMode = ManipulationModes.ScaleInertia;
             }
+        }
+
+        protected virtual void SetScrollMode(PointerRoutedEventArgs e)
+        {
+            var pointer = e.GetCurrentPoint(m_scroll);
+            m_manipulation_mode = rMindManipulationMode.Scroll;
+            m_manipulation_data.BeginVector = new Vector2(pointer);
+            m_manipulation_data.CurrentScroll = new Vector2(
+                m_scroll.HorizontalOffset,
+                m_scroll.VerticalOffset
+            );
+
+            SetManipulation(false, e);
         }
 
         private void onPointerMove(object sender, PointerRoutedEventArgs e)
