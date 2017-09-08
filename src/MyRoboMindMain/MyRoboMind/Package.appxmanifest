@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="38598EugenyKlokov.MyRoboMindbeta" Publisher="CN=80FD4E66-B830-4415-A26C-3CC9F9515F28" Version="0.0.6.0" />
+  <Identity Name="38598EugenyKlokov.MyRoboMindbeta" Publisher="CN=80FD4E66-B830-4415-A26C-3CC9F9515F28" Version="0.0.9.0" />
   <mp:PhoneIdentity PhoneProductId="be3491e1-ecf7-4955-9a61-675f6342d325" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>MyRoboMind beta</DisplayName>

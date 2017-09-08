@@ -97,12 +97,6 @@ namespace rMind.Elements
             if (m_touch_list.ContainsKey(point.PointerId))
                 m_touch_list.Remove(point.PointerId);
 
-            if (point.Properties.PointerUpdateKind == PointerUpdateKind.RightButtonReleased)
-            {
-                m_flyout?.ShowAt(m_canvas, point.Position);
-                return;
-            }
-
             if (m_overedItem == null && e.KeyModifiers != Windows.System.VirtualKeyModifiers.Shift)
             {
                 SetSelectedItem(null);   
@@ -151,18 +145,18 @@ namespace rMind.Elements
             if (pointer.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Touch)
             {
                 m_touch_list[pointer.PointerId] = pointer;
-            };          
 
-            if (m_touch_list.Count > 1 || CanControll())
-            {
-                SetManipulation(true, e);
-                m_manipulation_mode = rMindManipulationMode.None;
-                return;
-            }
+                if (m_touch_list.Count > 1 || CanControll())
+                {
+                    SetManipulation(true, e);
+                    m_manipulation_mode = rMindManipulationMode.None;
+                    return;
+                }
+            };
 
-            var mouseScroll = 
-                pointer.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse && 
-                pointer.Properties.IsRightButtonPressed;
+            var mouseScroll =
+                pointer.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse &&
+                e.KeyModifiers == Windows.System.VirtualKeyModifiers.Control;
 
             SetManipulation(false, e);
             
