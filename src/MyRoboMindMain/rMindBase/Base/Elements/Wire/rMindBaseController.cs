@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
@@ -11,10 +12,28 @@ namespace rMind.Elements
     using Nodes;
 
     public partial class rMindBaseController
-    {        
+    {
+        List<KeyValuePair<Vector2, rMindBaseNode>> m_baked_nodes;
         /// <summary>
         /// Create new wire
         /// </summary>
+        public List<KeyValuePair<Vector2, rMindBaseNode>> BakedNodes {
+            get
+            {
+                if (m_baked_nodes == null)
+                    m_baked_nodes = new List<KeyValuePair<Vector2, rMindBaseNode>>();
+                return m_baked_nodes;
+            }
+        }
+        
+        // Bske nodes for magnet
+        public void BakeNodes(rMindBaseNode root)
+        {
+            BakedNodes.Clear();
+            foreach (var list in m_items.Select(x => x.Nodes))
+                BakedNodes.AddRange(list.Select(node => new KeyValuePair<Vector2, rMindBaseNode>(node.GetOffset(), node)));
+        }
+
         public virtual rMindBaseWire CreateWire()
         {
             var wire = new rMindBaseWire(this);

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace rMind.Content
 {
     using Row;
-
+    using Nodes;
     using Elements;
 
     /// <summary>
@@ -25,7 +25,7 @@ namespace rMind.Content
 
         /// <summary> Шаблон для добавления новых строк </summary>
         public rMindRow AddRowTemplate { get; set; } = new rMindRow {
-            OutputNodeType = Nodes.rMindNodeConnectionType.Container
+            OutputNodeType = rMindNodeConnectionType.Container
         };
 
         protected bool m_static = true;
@@ -118,8 +118,8 @@ namespace rMind.Content
         protected virtual void OnAddRowClick(object sender, RoutedEventArgs e)
         {
             AddRow(new rMindRow {
-                InputNodeType = Nodes.rMindNodeConnectionType.Container,
-                OutputNodeType = Nodes.rMindNodeConnectionType.Container
+                InputNodeType = rMindNodeConnectionType.Container,
+                OutputNodeType = rMindNodeConnectionType.Container
             });
         }
 
@@ -169,13 +169,13 @@ namespace rMind.Content
             // Получаем строчку грида
             var idx_row = GetRowIndex(row);
 
-            if (row.InputNodeType != Nodes.rMindNodeConnectionType.None)
+            if (row.InputNodeType != rMindNodeConnectionType.None)
             {
                 row.InputNode = CreateNode(new Nodes.rMindNodeDesc { ConnectionType = row.InputNodeType });
                 row.InputNode.SetCell(0, idx_row);
             }
                
-            if (row.OutputNodeType != Nodes.rMindNodeConnectionType.None)
+            if (row.OutputNodeType != rMindNodeConnectionType.None)
             {
                 row.OutputNode = CreateNode(new Nodes.rMindNodeDesc { ConnectionType = row.OutputNodeType });
                 row.OutputNode.SetCell(2, idx_row);

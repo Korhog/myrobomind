@@ -291,6 +291,7 @@ namespace rMind.Nodes
             if (wire != null)
             {
                 Attach(wire.A);
+                GetController()?.BakeNodes(this);
                 GetController()?.SetDragWireDot(wire.B, e);                
             }
         }

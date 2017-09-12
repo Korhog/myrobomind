@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Shapes;
 
 namespace rMind.Elements
 {
@@ -111,9 +113,28 @@ namespace rMind.Elements
         protected void DragWireDot(PointerRoutedEventArgs e)
         {
             var p = e.GetCurrentPoint(m_canvas);
-            Vector2 offset = new Vector2(p.Position.X, p.Position.Y) - m_items_state.StartPointerPosition;
+            Vector2 offset = new Vector2(p) - m_items_state.StartPointerPosition;
             var item = m_items_state.DragedWireDot;
-            item.SetPosition(m_items_state.StartPosition + offset);
+            var pos = m_items_state.StartPosition + offset;
+            // var seek nodes 
+            foreach(var n in BakedNodes.Where(pair => Vector2.Length(pair.Key - pos) < 20).Select(pair => pair.Value))
+            {
+                if (m_canvas != null)
+                {
+                    m_canvas.Children.Add(new Line()
+                    {
+                        Stroke = ColorContainer.rMindColors.GetInstance().GetSolidBrush(Windows.UI.Colors.Red),
+                        StrokeThickness = 2,
+                        X1 = pos.X,
+                        Y1 = pos.Y,
+                        X2 = n.GetOffset().X,                        
+                        Y2 = n.GetOffset().Y
+                    });
+                }
+            }                            
+
+            item.SetPosition(pos);
+            //
         }
     }
 }

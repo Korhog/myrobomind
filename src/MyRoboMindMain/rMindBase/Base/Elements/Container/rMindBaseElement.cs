@@ -38,7 +38,15 @@ namespace rMind.Elements
         protected Border m_base;
         protected Border m_selector;
         protected bool m_selected;
-        protected Dictionary<string, rMindBaseNode> m_nodes_link;
+        protected Dictionary<string, rMindBaseNode> m_nodes_link;        
+        
+        public List<rMindBaseNode> Nodes
+        {
+            get
+            {
+                return m_nodes_link.Select(x => x.Value).ToList();
+            }
+        }        
 
         public rMindBaseElement(rMindBaseController parent) : base(parent)
         {
