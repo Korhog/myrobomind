@@ -112,18 +112,22 @@ namespace rMind.Elements
 
 
             if (m_items_state.IsDragDot())
-            { 
-                if (m_items_state.OveredNode == null)
+            {
+                var attachNode = m_items_state.OveredNode ?? m_items_state.MagnetNode;
+
+                if (attachNode == null)
                 {
                     m_items_state.DragedWireDot.Wire.Delete();
                     m_items_state.DragedWireDot = null;
                 }
                 else
                 {
-                    m_items_state.OveredNode.Attach(m_items_state.DragedWireDot);
+                    attachNode.Attach(m_items_state.DragedWireDot);
                     m_items_state.DragedWireDot.Wire.SetEnabledHitTest(true);
                     SetDragWireDot(null, e);
                 }
+
+                m_magnet.Hide();
             }
 
             m_items_state.DragedItem = null;

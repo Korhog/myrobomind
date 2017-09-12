@@ -10,7 +10,7 @@ namespace rMind.Elements
     using Types;
     using Nodes;
 
-    public struct rMindControllesState
+    public struct rMindControllerState
     {        
         public rMindBaseElement DragedItem;
         public Vector2 StartPosition;
@@ -18,6 +18,8 @@ namespace rMind.Elements
         public bool IsDrag() { return DragedItem != null; }
 
         public rMindBaseNode OveredNode;
+        public rMindBaseNode MagnetNode;
+
         public rMindBaseWireDot DragedWireDot;
         public bool IsDragDot() { return DragedWireDot != null; }
 
@@ -40,20 +42,24 @@ namespace rMind.Elements
         ScaleTransform m_scale;
 
         // Controls
-        rMindControllesState m_items_state;
+        rMindControllerState m_items_state;
         List<rMindBaseElement> m_selectedItems;
         rMindBaseElement m_overedItem;
 
         // Menu
-        MenuFlyout m_flyout;        
+        MenuFlyout m_flyout;
+
+        // Ext
+        rMindMagnet m_magnet;
 
         public rMindBaseController()
         {
-            m_items_state = new rMindControllesState()
+            m_items_state = new rMindControllerState()
             {
                 DragedItem = null
             };
 
+            m_magnet = new rMindMagnet();
             m_items = new List<rMindBaseElement>();
             m_wire_list = new List<rMindBaseWire>();
             m_selectedItems = new List<rMindBaseElement>();
@@ -73,6 +79,7 @@ namespace rMind.Elements
 
             m_subscribed = true;
 
+            m_magnet.Draw(m_canvas);
             SubscribeInput();
             InitMenu();
             DrawElements();
@@ -117,24 +124,23 @@ namespace rMind.Elements
             var item = m_items_state.DragedWireDot;
             var pos = m_items_state.StartPosition + offset;
             // var seek nodes 
-            foreach(var n in BakedNodes.Where(pair => Vector2.Length(pair.Key - pos) < 20).Select(pair => pair.Value))
+            m_items_state.MagnetNode = BakedNodes
+                .Where(pair => Vector2.Length(pair.Key - pos) < (100 / m_scroll.ZoomFactor))
+                .OrderBy(pair => Vector2.Length(pair.Key - pos))
+                .Select(pair => pair.Value)
+                .FirstOrDefault();
+
+            if (m_items_state.MagnetNode == null)
             {
-                if (m_canvas != null)
-                {
-                    m_canvas.Children.Add(new Line()
-                    {
-                        Stroke = ColorContainer.rMindColors.GetInstance().GetSolidBrush(Windows.UI.Colors.Red),
-                        StrokeThickness = 2,
-                        X1 = pos.X,
-                        Y1 = pos.Y,
-                        X2 = n.GetOffset().X,                        
-                        Y2 = n.GetOffset().Y
-                    });
-                }
-            }                            
+                m_magnet.Hide();
+            }
+            else
+            {
+                m_magnet.Show();
+                m_magnet.Magnet(pos, m_items_state.MagnetNode.GetOffset());
+            }                          
 
             item.SetPosition(pos);
-            //
         }
     }
 }

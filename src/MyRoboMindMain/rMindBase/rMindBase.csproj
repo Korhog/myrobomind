@@ -123,6 +123,7 @@
     <Compile Include="Base\Elements\Wire\rMindBaseWire.cs" />
     <Compile Include="Base\Elements\Wire\rMindBaseWireDot.cs" />
     <Compile Include="Base\Elements\rMindItemUI.cs" />
+    <Compile Include="Base\Elements\Wire\rMindMagnet.cs" />
     <Compile Include="Base\Interfaces\IDrawContainer.cs" />
     <Compile Include="Base\Interfaces\IDrawElement.cs" />
     <Compile Include="Base\Elements\rMindBaseController.cs" />

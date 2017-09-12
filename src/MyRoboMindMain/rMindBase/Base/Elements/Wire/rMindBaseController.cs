@@ -13,7 +13,7 @@ namespace rMind.Elements
 
     public partial class rMindBaseController
     {
-        List<KeyValuePair<Vector2, rMindBaseNode>> m_baked_nodes;
+        List<KeyValuePair<Vector2, rMindBaseNode>> m_baked_nodes;        
         /// <summary>
         /// Create new wire
         /// </summary>
