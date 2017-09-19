@@ -43,8 +43,8 @@ namespace rMind.Elements
 
         // Controls
         rMindControllerState m_items_state;
-        List<rMindBaseElement> m_selectedItems;
-        rMindBaseElement m_overedItem;
+        List<rMindBaseElement> m_selected_items;
+        rMindBaseElement m_overed_item;
 
         // Menu
         MenuFlyout m_flyout;
@@ -62,7 +62,7 @@ namespace rMind.Elements
             m_magnet = new rMindMagnet();
             m_items = new List<rMindBaseElement>();
             m_wire_list = new List<rMindBaseWire>();
-            m_selectedItems = new List<rMindBaseElement>();
+            m_selected_items = new List<rMindBaseElement>();
         }  
 
         /// <summary>

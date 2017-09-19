@@ -272,5 +272,15 @@ namespace rMind.Elements
             m_base.Background = rMindColors.GetInstance().GetSolidBrush(shades[7]);
             m_base.BorderBrush = rMindColors.GetInstance().GetSolidBrush(shades[5]);
         }
+
+        public bool InRect(Rectangle rect)
+        {
+            var left = Canvas.GetLeft(rect);
+            var right = left + rect.Width;
+            var top = Canvas.GetTop(rect);
+            var bottom = top + rect.Height;
+
+            return Position.X > left && (Position.X + Width) < right && Position.Y > top && (Position.Y + Height < bottom);
+        }
     }
 }

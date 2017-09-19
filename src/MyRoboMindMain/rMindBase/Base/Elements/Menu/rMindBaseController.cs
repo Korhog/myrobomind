@@ -50,7 +50,7 @@ namespace rMind.Elements
 
         protected virtual void OnFlyout(object sender, object e)
         {
-            m_items_state.ActionItem = m_overedItem;
+            m_items_state.ActionItem = m_overed_item;
         }
 
         //

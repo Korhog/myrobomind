@@ -17,7 +17,7 @@ namespace rMind.Elements
     {
         public bool CheckIsOvered(rMindBaseElement item)
         {
-            return m_overedItem == item;
+            return m_overed_item == item;
         }
 
         public bool CheckIsDraged(rMindBaseElement item)
@@ -51,12 +51,12 @@ namespace rMind.Elements
         public virtual void RemoveElement(rMindBaseElement item)
         {
             if (CheckIsOvered(item))
-                m_overedItem = null;
+                m_overed_item = null;
 
             if (m_items.Contains(item))
             {
-                if (m_selectedItems.Contains(item))
-                    m_selectedItems.Remove(item);
+                if (m_selected_items.Contains(item))
+                    m_selected_items.Remove(item);
 
                 m_canvas.Children.Remove(item.Template);
                 m_items.Remove(item);
@@ -67,31 +67,34 @@ namespace rMind.Elements
         {
             if (item == null)
             {
-                foreach (var it in m_selectedItems)
+                foreach (var it in m_selected_items)
                 {
                     it.SetSelected(false);
                 }
-                m_selectedItems.Clear();
+                m_selected_items.Clear();
                 return;
             }
-            if (!multi && !m_selectedItems.Contains(item))
+            if (!multi && !m_selected_items.Contains(item))
             {
-                foreach (var it in m_selectedItems)
+                foreach (var it in m_selected_items)
                 {
                     if (it == item)
                         continue;
                     it.SetSelected(false);
                 }
-                m_selectedItems.Clear();
-                m_selectedItems.Add(item);
+                m_selected_items.Clear();
+                m_selected_items.Add(item);
             }
-            if (!m_selectedItems.Contains(item))
-                m_selectedItems.Add(item);
+            if (!m_selected_items.Contains(item))
+            {
+                item.SetSelected(true);
+                m_selected_items.Add(item);
+            }
         }
 
         public void SetOveredItem(rMindBaseElement item)
         {
-            m_overedItem = item;
+            m_overed_item = item;
         }
 
         public void SetOveredNode(rMindBaseNode node)
@@ -117,9 +120,9 @@ namespace rMind.Elements
             var item = m_items_state.DragedItem;
 
             var translation = item.SetPosition(m_items_state.StartPosition + offset);
-            if (m_selectedItems.Contains(item))
+            if (m_selected_items.Contains(item))
             {
-                foreach (var it in m_selectedItems)
+                foreach (var it in m_selected_items)
                 {
                     if (it == item)
                         continue;
