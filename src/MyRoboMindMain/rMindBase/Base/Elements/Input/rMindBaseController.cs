@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Input;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.Foundation;
 
 namespace rMind.Elements
 {
     using Types;
     using Nodes;
+    using Windows.UI.Xaml;
 
     public enum rMindManipulationMode
     {
@@ -67,7 +70,10 @@ namespace rMind.Elements
 
             m_scroll.PointerExited += onPointerExit;
 
-            m_scroll.Loaded += onLoad; 
+            m_scroll.Loaded += onLoad;
+
+            Window.Current.CoreWindow.KeyDown += onKeyDown;
+            Window.Current.CoreWindow.KeyUp += onKeyUp;
         }
 
         void onLoad(object sender, Windows.UI.Xaml.RoutedEventArgs args)
@@ -90,6 +96,9 @@ namespace rMind.Elements
             m_scroll.Loaded -= onLoad;
 
             m_scroll.PointerExited -= onPointerExit;
+
+            Window.Current.CoreWindow.KeyDown -= onKeyDown;
+            Window.Current.CoreWindow.KeyUp -= onKeyUp;
         }
 
         // input
@@ -266,6 +275,19 @@ namespace rMind.Elements
         protected virtual void onWheel(object sender, PointerRoutedEventArgs e)
         {
             e.Handled = true;
+        }
+
+        protected virtual void onKeyDown(CoreWindow window, KeyEventArgs e)
+        {
+            if (e.VirtualKey == Windows.System.VirtualKey.Delete)
+            {
+                DeleteSelection();
+            }
+        }
+
+        protected virtual void onKeyUp(CoreWindow window, KeyEventArgs e)
+        {
+
         }
     }
 }

@@ -24,8 +24,22 @@ namespace rMind.Elements
                 Text = "Удалить"
             };
             item.Click += (sender, e) => {
-                (m_items_state.ActionItem as rMindBaseElement)?.Delete();
-                 m_items_state.ActionItem = null;
+                var actionItem = m_items_state.ActionItem as rMindBaseElement;
+                if (actionItem == null)
+                {
+                    m_items_state.ActionItem = null;
+                    return;
+                }
+                
+                if (m_selected_items.Contains(actionItem))
+                {
+                    DeleteSelection();
+                }
+                else
+                {
+                    actionItem.Delete();
+                } 
+                m_items_state.ActionItem = null;
             };
             m_flyout.Items.Add(item);
 

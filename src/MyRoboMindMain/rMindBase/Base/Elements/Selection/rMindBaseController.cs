@@ -98,7 +98,19 @@ namespace rMind.Elements
             {
                 SetSelectedItem(item, true);
             }
-        }        
+        }  
+        
+        protected virtual void DeleteSelection()
+        {
+            if (m_selected_items.Count > 0)
+            {
+                while (m_selected_items.Count > 0)
+                {
+                    m_selected_items[0].Delete();
+                }
+                m_selected_items.Clear();
+            }
+        }
     }
 }
 
