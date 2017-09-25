@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Input;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.Foundation;
 
 namespace rMind.Elements
 {
     using Types;
     using Nodes;
+    using Windows.UI.Xaml;
 
     public enum rMindManipulationMode
     {
         None,
         Scale,
-        Scroll
+        Scroll,
+        Select
     }
 
     public struct ManipulationData
@@ -38,6 +42,7 @@ namespace rMind.Elements
         protected Vector2 m_canvas_center;
         protected rMindManipulationMode m_manipulation_mode = rMindManipulationMode.None;
         protected ManipulationData m_manipulation_data;
+        protected ulong? m_pointer_timestamp = null;
 
         TextBlock m_test;
 
@@ -65,7 +70,10 @@ namespace rMind.Elements
 
             m_scroll.PointerExited += onPointerExit;
 
-            m_scroll.Loaded += onLoad; 
+            m_scroll.Loaded += onLoad;
+
+            Window.Current.CoreWindow.KeyDown += onKeyDown;
+            Window.Current.CoreWindow.KeyUp += onKeyUp;
         }
 
         void onLoad(object sender, Windows.UI.Xaml.RoutedEventArgs args)
@@ -88,28 +96,39 @@ namespace rMind.Elements
             m_scroll.Loaded -= onLoad;
 
             m_scroll.PointerExited -= onPointerExit;
-        }            
+
+            Window.Current.CoreWindow.KeyDown -= onKeyDown;
+            Window.Current.CoreWindow.KeyUp -= onKeyUp;
+        }
 
         // input
-        private void onPointerUp(object sender, PointerRoutedEventArgs e)
+        protected virtual void onPointerUp(object sender, PointerRoutedEventArgs e)
         {
+            if (m_manipulation_mode == rMindManipulationMode.Select)
+            {
+                // Пока просто отключаем рамку.
+                StopSelection();
+                return;
+            }
+
             var point = e.GetCurrentPoint(m_scroll);
+            m_pointer_timestamp = point.Timestamp;
+
             if (m_touch_list.ContainsKey(point.PointerId))
                 m_touch_list.Remove(point.PointerId);
 
-            if (m_overedItem == null && e.KeyModifiers != Windows.System.VirtualKeyModifiers.Shift)
+            if (m_overed_item == null && e.KeyModifiers != Windows.System.VirtualKeyModifiers.Shift)
             {
                 SetSelectedItem(null);   
             }
 
             if (point.Properties.PointerUpdateKind == PointerUpdateKind.MiddleButtonReleased)
             {
-                if (m_overedItem != null)
+                if (m_overed_item != null)
                 {
-                    m_overedItem.Delete();
+                    m_overed_item.Delete();
                 }
             }
-
 
             if (m_items_state.IsDragDot())
             {
@@ -132,17 +151,17 @@ namespace rMind.Elements
 
             m_items_state.DragedItem = null;
             m_canvas.ManipulationMode = ManipulationModes.System;
-            m_manipulation_mode = rMindManipulationMode.None;
+            m_manipulation_mode = rMindManipulationMode.None;            
         }
 
-        private void onPointerExit(object sender, PointerRoutedEventArgs e)
+        protected virtual void onPointerExit(object sender, PointerRoutedEventArgs e)
         {
 
         }
 
         protected bool CanControll()
         {
-            if (m_overedItem == null && m_items_state.OveredNode == null && m_items_state.DragedWireDot == null)
+            if (m_overed_item == null && m_items_state.OveredNode == null && m_items_state.DragedWireDot == null)
                 return true;
 
             return false;
@@ -151,9 +170,11 @@ namespace rMind.Elements
         private void onPointerPress(object sender, PointerRoutedEventArgs e)
         {
             var pointer = e.GetCurrentPoint(m_scroll);
+            var doubleClick = m_pointer_timestamp.HasValue && pointer.Timestamp - m_pointer_timestamp.Value < 300000;
+
             if (pointer.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Touch)
             {
-                m_touch_list[pointer.PointerId] = pointer;
+                m_touch_list[pointer.PointerId] = pointer;                                          
             }
             else
             {
@@ -167,20 +188,21 @@ namespace rMind.Elements
                     return;
                 }
 
-                SetManipulation(false, e);
+                if (CanControll())
+                    StartSelection(e.GetCurrentPoint(m_canvas));
                 return;
             }
 
-            if (m_touch_list.Count == 2 || CanControll())
-            {
+            if (CanControll())
+            { 
+                if (doubleClick)
+                {
+                    StartSelection(e.GetCurrentPoint(m_canvas));
+                    m_canvas.ManipulationMode = ManipulationModes.None;
+                    return;
+                }
                 SetManipulation(true, e);
                 m_manipulation_mode = rMindManipulationMode.None;
-                return;
-            }
-
-            if (m_touch_list.Count == 1 && CanControll())
-            {
-                SetScrollMode(e);
                 return;
             }
 
@@ -215,9 +237,15 @@ namespace rMind.Elements
             SetManipulation(false, e);
         }
 
-        private void onPointerMove(object sender, PointerRoutedEventArgs e)
+        protected virtual void onPointerMove(object sender, PointerRoutedEventArgs e)
         {
             e.Handled = true;
+
+            if (m_manipulation_mode == rMindManipulationMode.Select)
+            {
+                UpdateSelectorRect(e.GetCurrentPoint(m_canvas)); 
+                return;
+            }
             
             if (m_manipulation_mode == rMindManipulationMode.Scroll)
             {
@@ -243,9 +271,22 @@ namespace rMind.Elements
             }
         }
 
-        private void onWheel(object sender, PointerRoutedEventArgs e)
+        protected virtual void onWheel(object sender, PointerRoutedEventArgs e)
         {
             e.Handled = true;
+        }
+
+        protected virtual void onKeyDown(CoreWindow window, KeyEventArgs e)
+        {
+            if (e.VirtualKey == Windows.System.VirtualKey.Delete)
+            {
+                DeleteSelection();
+            }
+        }
+
+        protected virtual void onKeyUp(CoreWindow window, KeyEventArgs e)
+        {
+
         }
     }
 }
