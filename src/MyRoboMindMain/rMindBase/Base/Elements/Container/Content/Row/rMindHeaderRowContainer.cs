@@ -16,8 +16,9 @@ namespace rMind.Content
     {
         Border m_header_rect;
 
+        
         protected Button m_expand_button;
-
+        
         protected Button ExpandButton
         {
             get
@@ -30,19 +31,38 @@ namespace rMind.Content
                         {
                             FontFamily = new FontFamily("Segoe MDL2 Assets"),
                             Glyph = "\uE96E",
-                            Foreground = new SolidColorBrush(Colors.White),
                             FontSize = 10
                         },
+                        Background = rMindColors.GetInstance().GetSolidBrush(Colors.Transparent),
                         VerticalAlignment = VerticalAlignment.Stretch,
                         HorizontalAlignment = HorizontalAlignment.Left
                     };
 
-                    Grid.SetColumnSpan(m_expand_button, 2);
+                    Grid.SetColumnSpan(m_expand_button, 3);
                     m_expand_button.Click += ExpandButtonClick;
-                }
-                m_template.Children.Add(m_expand_button);
+                    m_template.Children.Add(m_expand_button);
+                }               
                 return m_expand_button;
             }
+        }
+
+        protected bool m_can_expand = false;
+
+        /// <summary>
+        /// container can expand/collapse rows
+        /// </summary>
+        public bool CanExpand
+        {
+            get { return m_can_expand; }
+            set { SetCanExpand(value); }
+        }
+
+        protected virtual void SetCanExpand(bool state)
+        {
+            if (state == m_can_expand)
+                return;
+
+            ExpandButton.Visibility = state ? Visibility.Visible : Visibility.Collapsed;
         }
 
         protected virtual void ExpandButtonClick(object sender, RoutedEventArgs args)
@@ -64,7 +84,7 @@ namespace rMind.Content
                 foreach (var row in m_rows)
                 {
                     row.SetVisibility(true);
-                }                
+                }
                 m_expanded = true;
             }
 
@@ -74,24 +94,60 @@ namespace rMind.Content
             SetPosition(Position);
         }
 
-        protected bool m_can_expand = false;
+        protected Button m_edit_button;
+
+        protected Button EditButton
+        {
+            get
+            {
+                if (m_edit_button == null)
+                {
+                    m_edit_button = new Button()
+                    {
+                        Content = new FontIcon
+                        {
+                            FontFamily = new FontFamily("Segoe MDL2 Assets"),
+                            Glyph = "\uE115",
+                            FontSize = 14
+                        },
+                        Background = rMindColors.GetInstance().GetSolidBrush(Colors.Transparent),
+                        VerticalAlignment = VerticalAlignment.Stretch,
+                        HorizontalAlignment = HorizontalAlignment.Right
+                    };
+
+                    Grid.SetColumnSpan(m_edit_button, 3);
+                    m_edit_button.Click += EditButtonClick;
+                    m_template.Children.Add(m_edit_button);
+                }
+                
+                return m_edit_button;
+            }
+        }
+
+        protected bool m_can_edit = false;
 
         /// <summary>
         /// container can expand/collapse rows
         /// </summary>
-        public bool CanExpand
+        public bool CanEdit
         {
-            get { return m_can_expand; }
-            set { SetCanExpand(value); }
+            get { return m_can_edit; }
+            set { SetCanEdit(value); }
         }
 
-        protected virtual void SetCanExpand(bool state)
+        protected virtual void SetCanEdit(bool state)
         {
-            if (state == m_can_expand)
+            if (state == m_can_edit)
                 return;
 
-            ExpandButton.Visibility = state ? Visibility.Visible : Visibility.Collapsed;
+            EditButton.Visibility = state ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        protected virtual void EditButtonClick(object sender, RoutedEventArgs args)
+        {
+
+        }
+
 
         public struct rMindHeaderRowContainerTheme
         {
@@ -126,6 +182,7 @@ namespace rMind.Content
         public rMindHeaderRowContainer(rMindBaseController parent) : base(parent)
         {
             CanExpand = true;
+            CanEdit = true;
         }
 
         public override void Init()
@@ -190,7 +247,10 @@ namespace rMind.Content
 
             m_header_rect.Background = rMindColors.GetInstance().GetSolidBrush(shades[6]);            
             m_header_rect.BorderBrush = rMindColors.GetInstance().GetSolidBrush(shades[5]);
-            m_header_label.Foreground = rMindColors.GetInstance().GetSolidBrush(shades[3]);            
+            m_header_label.Foreground = rMindColors.GetInstance().GetSolidBrush(shades[3]);
+
+            EditButton.Foreground = rMindColors.GetInstance().GetSolidBrush(shades[2]);
+            ExpandButton.Foreground = rMindColors.GetInstance().GetSolidBrush(shades[2]);
         }
 
         protected override void SetBorderThickness(Thickness value)
