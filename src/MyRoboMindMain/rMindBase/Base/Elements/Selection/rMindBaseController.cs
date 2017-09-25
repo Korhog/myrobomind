@@ -32,7 +32,8 @@ namespace rMind.Elements
                 Fill = new SolidColorBrush(Colors.Black),
                 Width = 20,
                 Height = 20,
-                Opacity = 0.5    
+                Opacity = 0.5,
+                IsHitTestVisible = false
             };
 
             return rect;

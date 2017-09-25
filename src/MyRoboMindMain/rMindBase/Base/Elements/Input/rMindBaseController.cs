@@ -42,7 +42,13 @@ namespace rMind.Elements
         protected Vector2 m_canvas_center;
         protected rMindManipulationMode m_manipulation_mode = rMindManipulationMode.None;
         protected ManipulationData m_manipulation_data;
+
         protected ulong? m_pointer_timestamp = null;
+        public void SetPointerTimestamp(PointerRoutedEventArgs e)
+        {
+            var point = e.GetCurrentPoint(m_scroll);
+            m_pointer_timestamp = point.Timestamp;
+        }
 
         TextBlock m_test;
 
@@ -156,7 +162,15 @@ namespace rMind.Elements
 
         protected virtual void onPointerExit(object sender, PointerRoutedEventArgs e)
         {
+            if (m_manipulation_mode == rMindManipulationMode.Select)
+            {
+                // Пока просто отключаем рамку.
+                StopSelection();
+                return;
+            }
 
+            var point = e.GetCurrentPoint(m_scroll);
+            m_pointer_timestamp = point.Timestamp;
         }
 
         protected bool CanControll()
@@ -169,6 +183,8 @@ namespace rMind.Elements
 
         private void onPointerPress(object sender, PointerRoutedEventArgs e)
         {
+            e.Handled = true;
+
             var pointer = e.GetCurrentPoint(m_scroll);
             var doubleClick = m_pointer_timestamp.HasValue && pointer.Timestamp - m_pointer_timestamp.Value < 300000;
 
@@ -178,6 +194,8 @@ namespace rMind.Elements
             }
             else
             {
+                SetManipulation(false, e);
+
                 var mouseScroll =
                     pointer.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse &&
                     e.KeyModifiers == Windows.System.VirtualKeyModifiers.Control;
@@ -197,6 +215,7 @@ namespace rMind.Elements
             { 
                 if (doubleClick)
                 {
+                    SetManipulation(false, e);
                     StartSelection(e.GetCurrentPoint(m_canvas));
                     m_canvas.ManipulationMode = ManipulationModes.None;
                     return;
@@ -204,6 +223,10 @@ namespace rMind.Elements
                 SetManipulation(true, e);
                 m_manipulation_mode = rMindManipulationMode.None;
                 return;
+            }
+            else if (doubleClick && m_overed_item != null)
+            {
+                SetSelectedItem(m_overed_item, true);
             }
 
             SetManipulation(false, e);

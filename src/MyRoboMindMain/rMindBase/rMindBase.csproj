@@ -150,6 +150,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\rMindBaseControls\rMindBaseControls.csproj">
+      <Project>{dde69cfe-2f1d-46ed-a414-eb48870ff997}</Project>
+      <Name>rMindBaseControls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\rMindTheme\rMindTheme.csproj">
       <Project>{458f5c99-d7e2-481a-baef-db0d694a0f8a}</Project>
       <Name>rMindTheme</Name>

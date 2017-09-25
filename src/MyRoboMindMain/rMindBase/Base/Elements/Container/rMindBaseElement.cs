@@ -22,6 +22,8 @@ namespace rMind.Elements
     /// </summary>
     public class rMindBaseElement : rMindBaseItem, IDrawContainer
     {
+        protected ulong? m_pointer_timestamp;
+
         rMindNodeTheme m_node_theme = null;
         public rMindNodeTheme NodeTheme
         {
@@ -102,6 +104,7 @@ namespace rMind.Elements
         private void onPointerExit(object sender, PointerRoutedEventArgs e)
         {
             e.Handled = true;
+            Parent.SetPointerTimestamp(e);
             Parent.SetOveredItem(null);
             if (m_selected)
                 return;         
@@ -122,7 +125,7 @@ namespace rMind.Elements
 
         private void onPointerPress(object sender, PointerRoutedEventArgs e)
         {
-            //e.Handled = true;
+            // e.Handled = true;
             if (Parent.CheckIsOvered(this))
             {                
                 Parent.SetDragItem(this, e);

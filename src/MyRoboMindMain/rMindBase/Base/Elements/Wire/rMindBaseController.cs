@@ -75,6 +75,8 @@ namespace rMind.Elements
             item.SetPosition(new Vector2(p.Position.X, p.Position.Y));
             m_items_state.StartPointerPosition = new Vector2(p.Position.X, p.Position.Y);
             m_items_state.StartPosition = item.Position;
+
+            SetManipulation(false, e);
         }
     }
 }
