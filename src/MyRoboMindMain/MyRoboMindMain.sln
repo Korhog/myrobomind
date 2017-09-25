@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRoboMind", "MyRoboMind\MyRoboMind.csproj", "{047CEDB9-F0E1-45D8-A62C-B729F5C85482}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMindTheme", "rMindTheme\rMindTheme.csproj", "{458F5C99-D7E2-481A-BAEF-DB0D694A0F8A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMindBaseControls", "rMindBaseControls\rMindBaseControls.csproj", "{DDE69CFE-2F1D-46ED-A414-EB48870FF997}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMindEditor", "rMindEditor\rMindEditor.csproj", "{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,8 +129,27 @@ Global
 		{DDE69CFE-2F1D-46ED-A414-EB48870FF997}.Release|x64.Build.0 = Release|x64
 		{DDE69CFE-2F1D-46ED-A414-EB48870FF997}.Release|x86.ActiveCfg = Release|x86
 		{DDE69CFE-2F1D-46ED-A414-EB48870FF997}.Release|x86.Build.0 = Release|x86
+		{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}.Debug|ARM.ActiveCfg = Debug|ARM
+		{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}.Debug|ARM.Build.0 = Debug|ARM
+		{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}.Debug|x64.ActiveCfg = Debug|x64
+		{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}.Debug|x64.Build.0 = Debug|x64
+		{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}.Debug|x86.ActiveCfg = Debug|x86
+		{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}.Debug|x86.Build.0 = Debug|x86
+		{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}.Release|ARM.ActiveCfg = Release|ARM
+		{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}.Release|ARM.Build.0 = Release|ARM
+		{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}.Release|x64.ActiveCfg = Release|x64
+		{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}.Release|x64.Build.0 = Release|x64
+		{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}.Release|x86.ActiveCfg = Release|x86
+		{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {861E975D-6907-4A58-9737-052DD2777058}
 	EndGlobalSection
 EndGlobal

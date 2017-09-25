@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{709002B9-916F-481F-981B-6F4F0C2B51DB}</ProjectGuid>
+    <ProjectGuid>{BE705B2A-85BC-4C47-B8C7-EC29B257C19A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>rMindBase</RootNamespace>
-    <AssemblyName>rMindBase</AssemblyName>
+    <RootNamespace>rMindEditor</RootNamespace>
+    <AssemblyName>rMindEditor</AssemblyName>
     <DefaultLanguage>ru-RU</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
@@ -106,57 +106,19 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Base\Action\Action.cs" />
-    <Compile Include="Base\Elements\Container\Content\Quad\rMindHorizontalLine.cs" />
-    <Compile Include="Base\Elements\Container\Content\Quad\rMindLine.cs" />
-    <Compile Include="Base\Elements\Container\Content\Quad\rMindVerticalLine.cs" />
-    <Compile Include="Base\Elements\Container\Content\Row\rMindHeaderRowContainer.cs" />
-    <Compile Include="Base\Elements\Container\Content\Quad\rMindQuadContainer.cs" />
-    <Compile Include="Base\Elements\Container\Content\Row\rMindRowContainer.cs" />
-    <Compile Include="Base\Elements\Container\Content\Row\rMindRow.cs" />
-    <Compile Include="Base\Elements\Container\Content\Row\rMindValueRow.cs" />
-    <Compile Include="Base\Elements\Container\rMindBaseController.cs" />
-    <Compile Include="Base\Elements\Container\rMindBaseItem.cs" />
-    <Compile Include="Base\Elements\Input\rMindBaseController.cs" />
-    <Compile Include="Base\Elements\Menu\rMindBaseController.cs" />
-    <Compile Include="Base\Elements\rMindDebugContainer.cs" />
-    <Compile Include="Base\Elements\Wire\rMindBaseController.cs" />
-    <Compile Include="Base\Elements\Wire\rMindBaseWire.cs" />
-    <Compile Include="Base\Elements\Wire\rMindBaseWireDot.cs" />
-    <Compile Include="Base\Elements\rMindItemUI.cs" />
-    <Compile Include="Base\Elements\Wire\rMindMagnet.cs" />
-    <Compile Include="Base\Interfaces\IDrawContainer.cs" />
-    <Compile Include="Base\Interfaces\IDrawElement.cs" />
-    <Compile Include="Base\Elements\rMindBaseController.cs" />
-    <Compile Include="Base\Elements\Container\rMindBaseElement.cs" />
-    <Compile Include="Base\Elements\rMindBaseNode.cs" />
-    <Compile Include="Base\Interfaces\IJsonStore.cs" />
-    <Compile Include="Canvas\rMindCanvas.cs" />
-    <Compile Include="Canvas\rMindCanvasController.cs" />
+    <Compile Include="Project\rMindProjectBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Base\Types\Vector2.cs" />
-    <Compile Include="Template\rMindTemplate.cs" />
-    <Compile Include="Template\rMindTemplatePart.cs" />
-    <EmbeddedResource Include="Properties\rMindBase.rd.xml" />
+    <EmbeddedResource Include="Properties\rMindEditor.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.4.0</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>10.0.3</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\rMindTheme\rMindTheme.csproj">
-      <Project>{458f5c99-d7e2-481a-baef-db0d694a0f8a}</Project>
-      <Name>rMindTheme</Name>
+    <ProjectReference Include="..\rMindBase\rMindBase.csproj">
+      <Project>{709002b9-916f-481f-981b-6f4f0c2b51db}</Project>
+      <Name>rMindBase</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
