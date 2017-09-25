@@ -8,6 +8,8 @@ namespace rMind.Elements
     public class rMindItemUI
     {
         protected bool m_has_translate;
+        protected bool m_expanded = true;
+        public bool Expanded { get { return m_expanded; } }
         protected Vector2 m_position;
         public Vector2 Position { get { return m_position; } }
 
@@ -26,6 +28,11 @@ namespace rMind.Elements
 
             m_template.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             m_template.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+        }
+
+        public void SetVisibility(bool state)
+        {
+            m_template.Visibility = state ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public virtual Vector2 SetPosition(Vector2 newPos)

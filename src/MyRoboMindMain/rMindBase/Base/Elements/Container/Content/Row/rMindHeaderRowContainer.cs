@@ -16,6 +16,83 @@ namespace rMind.Content
     {
         Border m_header_rect;
 
+        protected Button m_expand_button;
+
+        protected Button ExpandButton
+        {
+            get
+            {
+                if (m_expand_button == null)
+                {
+                    m_expand_button = new Button()
+                    {
+                        Content = new FontIcon
+                        {
+                            FontFamily = new FontFamily("Segoe MDL2 Assets"),
+                            Glyph = "\uE96E",
+                            Foreground = new SolidColorBrush(Colors.White),
+                            FontSize = 10
+                        },
+                        VerticalAlignment = VerticalAlignment.Stretch,
+                        HorizontalAlignment = HorizontalAlignment.Left
+                    };
+
+                    Grid.SetColumnSpan(m_expand_button, 2);
+                    m_expand_button.Click += ExpandButtonClick;
+                }
+                m_template.Children.Add(m_expand_button);
+                return m_expand_button;
+            }
+        }
+
+        protected virtual void ExpandButtonClick(object sender, RoutedEventArgs args)
+        {
+            if (m_expanded)
+            {
+                (m_expand_button.Content as FontIcon).Glyph = "\uE970";
+
+                foreach (var row in m_rows)
+                {
+                    row.SetVisibility(false);
+                }
+                m_expanded = false;
+            }
+            else
+            {
+                (m_expand_button.Content as FontIcon).Glyph = "\uE96E";
+
+                foreach (var row in m_rows)
+                {
+                    row.SetVisibility(true);
+                }                
+                m_expanded = true;
+            }
+
+            Template.UpdateLayout();
+            SetBorderRadius(m_border_radius);
+            SetBorderThickness(m_border_thickness);
+            SetPosition(Position);
+        }
+
+        protected bool m_can_expand = false;
+
+        /// <summary>
+        /// container can expand/collapse rows
+        /// </summary>
+        public bool CanExpand
+        {
+            get { return m_can_expand; }
+            set { SetCanExpand(value); }
+        }
+
+        protected virtual void SetCanExpand(bool state)
+        {
+            if (state == m_can_expand)
+                return;
+
+            ExpandButton.Visibility = state ? Visibility.Visible : Visibility.Collapsed;
+        }
+
         public struct rMindHeaderRowContainerTheme
         {
             public Color MainColor;
@@ -48,7 +125,7 @@ namespace rMind.Content
 
         public rMindHeaderRowContainer(rMindBaseController parent) : base(parent)
         {
-
+            CanExpand = true;
         }
 
         public override void Init()
@@ -76,10 +153,11 @@ namespace rMind.Content
                 Foreground = colors.GetSolidBrush(Colors.White),
                 TextAlignment = TextAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
-                IsHitTestVisible = false
+                IsHitTestVisible = false,
+                Margin = new Thickness(36, 0, 36, 0)
             };
-
-            Grid.SetColumn(m_header_label, 1);
+            
+            Grid.SetColumnSpan(m_header_label, 3);
 
             Template.Children.Add(m_header_label);
 
@@ -99,7 +177,10 @@ namespace rMind.Content
         protected override void SetBorderRadius(CornerRadius value)
         {
             base.SetBorderRadius(value);
-            m_header_rect.CornerRadius = new CornerRadius( value.TopLeft, value.TopRight, 0, 0 );
+            if (m_expanded)
+                m_header_rect.CornerRadius = new CornerRadius(value.TopLeft, value.TopRight, 0, 0);                    
+            else
+                m_header_rect.CornerRadius = value;
         }
 
         protected override void SetAccentColor(Color color)
@@ -115,9 +196,14 @@ namespace rMind.Content
         protected override void SetBorderThickness(Thickness value)
         {
             base.SetBorderThickness(value);
-            m_header_rect.BorderThickness = new Thickness(
-                value.Left, value.Top, value.Right, 0
-            );
+            if (m_expanded)
+            {
+                m_header_rect.BorderThickness = new Thickness(
+                    value.Left, value.Top, value.Right, 0
+                );
+            }
+            else
+                m_header_rect.BorderThickness = value;
         }
     }
 }

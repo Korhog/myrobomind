@@ -63,7 +63,7 @@ namespace rMind.Elements
             m_scroll.PointerPressed += onPointerPress;
             m_scroll.PointerWheelChanged += onWheel;
 
-            m_scroll.PointerExited += onPointerUp;
+            m_scroll.PointerExited += onPointerExit;
 
             m_scroll.Loaded += onLoad; 
         }
@@ -87,7 +87,7 @@ namespace rMind.Elements
 
             m_scroll.Loaded -= onLoad;
 
-            m_scroll.PointerExited -= onPointerUp;
+            m_scroll.PointerExited -= onPointerExit;
         }            
 
         // input
@@ -135,6 +135,11 @@ namespace rMind.Elements
             m_manipulation_mode = rMindManipulationMode.None;
         }
 
+        private void onPointerExit(object sender, PointerRoutedEventArgs e)
+        {
+
+        }
+
         protected bool CanControll()
         {
             if (m_overedItem == null && m_items_state.OveredNode == null && m_items_state.DragedWireDot == null)
@@ -161,6 +166,9 @@ namespace rMind.Elements
                     SetScrollMode(e);
                     return;
                 }
+
+                SetManipulation(false, e);
+                return;
             }
 
             if (m_touch_list.Count == 2 || CanControll())
@@ -191,14 +199,13 @@ namespace rMind.Elements
             }
             else
             {
-                m_canvas.ManipulationMode = ManipulationModes.ScaleInertia;
+                m_canvas.ManipulationMode = ManipulationModes.None;
             }
         }
 
         protected virtual void SetScrollMode(PointerRoutedEventArgs e)
         {
             var pointer = e.GetCurrentPoint(m_scroll);
-            m_manipulation_mode = rMindManipulationMode.Scroll;
             m_manipulation_data.BeginVector = new Vector2(pointer);
             m_manipulation_data.CurrentScroll = new Vector2(
                 m_scroll.HorizontalOffset,

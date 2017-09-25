@@ -22,6 +22,7 @@ namespace rMind.Content
     {
         protected List<rMindRow> m_rows;
         protected Button m_add_button;
+        
 
         /// <summary> Шаблон для добавления новых строк </summary>
         public rMindRow AddRowTemplate { get; set; } = new rMindRow {
@@ -134,14 +135,14 @@ namespace rMind.Content
 
         public rMindRowContainer(rMindBaseController parent) : base(parent)
         { 
-            m_rows = new List<rMindRow>(); 
+            m_rows = new List<rMindRow>();
         }
 
         public override void Init()
         {
             base.Init();
 
-            Template.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(80) });
+            Template.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth = 80 });
             Template.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
 
             m_base.BorderBrush = ColorContainer.rMindColors.GetInstance().GetSolidBrush(Colors.Black);

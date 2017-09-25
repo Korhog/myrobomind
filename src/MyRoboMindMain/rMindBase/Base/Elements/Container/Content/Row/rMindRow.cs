@@ -58,6 +58,16 @@ namespace rMind.Content.Row
             OutputNode?.SetCell(OutputNode.Column, index);
 
             if (Content != null) Grid.SetRow(Content, index);
-        } 
+        }
+
+        public virtual void SetVisibility(bool state)
+        {
+            InputNode?.SetVisibility(state);
+            OutputNode?.SetVisibility(state);
+            if (Content != null)
+            {
+                Content.Visibility = state ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
     }
 }

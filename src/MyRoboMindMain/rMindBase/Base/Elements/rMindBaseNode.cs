@@ -248,15 +248,24 @@ namespace rMind.Nodes
         {
             var localOffset = Parent.GetOffset();
 
-            var rd = Parent.Template.RowDefinitions;
-            var h = rd.Where(row => rd.IndexOf(row) < Grid.GetRow(Template))
-                .Select(row => row.ActualHeight)
-                .Sum() + rd[Grid.GetRow(Template)].ActualHeight / 2;
-
             var cd = Parent.Template.ColumnDefinitions;
             var w = cd.Where(col => cd.IndexOf(col) < Grid.GetColumn(Template))
                 .Select(col => col.ActualWidth)
                 .Sum() + cd[Grid.GetColumn(Template)].ActualWidth / 2;
+
+            var h = 0.0;
+            if (!Parent.Expanded)
+            {
+                h = Parent.Template.ActualHeight / 2;
+            }
+            else
+            {
+
+                var rd = Parent.Template.RowDefinitions;
+                h = rd.Where(row => rd.IndexOf(row) < Grid.GetRow(Template))
+                    .Select(row => row.ActualHeight)
+                    .Sum() + rd[Grid.GetRow(Template)].ActualHeight / 2;
+            }
 
             return localOffset + new Types.Vector2(w, h);
         }
@@ -287,10 +296,12 @@ namespace rMind.Nodes
 
         private void onPointerPress(object sender, PointerRoutedEventArgs e)
         {
+            e.Handled = true;
             var wire = GetController()?.CreateWire();
             if (wire != null)
             {
                 Attach(wire.A);
+                wire.SetEnabledHitTest(false);
                 GetController()?.BakeNodes(this);
                 GetController()?.SetDragWireDot(wire.B, e);                
             }

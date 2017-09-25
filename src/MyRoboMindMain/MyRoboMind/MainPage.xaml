@@ -42,8 +42,7 @@
                 HorizontalScrollBarVisibility="Visible" 
                 IsHorizontalRailEnabled="False"
                 IsVerticalRailEnabled="False"
-                x:Name="scroll" 
-                ManipulationMode="Scale">
+                x:Name="scroll" >
             <Canvas 
                     Width="10000"
                     Height="6000"

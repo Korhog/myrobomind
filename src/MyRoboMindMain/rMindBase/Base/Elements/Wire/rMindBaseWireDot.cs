@@ -22,7 +22,7 @@ namespace rMind.Elements
 
         public rMindBaseWireDot(rMindBaseWire parent) 
         {
-            m_parent = parent;
+            m_parent = parent;            
             Init();
         }
 
@@ -69,12 +69,12 @@ namespace rMind.Elements
 
         private void onPointerUp(object sender, PointerRoutedEventArgs e)
         {
-            // e.Handled = true;           
+            e.Handled = true;           
         }
 
         private void onPointerPress(object sender, PointerRoutedEventArgs e)
         {
-            //e.Handled = true;
+            e.Handled = true;
             GetController().SetDragWireDot(this, e);
             Detach();            
         }

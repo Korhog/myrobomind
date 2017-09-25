@@ -203,14 +203,15 @@ namespace rMind.Elements
         }
 
         /// <summary> update IDSs nodes after remove </summary>
-        void UpdateNodes()
+        protected void UpdateNodes()
         {
             var nodes = m_nodes_link.Values.ToList();
             m_nodes_link.Clear();
             foreach(var node in nodes)
             {
                 node.IDS = "node" + m_nodes_link.Count.ToString();
-                m_nodes_link[node.IDS] = node;    
+                m_nodes_link[node.IDS] = node;
+                node.Update();
             }
         }
 
