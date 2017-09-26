@@ -11,21 +11,22 @@ namespace rMind.Content
     using Elements;
     using rMind.Content.Row;
     using rMind.ColorContainer;
+    using rMindBaseControls.Buttons;
 
     public class rMindHeaderRowContainer : rMindRowContainer
     {
         Border m_header_rect;
 
         
-        protected Button m_expand_button;
+        protected HeaderButton m_expand_button;
         
-        protected Button ExpandButton
+        protected HeaderButton ExpandButton
         {
             get
             {
                 if (m_expand_button == null)
                 {
-                    m_expand_button = new Button()
+                    m_expand_button = new HeaderButton()
                     {
                         Content = new FontIcon
                         {
@@ -33,6 +34,8 @@ namespace rMind.Content
                             Glyph = "\uE96E",
                             FontSize = 10
                         },
+                        Padding = new Thickness(8, 0, 8, 0),
+                        BorderThickness = new Thickness(0, 0, 1, 0),
                         Background = rMindColors.GetInstance().GetSolidBrush(Colors.Transparent),
                         VerticalAlignment = VerticalAlignment.Stretch,
                         HorizontalAlignment = HorizontalAlignment.Left
@@ -94,15 +97,15 @@ namespace rMind.Content
             SetPosition(Position);
         }
 
-        protected Button m_edit_button;
+        protected HeaderButton m_edit_button;
 
-        protected Button EditButton
+        protected HeaderButton EditButton
         {
             get
             {
                 if (m_edit_button == null)
                 {
-                    m_edit_button = new Button()
+                    m_edit_button = new HeaderButton()
                     {
                         Content = new FontIcon
                         {
@@ -110,6 +113,7 @@ namespace rMind.Content
                             Glyph = "\uE115",
                             FontSize = 14
                         },
+                        Padding = new Thickness(8, 0, 8, 0),
                         Background = rMindColors.GetInstance().GetSolidBrush(Colors.Transparent),
                         VerticalAlignment = VerticalAlignment.Stretch,
                         HorizontalAlignment = HorizontalAlignment.Right
@@ -251,6 +255,7 @@ namespace rMind.Content
 
             EditButton.Foreground = rMindColors.GetInstance().GetSolidBrush(shades[2]);
             ExpandButton.Foreground = rMindColors.GetInstance().GetSolidBrush(shades[2]);
+            ExpandButton.BorderBrush = rMindColors.GetInstance().GetSolidBrush(shades[5]);
         }
 
         protected override void SetBorderThickness(Thickness value)

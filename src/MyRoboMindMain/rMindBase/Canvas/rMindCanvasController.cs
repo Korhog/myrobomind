@@ -13,20 +13,18 @@ namespace rMind.CanvasEx
         rMindBaseController m_current_controller;
         Canvas m_canvas;
         ScrollViewer m_scroll;
-        ScaleTransform m_scale;
 
-        public rMindCanvasController(Canvas canvas, ScrollViewer scroll, ScaleTransform scale)
+        public rMindCanvasController(Canvas canvas, ScrollViewer scroll)
         {
             m_canvas = canvas;
             m_scroll = scroll;
-            m_scale = scale;
         }
 
         public void SetController(rMindBaseController controller)
         {
             m_current_controller?.Unsubscribe();
             m_current_controller = controller;
-            m_current_controller?.Subscribe(m_canvas, m_scroll, m_scale);
+            m_current_controller?.Subscribe(m_canvas, m_scroll);
         }
     }
 }

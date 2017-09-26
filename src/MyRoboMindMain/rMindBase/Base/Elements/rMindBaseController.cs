@@ -39,7 +39,6 @@ namespace rMind.Elements
         // Graphics
         Canvas m_canvas;
         ScrollViewer m_scroll;
-        ScaleTransform m_scale;
 
         // Controls
         rMindControllerState m_items_state;
@@ -68,14 +67,13 @@ namespace rMind.Elements
         /// <summary>
         /// Subscribe to canvas
         /// </summary>
-        public virtual void Subscribe(Canvas canvas, ScrollViewer scroll, ScaleTransform scale = null)
+        public virtual void Subscribe(Canvas canvas, ScrollViewer scroll)
         {
             if (m_subscribed)
                 Unsubscribe();
 
             m_canvas = canvas;
-            m_scroll = scroll;
-            m_scale = scale;            
+            m_scroll = scroll;   
 
             m_subscribed = true;
 

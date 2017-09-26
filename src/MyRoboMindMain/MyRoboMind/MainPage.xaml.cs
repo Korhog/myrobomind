@@ -45,7 +45,7 @@ namespace MyRoboMind
             InitializeComponent();
 
             controller = new rMindBaseController();
-            canvas_controller = new rMindCanvasController(canvas, scroll, scale);
+            canvas_controller = new rMindCanvasController(canvas, scroll);
             canvas_controller.SetController(controller);
         }
 

@@ -110,6 +110,8 @@ namespace rMind.Elements
         // input
         protected virtual void onPointerUp(object sender, PointerRoutedEventArgs e)
         {
+            e.Handled = true;
+
             if (m_manipulation_mode == rMindManipulationMode.Select)
             {
                 // Пока просто отключаем рамку.
@@ -194,20 +196,22 @@ namespace rMind.Elements
             }
             else
             {
-                SetManipulation(false, e);
-
-                var mouseScroll =
-                    pointer.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse &&
-                    e.KeyModifiers == Windows.System.VirtualKeyModifiers.Control;
-
-                if (mouseScroll)
+                // Временное кастыляние, правой кнопкой мыши
+                if (pointer.Properties.IsRightButtonPressed)
                 {
-                    SetScrollMode(e);
-                    return;
-                }
+                    var mouseScroll =
+                        pointer.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse &&
+                        e.KeyModifiers == Windows.System.VirtualKeyModifiers.Control;
 
-                if (CanControll())
-                    StartSelection(e.GetCurrentPoint(m_canvas));
+                    if (mouseScroll)
+                    {
+                        SetScrollMode(e);
+                        return;
+                    }
+
+                    if (CanControll())
+                        StartSelection(e.GetCurrentPoint(m_canvas));
+                }
                 return;
             }
 
@@ -250,6 +254,7 @@ namespace rMind.Elements
 
         protected virtual void SetScrollMode(PointerRoutedEventArgs e)
         {
+            m_manipulation_mode = rMindManipulationMode.Scroll;
             var pointer = e.GetCurrentPoint(m_scroll);
             m_manipulation_data.BeginVector = new Vector2(pointer);
             m_manipulation_data.CurrentScroll = new Vector2(

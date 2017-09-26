@@ -48,11 +48,7 @@
                     Height="6000"
                     x:Name="canvas" 
                     Background="Transparent" 
-                    UseLayoutRounding="True"
-                    >
-                <Canvas.RenderTransform>
-                    <ScaleTransform x:Name="scale" ScaleX="1" ScaleY="1"/>
-                </Canvas.RenderTransform>
+                    UseLayoutRounding="True">
             </Canvas>
         </ScrollViewer>
 

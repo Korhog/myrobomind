@@ -64,6 +64,7 @@ namespace rMind.Elements
             m_start_point = new Vector2(p);
             UpdateSelectorRect(p);
             m_manipulation_mode = rMindManipulationMode.Select;
+            m_canvas.ManipulationMode = ManipulationModes.None;
         }
 
         public void StopSelection()
