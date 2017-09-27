@@ -25,6 +25,12 @@ namespace rMind.Elements
         public bool IsDragDot() { return DragedWireDot != null; }
 
         public rMindItemUI ActionItem;
+
+        // View state
+        public float ZoomFactor;
+        public double HorizontalOffset;
+        public double VerticalOffset;
+        public bool Saved;
     }
 
     /// <summary>
@@ -65,7 +71,9 @@ namespace rMind.Elements
 
             m_items_state = new rMindControllerState()
             {
-                DragedItem = null
+                DragedItem = null,
+                ZoomFactor = 1,
+                Saved = false
             };
 
             m_magnet = new rMindMagnet();
@@ -97,16 +105,34 @@ namespace rMind.Elements
         protected virtual void ResroteControllerState()
         {
             // пока смотрим в центр
-            onLoad(null, null);
+            if (!m_items_state.Saved)
+                onLoad(null, null);
+            else {
+                m_scroll.ChangeView(
+                    m_items_state.HorizontalOffset,
+                    m_items_state.VerticalOffset,
+                    m_items_state.ZoomFactor,
+                    true
+                );
+            }
+        }
+
+        protected virtual void SaveControllerState()
+        {
+            m_items_state.Saved = true;
+            m_items_state.ZoomFactor = m_scroll.ZoomFactor;
+            m_items_state.HorizontalOffset = m_scroll.HorizontalOffset;
+            m_items_state.VerticalOffset = m_scroll.VerticalOffset;            
         }
 
         /// <summary>
         /// Unsubscribe from canvas
         /// </summary>
         public void Unsubscribe()
-        {
+        {            
             if (m_subscribed)
             {
+                SaveControllerState();
                 m_canvas.Children.Clear();
                 // events                
                 UnsubscribeInput();
@@ -114,7 +140,7 @@ namespace rMind.Elements
                 m_canvas = null;
                 m_scroll = null;
             }            
-            m_subscribed = false;
+            m_subscribed = false;            
         }
 
         protected virtual void Draw(rMindBaseElement item)

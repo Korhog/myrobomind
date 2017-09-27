@@ -41,11 +41,9 @@ namespace MyRoboMind
             return container;
         }
 
-
         public MainPage()
         {
             InitializeComponent();
-
             
             canvas_controller = new rMindCanvasController(canvas, scroll);
             BreadCrumbs.ItemsSource = canvas_controller.BreadCrumbs;
@@ -53,11 +51,13 @@ namespace MyRoboMind
             controller = new rMindBaseController(canvas_controller);
             canvas_controller.SetController(controller);
 
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {               
-                var statusBar = StatusBar.GetForCurrentView();
-                statusBar.HideAsync();
-            }
+            Window.Current.Activated += async (s, e) => {
+                if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                {
+                    var statusBar = StatusBar.GetForCurrentView();
+                    await statusBar.HideAsync();
+                }
+            };
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

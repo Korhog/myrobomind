@@ -87,7 +87,7 @@ namespace rMind.Elements
             m_scroll.ChangeView(
                 (m_scroll.ExtentWidth - m_scroll.ViewportWidth) / 2.0,
                 (m_scroll.ExtentHeight - m_scroll.ViewportHeight) / 2.0,
-                1);
+                1, true);
         }
 
         public void UnsubscribeInput()
