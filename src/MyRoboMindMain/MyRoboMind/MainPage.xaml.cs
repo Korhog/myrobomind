@@ -44,8 +44,11 @@ namespace MyRoboMind
         {
             InitializeComponent();
 
-            controller = new rMindBaseController();
+            
             canvas_controller = new rMindCanvasController(canvas, scroll);
+            BreadCrumbs.ItemsSource = canvas_controller.BreadCrumbs;
+
+            controller = new rMindBaseController(canvas_controller);
             canvas_controller.SetController(controller);
         }
 
@@ -97,6 +100,11 @@ namespace MyRoboMind
         private void Button_Unsubscribe(object sender, RoutedEventArgs e)
         {
             canvas_controller.SetController(null);
+        }
+
+        private void Button_Back(object sender, RoutedEventArgs e)
+        {
+            canvas_controller.Back();
         }
     }
 }

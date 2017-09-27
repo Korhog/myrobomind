@@ -5,6 +5,7 @@
     xmlns:local="using:MyRoboMind"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"    
+    xmlns:rmind="using:rMind.Elements"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -21,6 +22,9 @@
                     <Setter Property="Height" Value="50"/>
                 </Style>
             </StackPanel.Resources>
+            <Button VerticalAlignment="Top" Click="Button_Back">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE0A6;" />
+            </Button>
             <Button VerticalAlignment="Top" Click="Button_Subscribe">
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE17B;" />
             </Button>
@@ -34,6 +38,16 @@
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE950;" />
             </Button>
         </StackPanel>
+
+        <ListView Grid.Column="1" x:Name="BreadCrumbs">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="rmind:rMindBaseController">
+                    <TextBlock Text="{x:Bind Name}" Foreground="Black"
+                           VerticalAlignment="Center"
+                           Padding="0,0,54,0"/>
+                </DataTemplate>                
+            </ListView.ItemTemplate>
+        </ListView>
 
         <ScrollViewer
                 Grid.Column="1"

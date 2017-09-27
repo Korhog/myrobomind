@@ -9,6 +9,7 @@ namespace rMind.Elements
 {
     using Types;
     using Nodes;
+    using CanvasEx;
 
     public struct rMindControllerState
     {        
@@ -34,6 +35,10 @@ namespace rMind.Elements
         protected List<rMindBaseElement> m_items;
         protected List<rMindBaseWire> m_wire_list;
 
+        protected rMindCanvasController m_parent;
+
+        public rMindCanvasController CanvasController { get { return m_parent; } }
+
         protected bool m_subscribed;
 
         // Graphics
@@ -51,8 +56,13 @@ namespace rMind.Elements
         // Ext
         rMindMagnet m_magnet;
 
-        public rMindBaseController()
+        public rMindBaseController(rMindCanvasController parent)
         {
+            var rand = new System.Random();
+
+            Name = "root" + rand.Next(0, 100).ToString(); 
+            m_parent = parent;
+
             m_items_state = new rMindControllerState()
             {
                 DragedItem = null

@@ -15,6 +15,8 @@ namespace rMind.Elements
     /// </summary>
     public partial class rMindBaseController
     {
+        public string Name { get; set; }
+
         public bool CheckIsOvered(rMindBaseElement item)
         {
             return m_overed_item == item;
