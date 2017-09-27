@@ -25,12 +25,6 @@
             <Button VerticalAlignment="Top" Click="Button_Back">
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE0A6;" />
             </Button>
-            <Button VerticalAlignment="Top" Click="Button_Subscribe">
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE17B;" />
-            </Button>
-            <Button VerticalAlignment="Top" Click="Button_Unsubscribe">
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE17A;" />                
-            </Button>
             <Button VerticalAlignment="Top" Click="Button_Click">
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE964;" />
             </Button>
@@ -38,16 +32,6 @@
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE950;" />
             </Button>
         </StackPanel>
-
-        <ListView Grid.Column="1" x:Name="BreadCrumbs">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="rmind:rMindBaseController">
-                    <TextBlock Text="{x:Bind Name}" Foreground="Black"
-                           VerticalAlignment="Center"
-                           Padding="0,0,54,0"/>
-                </DataTemplate>                
-            </ListView.ItemTemplate>
-        </ListView>
 
         <ScrollViewer
                 Grid.Column="1"
@@ -66,5 +50,35 @@
             </Canvas>
         </ScrollViewer>
 
+        <ListView 
+            Grid.Column="1" 
+            x:Name="BreadCrumbs" 
+            VerticalAlignment="Top" 
+            IsItemClickEnabled="True"
+            SelectionMode="None"
+            ItemClick="BreadCrumbClick">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="rmind:rMindBaseController">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon Glyph="&#xE00F;" Margin="4" FontSize="10"/>
+                        <TextBlock 
+                            Text="{x:Bind Name}" 
+                            Foreground="Black"
+                            Grid.Column="1"                                    
+                            VerticalAlignment="Center"
+                            Padding="4"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

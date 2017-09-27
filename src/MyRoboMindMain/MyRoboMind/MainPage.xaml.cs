@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Foundation.Metadata;
+using Windows.UI.ViewManagement;
 
 using rMind.CanvasEx;
 using rMind.Elements;
@@ -50,12 +52,22 @@ namespace MyRoboMind
 
             controller = new rMindBaseController(canvas_controller);
             canvas_controller.SetController(controller);
+
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {               
+                var statusBar = StatusBar.GetForCurrentView();
+                statusBar.HideAsync();
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            var cont = canvas_controller.CurrentController;
+            if (cont == null)
+                return;
+
             var rand = new Random();
-            var container = new rMind.Content.rMindHeaderRowContainer(controller);
+            var container = new rMind.Content.rMindHeaderRowContainer(cont);
             container.AccentColor = rMind.ColorContainer.rMindColors.ColorRandom(100, 200);
             container.BorderThickness = new Thickness(1);
             var cnt = rand.Next(1, 5);
@@ -64,14 +76,18 @@ namespace MyRoboMind
                 container.AddRow();
             }            
             //container.Static = false;
-            container.BorderRadius = new CornerRadius(3);            
-            controller.AddElement(container);
-            container.SetPosition(controller.GetScreenCenter(container));
+            container.BorderRadius = new CornerRadius(3);
+            cont.AddElement(container);
+            container.SetPosition(cont.GetScreenCenter(container));
         }
 
         private void Button_B_Click(object sender, RoutedEventArgs e)
         {
-            var container = new rMind.Content.rMindQuadContainer(controller);
+            var cont = canvas_controller.CurrentController;
+            if (cont == null)
+                return;
+
+            var container = new rMind.Content.rMindQuadContainer(cont);
             container.AccentColor = Windows.UI.Colors.LightBlue;
             container.BorderRadius = new CornerRadius(3);
 
@@ -88,8 +104,8 @@ namespace MyRoboMind
             hline = container.CreateLine<rMindHorizontalLine>() as rMindHorizontalLine;
             hline.AddLeftNode(); hline.AddRightNode();
 
-            controller.AddElement(container);
-            container.SetPosition(controller.GetScreenCenter(container));
+            cont.AddElement(container);
+            container.SetPosition(cont.GetScreenCenter(container));
         }
 
         private void Button_Subscribe(object sender, RoutedEventArgs e)
@@ -105,6 +121,15 @@ namespace MyRoboMind
         private void Button_Back(object sender, RoutedEventArgs e)
         {
             canvas_controller.Back();
+        }
+
+        private void BreadCrumbClick(object sender, ItemClickEventArgs e)
+        {
+            var o = e.ClickedItem as rMindBaseController;
+            if (o == null)
+                return;
+
+            canvas_controller.SetController(o);
         }
     }
 }

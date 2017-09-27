@@ -16,6 +16,8 @@ namespace rMind.CanvasEx
     {
         rMindBaseController m_current_controller;
 
+        public rMindBaseController CurrentController {  get { return m_current_controller; } }
+
         Canvas m_canvas;
         ScrollViewer m_scroll;
 
@@ -31,6 +33,21 @@ namespace rMind.CanvasEx
 
         public void SetController(rMindBaseController controller)
         { 
+            if (m_bread_crumbs.Contains(controller))
+            { // Переход по хлебным крошкам.
+                var idx = m_bread_crumbs.IndexOf(controller);
+
+                m_current_controller?.Unsubscribe();
+                m_current_controller = controller;
+                m_current_controller.Subscribe(m_canvas, m_scroll);
+
+                var remove = m_bread_crumbs.Where(x => m_bread_crumbs.IndexOf(x) > idx).ToList();
+                foreach (var item in remove)
+                    m_bread_crumbs.Remove(item); 
+
+                return;
+            }
+
             m_current_controller?.Unsubscribe();
             if (controller == null)
                 return;

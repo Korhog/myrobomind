@@ -24,6 +24,21 @@ namespace rMind.Elements
     {
         protected ulong? m_pointer_timestamp;
 
+        protected rMindBaseController m_inner_controller;
+
+        protected rMindBaseController InnerController
+        {
+            get
+            {
+                if (m_inner_controller == null)
+                {
+                    m_inner_controller = new rMindBaseController(GetController()?.CanvasController);
+                    m_inner_controller.Name = "Element";
+                }
+                return m_inner_controller;
+            }
+        }
+
         rMindNodeTheme m_node_theme = null;
         public rMindNodeTheme NodeTheme
         {

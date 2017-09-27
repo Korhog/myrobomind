@@ -149,7 +149,7 @@ namespace rMind.Content
 
         protected virtual void EditButtonClick(object sender, RoutedEventArgs args)
         {
-
+            GetController()?.CanvasController.SetController(InnerController);
         }
 
 
