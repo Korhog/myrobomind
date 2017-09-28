@@ -36,7 +36,7 @@ namespace rMind.Elements
     /// <summary>
     /// Base scheme controller
     /// </summary>
-    public partial class rMindBaseController
+    public partial class rMindBaseController : Storage.IStorageObject
     {
         protected List<rMindBaseElement> m_items;
         protected List<rMindBaseWire> m_wire_list;

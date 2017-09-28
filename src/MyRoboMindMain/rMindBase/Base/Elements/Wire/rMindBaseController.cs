@@ -11,7 +11,7 @@ namespace rMind.Elements
     using Types;
     using Nodes;
 
-    public partial class rMindBaseController
+    public partial class rMindBaseController : Storage.IStorageObject
     {
         List<KeyValuePair<Vector2, rMindBaseNode>> m_baked_nodes;        
         /// <summary>

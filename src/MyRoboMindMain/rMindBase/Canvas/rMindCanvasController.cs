@@ -10,13 +10,14 @@ using Windows.UI.Xaml.Media;
 
 namespace rMind.CanvasEx
 {
+    using rMind.Storage;
     using Elements;
 
-    public class rMindCanvasController
+    public class rMindCanvasController : IStorageObject
     {
         rMindBaseController m_current_controller;
 
-        public rMindBaseController CurrentController {  get { return m_current_controller; } }
+        public rMindBaseController CurrentController {  get { return m_current_controller; } }       
 
         Canvas m_canvas;
         ScrollViewer m_scroll;
@@ -69,6 +70,18 @@ namespace rMind.CanvasEx
             m_current_controller?.Subscribe(m_canvas, m_scroll);
         }
 
+        public object Serialize()
+        {
+            var rootController = m_bread_crumbs.FirstOrDefault();
+
+            return new
+            {
+                name = "Name",
+                root = rootController?.Serialize()
+            };         
+        }
+
         public ObservableCollection<rMindBaseController> BreadCrumbs { get { return m_bread_crumbs; } }
+
     }
 }

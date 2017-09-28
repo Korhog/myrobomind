@@ -4,10 +4,11 @@ using Windows.UI.Xaml.Controls;
 
 namespace rMind.Elements
 {
+
     /// <summary>
     /// Base scheme controller : Menu section
     /// </summary>
-    public partial class rMindBaseController
+    public partial class rMindBaseController : Storage.IStorageObject
     {
         protected virtual void InitMenu()
         {

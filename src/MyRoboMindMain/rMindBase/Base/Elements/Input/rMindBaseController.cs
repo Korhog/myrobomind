@@ -34,7 +34,7 @@ namespace rMind.Elements
     /// <summary>
     /// Base scheme controller : input
     /// </summary>
-    public partial class rMindBaseController
+    public partial class rMindBaseController : Storage.IStorageObject
     {
         protected Dictionary<uint, PointerPoint> m_touch_list;
         protected Vector2 m_first_touch;
@@ -51,6 +51,7 @@ namespace rMind.Elements
         }
 
         TextBlock m_test;
+        public Visibility ArrowVisibility { get { return m_parent.BreadCrumbs.IndexOf(this) == 0 ? Visibility.Collapsed : Visibility.Visible; } }        
 
         public void SubscribeInput()
         {

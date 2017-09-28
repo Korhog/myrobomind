@@ -31,6 +31,9 @@
             <Button VerticalAlignment="Top" Click="Button_B_Click">
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE950;" />
             </Button>
+            <Button VerticalAlignment="Top" Click="Button_Save_Click">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE159;" />
+            </Button>            
         </StackPanel>
 
         <ScrollViewer
@@ -57,6 +60,15 @@
             IsItemClickEnabled="True"
             SelectionMode="None"
             ItemClick="BreadCrumbClick">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="FontWeight" Value="SemiBold"/>
+                    <Setter Property="Padding" Value="0,4,0,4"/>
+                    <Setter Property="MinWidth" Value="0"/>
+                    <Setter Property="MinHeight" Value="0"/>
+                    <Setter Property="Foreground" Value="DarkGray"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"/>
@@ -69,10 +81,9 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <FontIcon Glyph="&#xE00F;" Margin="4" FontSize="10"/>
+                        <FontIcon Glyph="&#xE970;" Margin="4" FontSize="10" Visibility="{x:Bind ArrowVisibility}"/>
                         <TextBlock 
-                            Text="{x:Bind Name}" 
-                            Foreground="Black"
+                            Text="{x:Bind Name}"   
                             Grid.Column="1"                                    
                             VerticalAlignment="Center"
                             Padding="4"/>

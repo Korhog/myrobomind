@@ -13,7 +13,7 @@ namespace rMind.Elements
     /// <summary>
     /// Base scheme controller
     /// </summary>
-    public partial class rMindBaseController
+    public partial class rMindBaseController : Storage.IStorageObject
     {
 
         public string Name { get; set; }

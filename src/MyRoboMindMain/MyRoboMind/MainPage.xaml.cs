@@ -131,5 +131,10 @@ namespace MyRoboMind
 
             canvas_controller.SetController(o);
         }
+
+        private void Button_Save_Click(object sender, RoutedEventArgs e)
+        {
+            var data = canvas_controller.Serialize();
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace rMind.Elements
     /// <summary>
     /// selector section of controller 
     /// </summary>
-    public partial class rMindBaseController
+    public partial class rMindBaseController : Storage.IStorageObject
     {
         Vector2 m_start_point;
 
