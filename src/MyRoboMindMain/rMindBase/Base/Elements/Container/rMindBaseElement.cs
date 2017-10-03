@@ -15,12 +15,13 @@ using System;
 
 namespace rMind.Elements
 {
+    using Storage;
     using ColorContainer;
     using Nodes;
     /// <summary>
     /// Base scheme element 
     /// </summary>
-    public class rMindBaseElement : rMindBaseItem, IDrawContainer
+    public partial class rMindBaseElement : rMindBaseItem, IDrawContainer, IStorageObject
     {
         protected ulong? m_pointer_timestamp;
 

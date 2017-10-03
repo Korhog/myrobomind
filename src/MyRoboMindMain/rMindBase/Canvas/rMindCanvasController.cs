@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Xml.Linq;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
@@ -15,6 +16,7 @@ namespace rMind.CanvasEx
 
     public class rMindCanvasController : IStorageObject
     {
+        rMindBaseController m_root_controller;
         rMindBaseController m_current_controller;
 
         public rMindBaseController CurrentController {  get { return m_current_controller; } }       
@@ -33,7 +35,11 @@ namespace rMind.CanvasEx
         }
 
         public void SetController(rMindBaseController controller)
-        { 
+        {
+            if (m_root_controller == null)
+                m_root_controller = controller;
+
+
             if (m_bread_crumbs.Contains(controller))
             { // Переход по хлебным крошкам.
                 var idx = m_bread_crumbs.IndexOf(controller);
@@ -70,18 +76,15 @@ namespace rMind.CanvasEx
             m_current_controller?.Subscribe(m_canvas, m_scroll);
         }
 
-        public object Serialize()
+        public XElement Serialize()
         {
-            var rootController = m_bread_crumbs.FirstOrDefault();
+            if (m_root_controller == null)
+                return null;
 
-            return new
-            {
-                name = "Name",
-                root = rootController?.Serialize()
-            };         
+            var node = m_root_controller.Serialize();
+            return null;                   
         }
 
         public ObservableCollection<rMindBaseController> BreadCrumbs { get { return m_bread_crumbs; } }
-
     }
 }

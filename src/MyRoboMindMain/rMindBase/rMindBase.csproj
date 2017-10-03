@@ -136,6 +136,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Base\Types\Vector2.cs" />
     <Compile Include="Storage\rMindBaseController.cs" />
+    <Compile Include="Storage\rMindBaseElement.cs" />
     <Compile Include="Template\rMindTemplate.cs" />
     <Compile Include="Template\rMindTemplatePart.cs" />
     <EmbeddedResource Include="Properties\rMindBase.rd.xml" />

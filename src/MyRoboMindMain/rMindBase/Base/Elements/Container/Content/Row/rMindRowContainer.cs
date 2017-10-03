@@ -14,6 +14,7 @@ namespace rMind.Content
     using Row;
     using Nodes;
     using Elements;
+    using System.Xml.Linq;
 
     /// <summary>
     /// Контейнер с возможностью добавлять строки с данными
@@ -264,6 +265,16 @@ namespace rMind.Content
                 OveredFill = colors.GetSolidBrush(shades[5]),
                 OveredStroke = colors.GetSolidBrush(shades[3])
             }; 
+        }
+
+        protected override XElement OptionsNode()
+        {
+            var node = base.OptionsNode();
+
+            node.Add(new XAttribute("color", m_accent_color));
+            node.Add(new XAttribute("expanded", m_expanded));
+
+            return node;
         }
     }
 }

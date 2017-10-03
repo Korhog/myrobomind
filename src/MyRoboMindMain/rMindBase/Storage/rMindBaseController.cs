@@ -1,4 +1,7 @@
 ﻿using System.Linq;
+using System.Xml;
+using System.Xml.Linq;
+
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -13,16 +16,38 @@ namespace rMind.Elements
     /// </summary>
     public partial class rMindBaseController : IStorageObject
     {
-        public object Serialize()
+        public virtual XElement Serialize()
+        {           
+            var controller = new XElement("controller");
+            var attribure = new XAttribute("name", Name);
+            controller.Add(attribure);
+
+            controller.Add(ItemsNode());
+            controller.Add(WiresNode());
+
+            return controller;
+        }
+
+        protected virtual XElement ItemsNode()
         {
-            var items = m_items.Select(x => new { ids = x.IDS }).ToArray();
-            var wires = m_wire_list.Select(x => new { code = "wire" }).ToArray();
-            return new
+            var itemsNode = new XElement("items");
+            foreach (var item in m_items)
             {
-                name = Name,
-                items = items,
-                wires = wires
-            };
+                var itemNode = item.Serialize();
+                if (itemNode == null)
+                    continue;
+
+                itemsNode.Add(itemNode);
+            }
+           
+
+            return itemsNode;
+        }
+
+        protected virtual XElement WiresNode()
+        {
+            var itemsNode = new XElement("wires");
+            return itemsNode;
         }
     }
 }

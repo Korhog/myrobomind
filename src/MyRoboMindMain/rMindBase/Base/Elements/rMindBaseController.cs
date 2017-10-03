@@ -38,6 +38,9 @@ namespace rMind.Elements
     /// </summary>
     public partial class rMindBaseController : Storage.IStorageObject
     {
+        /// <summary>
+        /// Контейнер со всем блоками контроллера.
+        /// </summary>
         protected List<rMindBaseElement> m_items;
         protected List<rMindBaseWire> m_wire_list;
 
@@ -64,9 +67,8 @@ namespace rMind.Elements
 
         public rMindBaseController(rMindCanvasController parent)
         {
-            var rand = new System.Random();
 
-            Name = "root" + rand.Next(0, 100).ToString(); 
+            Name = "root"; 
             m_parent = parent;
 
             m_items_state = new rMindControllerState()
