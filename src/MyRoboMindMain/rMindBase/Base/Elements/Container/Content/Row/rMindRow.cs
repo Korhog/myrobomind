@@ -5,9 +5,10 @@ using Windows.UI.Xaml.Controls;
 
 namespace rMind.Content.Row
 {
+    using Storage;
     using Nodes;
 
-    public class rMindRow
+    public partial class rMindRow : IStorageObject
     {
         public rMindNodeConnectionType InputNodeType { get; set; } = rMindNodeConnectionType.Container;
         public rMindNodeConnectionType OutputNodeType { get; set; } = rMindNodeConnectionType.Container;

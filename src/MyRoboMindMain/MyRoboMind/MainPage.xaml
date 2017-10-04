@@ -33,7 +33,10 @@
             </Button>
             <Button VerticalAlignment="Top" Click="Button_Save_Click">
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE159;" />
-            </Button>            
+            </Button>
+            <Button VerticalAlignment="Top" Click="Button_Save_Load">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE159;" />
+            </Button>
         </StackPanel>
 
         <ScrollViewer

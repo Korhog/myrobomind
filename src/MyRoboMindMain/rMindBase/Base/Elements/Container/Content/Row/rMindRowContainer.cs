@@ -19,7 +19,7 @@ namespace rMind.Content
     /// <summary>
     /// Контейнер с возможностью добавлять строки с данными
     /// </summary>
-    public class rMindRowContainer : rMindBaseElement
+    public partial class rMindRowContainer : rMindBaseElement
     {
         protected List<rMindRow> m_rows;
         protected Button m_add_button;

@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="Interfaces\IStorageObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="rMindStorage.cs" />
     <EmbeddedResource Include="Properties\rMindStorage.rd.xml" />
   </ItemGroup>
   <ItemGroup>

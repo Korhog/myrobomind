@@ -67,17 +67,14 @@ namespace MyRoboMind
                 return;
 
             var rand = new Random();
-            var container = new rMind.Content.rMindHeaderRowContainer(cont);
+            var container = cont.CreateElementByElementType(rElementType.RET_NONE);
             container.AccentColor = rMind.ColorContainer.rMindColors.ColorRandom(100, 200);
-            container.BorderThickness = new Thickness(1);
+
             var cnt = rand.Next(1, 5);
             for (int i = 0; i < cnt; i++)
             {
-                container.AddRow();
-            }            
-            //container.Static = false;
-            container.BorderRadius = new CornerRadius(3);
-            cont.AddElement(container);
+                (container as rMind.Content.rMindHeaderRowContainer)?.AddRow();
+            } 
             container.SetPosition(cont.GetScreenCenter(container));
         }
 
@@ -134,7 +131,16 @@ namespace MyRoboMind
 
         private void Button_Save_Click(object sender, RoutedEventArgs e)
         {
-            var data = canvas_controller.Serialize();
+            var data = canvas_controller.GetXML();
+            var storage = rMind.Storage.rMindStorage.GetInstance();
+            storage.SaveTmpData(data);
+        }
+
+        private async void Button_Save_Load(object sender, RoutedEventArgs e)
+        {
+            var storage = rMind.Storage.rMindStorage.GetInstance();
+            var doc = await storage.LoadTmpData();
+            canvas_controller.LoadFromXML(doc);
         }
     }
 }

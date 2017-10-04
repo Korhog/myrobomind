@@ -120,5 +120,31 @@ namespace rMind.ColorContainer
         {
             return ColorRandom(0, 255);
         }
+
+        public static Color Deserialize(string colorString, bool randomIfEmpty = false)
+        {
+            if (string.IsNullOrEmpty(colorString))
+            {
+                if (randomIfEmpty)
+                    return ColorRandom(100, 200);
+                return Colors.Aquamarine;
+            }
+
+            return GetColorFromHex(colorString);
+        }
+
+
+        public static Color GetColorFromHex(string hex)
+        {
+            hex = hex.Replace("#", string.Empty);
+
+            byte a = (byte)(Convert.ToUInt32(hex.Substring(0, 2), 16));
+            byte r = (byte)(Convert.ToUInt32(hex.Substring(2, 2), 16));
+            byte g = (byte)(Convert.ToUInt32(hex.Substring(4, 2), 16));
+            byte b = (byte)(Convert.ToUInt32(hex.Substring(6, 2), 16));
+
+            Color c = Color.FromArgb(a, r, g, b);
+            return c;
+        }
     }
 }

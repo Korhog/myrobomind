@@ -35,5 +35,34 @@ namespace rMind.Elements
             var optionsNode = new XElement("options");
             return optionsNode;
         }
+
+        public virtual void Deserialize(XElement node)
+        {
+            var sX = node.Attribute("x")?.Value;
+            var sY = node.Attribute("y")?.Value;
+
+            var x = 0.0;
+            var y = 0.0;
+
+            double.TryParse(sX, out x);
+            double.TryParse(sY, out y);
+
+            SetPosition(x, y);
+
+            var controllerNode = node.Element("controller");
+            if (controllerNode != null)            
+                InnerController.Deserialize(controllerNode);
+            
+
+            var optionsNode = node.Element("options");
+            if (optionsNode != null)
+                DeserializeOptions(optionsNode);
+
+        }
+
+        protected virtual void DeserializeOptions(XElement optionsNode)
+        {
+
+        }
     }
 }

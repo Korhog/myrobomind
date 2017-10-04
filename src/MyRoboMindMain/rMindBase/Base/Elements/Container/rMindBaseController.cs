@@ -15,7 +15,6 @@ namespace rMind.Elements
     /// </summary>
     public partial class rMindBaseController : Storage.IStorageObject
     {
-
         public string Name { get; set; }
 
         public bool CheckIsOvered(rMindBaseElement item)
@@ -157,6 +156,20 @@ namespace rMind.Elements
                 (m_scroll.HorizontalOffset + m_scroll.ActualWidth / 2 - (item == null ? 0 : item.Width / 2)) / m_scroll.ZoomFactor,
                 (m_scroll.VerticalOffset + m_scroll.ActualHeight / 2 - (item == null ? 0 : item.Height / 2)) / m_scroll.ZoomFactor
             );
+        }
+
+        public virtual rMindBaseElement CreateElementByElementType(rElementType type)
+        {
+            rMindBaseElement element = null;
+            switch (type)
+            {
+                case rElementType.RET_NONE:
+                    element = new Content.rMindHeaderRowContainer(this);
+                    AddElement(element);
+                    break;                
+            }
+
+            return element;
         }
     }
 }

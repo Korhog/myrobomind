@@ -16,6 +16,7 @@ namespace rMind.Elements
     /// </summary>
     public partial class rMindBaseController : IStorageObject
     {
+        #region Serialize
         public virtual XElement Serialize()
         {           
             var controller = new XElement("controller");
@@ -38,9 +39,7 @@ namespace rMind.Elements
                     continue;
 
                 itemsNode.Add(itemNode);
-            }
-           
-
+            } 
             return itemsNode;
         }
 
@@ -49,6 +48,32 @@ namespace rMind.Elements
             var itemsNode = new XElement("wires");
             return itemsNode;
         }
+        #endregion
+
+        #region Deserialize
+
+        public virtual void Deserialize(XElement node)
+        {
+            if (node == null)
+                return;
+
+            var itemsNode = node.Elements("items").FirstOrDefault();
+            DeserializeItems(itemsNode);
+        }
+
+        protected virtual void DeserializeItems(XElement itemsNode)
+        {
+            foreach (var itemNode in itemsNode.Elements("item"))
+                DeserializeItem(itemNode);                
+        }
+
+        protected virtual void DeserializeItem(XElement itemNode)
+        {
+            var item = CreateElementByElementType(rElementType.RET_NONE); 
+            item.Deserialize(itemNode);
+        }
+
+        #endregion
     }
 }
 

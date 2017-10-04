@@ -14,7 +14,7 @@ namespace rMind.CanvasEx
     using rMind.Storage;
     using Elements;
 
-    public class rMindCanvasController : IStorageObject
+    public class rMindCanvasController
     {
         rMindBaseController m_root_controller;
         rMindBaseController m_current_controller;
@@ -83,6 +83,28 @@ namespace rMind.CanvasEx
 
             var node = m_root_controller.Serialize();
             return null;                   
+        }
+
+        public XDocument GetXML()
+        {
+            if (m_root_controller == null)
+                return null;
+
+            var doc = new XDocument();
+            var node = m_root_controller.Serialize();
+            doc.AddFirst(node);
+            return doc;
+        }
+
+        public void LoadFromXML(XDocument doc)
+        {
+            var root = doc.Elements().FirstOrDefault();
+
+            if (m_root_controller == null)
+                return;
+
+            m_root_controller.Deserialize(root);
+
         }
 
         public ObservableCollection<rMindBaseController> BreadCrumbs { get { return m_bread_crumbs; } }

@@ -18,11 +18,20 @@ namespace rMind.Elements
     using Storage;
     using ColorContainer;
     using Nodes;
+
+    public enum rElementType
+    {
+        RET_NONE
+    }
+
     /// <summary>
-    /// Base scheme element 
-    /// </summary>
+    /// Base controller element 
+    /// </summary>   
     public partial class rMindBaseElement : rMindBaseItem, IDrawContainer, IStorageObject
     {
+        protected rElementType m_element_type;
+        public rElementType ElementType { get { return m_element_type; } }
+
         protected ulong? m_pointer_timestamp;
 
         protected rMindBaseController m_inner_controller;
@@ -68,6 +77,7 @@ namespace rMind.Elements
 
         public rMindBaseElement(rMindBaseController parent) : base(parent)
         {
+            m_element_type = rElementType.RET_NONE;
             m_nodes_link = new Dictionary<string, rMindBaseNode>();
 
             Init();

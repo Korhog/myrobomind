@@ -13,7 +13,7 @@ namespace rMind.Content
     using rMind.ColorContainer;
     using rMindBaseControls.Buttons;
 
-    public class rMindHeaderRowContainer : rMindRowContainer
+    public partial class rMindHeaderRowContainer : rMindRowContainer
     {
         Border m_header_rect;
 
@@ -69,6 +69,11 @@ namespace rMind.Content
         }
 
         protected virtual void ExpandButtonClick(object sender, RoutedEventArgs args)
+        {
+            Expand();
+        }
+
+        protected void Expand()
         {
             if (m_expanded)
             {
