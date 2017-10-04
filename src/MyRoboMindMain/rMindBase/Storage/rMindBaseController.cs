@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -99,7 +100,9 @@ namespace rMind.Elements
 
         protected virtual void DeserializeItem(XElement itemNode)
         {
-            var item = CreateElementByElementType(rElementType.RET_NONE); 
+            rElementType type = rElementType.RET_NONE;
+            Enum.TryParse(itemNode.Attribute("type")?.Value, out type);
+            var item = CreateElementByElementType(type); 
             item.Deserialize(itemNode);
         }
 

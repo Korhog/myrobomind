@@ -19,6 +19,7 @@ namespace rMind.Elements
         {
             var itemNode = new XElement("item");
             // attributes
+            itemNode.Add(new XAttribute("type", m_element_type.ToString()));
             itemNode.Add(new XAttribute("x", Math.Round(Position.X)));
             itemNode.Add(new XAttribute("y", Math.Round(Position.Y)));
 
