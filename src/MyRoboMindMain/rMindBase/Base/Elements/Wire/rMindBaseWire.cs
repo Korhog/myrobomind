@@ -6,10 +6,11 @@ using Windows.Foundation;
 
 namespace rMind.Elements
 {
+    using Storage;
     using Draw;
     using Types;
     /// <summary> Wire to connect nodes </summary>
-    public class rMindBaseWire : IDrawElement
+    public partial class rMindBaseWire : IDrawElement, IStorageObject
     {
         protected rMindBaseWireDot m_a_dot;
         protected rMindBaseWireDot m_b_dot;

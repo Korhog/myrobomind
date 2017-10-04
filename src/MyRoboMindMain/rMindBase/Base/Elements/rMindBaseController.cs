@@ -150,6 +150,9 @@ namespace rMind.Elements
             if (m_subscribed && !m_canvas.Children.Contains(item.Template))
             {
                 m_canvas.Children.Add(item.Template);
+                item.Template.UpdateLayout();
+                foreach (var node in item.Nodes)
+                    node.Update();
             }
         }
 

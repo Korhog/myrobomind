@@ -28,7 +28,8 @@ namespace rMind.Elements
     /// Base controller element 
     /// </summary>   
     public partial class rMindBaseElement : rMindBaseItem, IDrawContainer, IStorageObject
-    {
+    {       
+
         protected rElementType m_element_type;
         public rElementType ElementType { get { return m_element_type; } }
 

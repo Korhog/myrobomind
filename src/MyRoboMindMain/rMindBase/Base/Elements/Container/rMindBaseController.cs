@@ -15,6 +15,13 @@ namespace rMind.Elements
     /// </summary>
     public partial class rMindBaseController : Storage.IStorageObject
     {
+        public long GetIndexOfElement(rMindBaseElement element)
+        {
+            if (m_items.Contains(element))
+                return m_items.IndexOf(element);
+            else return -1;
+        }
+
         public string Name { get; set; }
 
         public bool CheckIsOvered(rMindBaseElement item)
@@ -140,8 +147,9 @@ namespace rMind.Elements
             if (!m_subscribed)
                 return;
 
-            foreach (var e in m_items)
+            foreach (var e in m_items)                
                 Draw(e);
+            
 
             foreach (var w in m_wire_list)
                 Draw(w);

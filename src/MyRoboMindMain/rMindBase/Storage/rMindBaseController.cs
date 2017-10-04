@@ -11,11 +11,27 @@ using Windows.UI.Xaml.Shapes;
 namespace rMind.Elements
 {
     using Storage;
+    using Nodes;
     /// <summary>
     /// Starage section
     /// </summary>
     public partial class rMindBaseController : IStorageObject
     {
+        public rMindBaseNode GetNodeByIndexPair(int itemIdx, int nodeIdx)
+        {
+            rMindBaseElement item = null;
+            if (m_items.Count > itemIdx)
+            {
+                item = m_items[itemIdx];
+                if (item.Nodes.Count > nodeIdx)
+                {
+                    return item.Nodes[nodeIdx];
+                }
+            }
+            return null;            
+        }
+        
+
         #region Serialize
         public virtual XElement Serialize()
         {           
@@ -45,8 +61,16 @@ namespace rMind.Elements
 
         protected virtual XElement WiresNode()
         {
-            var itemsNode = new XElement("wires");
-            return itemsNode;
+            var wiresNode = new XElement("wires");
+            foreach (var wire in m_wire_list)
+            {
+                var wireNode = wire.Serialize();
+                if (wireNode == null)
+                    continue;
+
+                wiresNode.Add(wireNode);
+            }
+            return wiresNode;
         }
         #endregion
 
@@ -59,10 +83,16 @@ namespace rMind.Elements
 
             var itemsNode = node.Elements("items").FirstOrDefault();
             DeserializeItems(itemsNode);
+
+            var wiresNode = node.Elements("wires").FirstOrDefault();
+            DeserializeWires(wiresNode);
         }
 
         protected virtual void DeserializeItems(XElement itemsNode)
         {
+            if (itemsNode == null)
+                return;
+
             foreach (var itemNode in itemsNode.Elements("item"))
                 DeserializeItem(itemNode);                
         }
@@ -71,6 +101,21 @@ namespace rMind.Elements
         {
             var item = CreateElementByElementType(rElementType.RET_NONE); 
             item.Deserialize(itemNode);
+        }
+
+        protected virtual void DeserializeWires(XElement wiresNode)
+        {
+            if (wiresNode == null)
+                return;
+
+            foreach (var wireNode in wiresNode.Elements("wire"))
+                DeserializeWire(wireNode);
+        }
+
+        protected virtual void DeserializeWire(XElement wireNode)
+        {
+            var wire = CreateWire();
+            wire.Deserialize(wireNode);
         }
 
         #endregion

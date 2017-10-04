@@ -10,6 +10,10 @@ namespace rMind.Content.Row
         public virtual XElement Serialize()
         {
             var node = new XElement("row");
+
+            node.Add(new XAttribute("inode", InputNodeType));
+            node.Add(new XAttribute("onode", OutputNodeType));
+
             return node;
         }        
         #endregion
@@ -17,7 +21,7 @@ namespace rMind.Content.Row
         #region Deserialize
         public virtual void Deserialize(XElement node)
         {
-
+            //OutputNodeType = 
         }
 
         #endregion

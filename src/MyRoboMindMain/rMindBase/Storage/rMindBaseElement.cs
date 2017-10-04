@@ -13,6 +13,8 @@ namespace rMind.Elements
     /// </summary>
     public partial class rMindBaseElement : rMindBaseItem, IDrawContainer, IStorageObject
     {
+        public long Index { get { return GetController()?.GetIndexOfElement(this) ?? -1; } }
+
         public virtual XElement Serialize()
         {
             var itemNode = new XElement("item");

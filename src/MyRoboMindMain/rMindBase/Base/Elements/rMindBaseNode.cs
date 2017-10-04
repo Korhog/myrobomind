@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
 namespace rMind.Nodes
-{
+{  
     using Draw;
     using Elements;
 
@@ -85,6 +85,8 @@ namespace rMind.Nodes
 
     public class rMindBaseNode : rMindItemUI, IDrawElement
     {
+        public int Index { get { return m_parent.Nodes.IndexOf(this); } }
+
         rMindNodeTheme m_theme;
         public rMindNodeTheme Theme { 
             get
