@@ -71,7 +71,8 @@ namespace rMind.Elements
             m_scroll.DoubleTapped += (s, e) => { };
             m_canvas_center = new Vector2(m_canvas.Width / 2.0, m_canvas.Height / 2.0);
 
-            m_scroll.PointerReleased += onPointerUp;
+            m_canvas.PointerReleased += onPointerUp;
+
             m_scroll.PointerPressed += onPointerPress;
             m_scroll.PointerWheelChanged += onWheel;
 
@@ -96,7 +97,8 @@ namespace rMind.Elements
             // events                
             m_scroll.PointerMoved -= onPointerMove;
 
-            m_scroll.PointerReleased -= onPointerUp;
+            m_canvas.PointerReleased -= onPointerUp;
+
             m_scroll.PointerPressed -= onPointerPress;
             m_scroll.PointerWheelChanged -= onWheel;
 

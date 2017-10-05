@@ -74,9 +74,8 @@ namespace rMind.Elements
 
         private void onPointerPress(object sender, PointerRoutedEventArgs e)
         {
-            e.Handled = true;
-            GetController().SetDragWireDot(this, e);
-            Detach();            
+            e.Handled = true;            
+            GetController().SetDragWireDot(this, e);                      
         }
 
         void SubscribeInput()
@@ -140,6 +139,18 @@ namespace rMind.Elements
                 {
                     Wire.Delete();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Возвращает точку с друго конца нити
+        /// </summary>
+        public rMindBaseWireDot ReverseDot {
+            get
+            {
+                if (this == Wire.A)
+                    return Wire.B;
+                return Wire.A;
             }
         }
 

@@ -66,7 +66,7 @@ namespace rMind.CanvasEx
 
         public void Back()
         {
-            if (m_bread_crumbs.Count < 1)
+            if (m_bread_crumbs.Count < 2)
                 return;
 
             m_current_controller?.Unsubscribe();

@@ -31,7 +31,17 @@ namespace rMind.Elements
         {
             BakedNodes.Clear();
             foreach (var list in m_items.Select(x => x.Nodes))
-                BakedNodes.AddRange(list.Select(node => new KeyValuePair<Vector2, rMindBaseNode>(node.GetOffset(), node)));
+            {
+                BakedNodes.AddRange(
+                    list
+                        .Where(node => node.CanAttach && node.Parent != root.Parent) 
+                        .Select(node => 
+                            new KeyValuePair<Vector2, rMindBaseNode>(node.GetOffset(), 
+                            node
+                        )
+                    )
+                );
+            }
         }
 
         public virtual rMindBaseWire CreateWire()
@@ -69,6 +79,13 @@ namespace rMind.Elements
             m_items_state.DragedWireDot = item;
             if (item == null)
                 return;
+
+            var node = item.ReverseDot.Node;
+            if (node == null)
+                return;
+
+            item.Detach();
+            BakeNodes(node);
 
             item.Wire.SetEnabledHitTest(false);
             var p = e.GetCurrentPoint(m_canvas);

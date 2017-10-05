@@ -303,8 +303,7 @@ namespace rMind.Nodes
             if (wire != null)
             {
                 Attach(wire.A);
-                wire.SetEnabledHitTest(false);
-                GetController()?.BakeNodes(this);
+                wire.SetEnabledHitTest(false);                
                 GetController()?.SetDragWireDot(wire.B, e);                
             }
         }
@@ -406,6 +405,8 @@ namespace rMind.Nodes
                 m_area.Margin = value;
             }
         }
+
+        public bool CanAttach { get { return m_attach_mode == rMindNodeAttachMode.Multi || m_attached_dots.Count == 0; } }
     }
 
 }

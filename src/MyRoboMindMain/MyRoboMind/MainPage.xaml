@@ -10,31 +10,65 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="48"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Background="{ThemeResource SystemAccentColorDark2}">            
             <StackPanel.Resources>
                 <Style TargetType="Button">
+                    <Setter Property="Height" Value="48"/>
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="Template">
+                        <Setter.Value>   
+                            <ControlTemplate TargetType="Button">
+                                <Grid >
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualStateGroup.Transitions>
+                                                <VisualTransition To="PointerOver" GeneratedDuration="0:0:0.2"/>
+                                            </VisualStateGroup.Transitions>
+                                            <VisualState x:Name="Normal">
+                                                <Storyboard>
+                                                    <ColorAnimation                                                         
+                                                            Storyboard.TargetName="ButtonBrush" 
+                                                            Storyboard.TargetProperty="Color" To="Transparent" />
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="PointerOver">
+                                                <Storyboard>
+                                                    <ColorAnimation                                                         
+                                                        Storyboard.TargetName="ButtonBrush" 
+                                                        Storyboard.TargetProperty="Color" To="#22FFFFFF" />
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <Grid.Background>
+                                        <SolidColorBrush x:Name="ButtonBrush" Color="Transparent"/>
+                                    </Grid.Background>
+                                    <ContentPresenter 
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Center"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
                     <Setter Property="Foreground" Value="White"/>
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="Height" Value="50"/>
+                    <Setter Property="Background" Value="Transparent"/>                    
                 </Style>
             </StackPanel.Resources>
-            <Button VerticalAlignment="Top" Click="Button_Back">
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE0A6;" />
+            <Button VerticalAlignment="Top" Click="Button_Back" ToolTipService.ToolTip="Back" >
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE0A6;"  />
             </Button>
-            <Button VerticalAlignment="Top" Click="Button_Click">
+            <Button VerticalAlignment="Top" Click="Button_Click" ToolTipService.ToolTip="Add row item">
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE964;" />
             </Button>
-            <Button VerticalAlignment="Top" Click="Button_B_Click">
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE950;" />
+            <Button VerticalAlignment="Top" Click="Button_Save_Click" ToolTipService.ToolTip="Save scheme">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE105;"  />
             </Button>
-            <Button VerticalAlignment="Top" Click="Button_Save_Click">
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE159;" />
-            </Button>
-            <Button VerticalAlignment="Top" Click="Button_Save_Load">
+            <Button VerticalAlignment="Top" Click="Button_Save_Load" ToolTipService.ToolTip="Load scheme">
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE159;" />
             </Button>
         </StackPanel>
