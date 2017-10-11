@@ -1,5 +1,5 @@
 ﻿using System.Xml.Linq;
-
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
 namespace rMind.Project
@@ -62,24 +62,25 @@ namespace rMind.Project
         /// <summary>
         /// Save current project state in temp folder
         /// </summary>
-        public void  SaveState()
+        public async Task SaveState()
         {
             if (m_device_controller == null)
                 return;
 
             var data = m_device_controller.GetXML();
-            var storage = rMind.Storage.rMindStorage.GetInstance();
-            storage.SaveTmpData(data);
+            var storage = Storage.rMindStorage.GetInstance();
+            await storage.SaveTmpData(data);            
         }
 
         /// <summary>
         /// restore project state from temp folder
         /// </summary>
-        public async void RestoreState()
+        public async Task RestoreState()
         {
             var storage = rMind.Storage.rMindStorage.GetInstance();
             var doc = await storage.LoadTmpData();
             DeviceController.LoadFromXML(doc);
+            DeviceController.Draw();
         }
 
         /// <summary>

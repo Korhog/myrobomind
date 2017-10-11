@@ -40,7 +40,7 @@ namespace rMind.Storage
 
         /// <summary> Save temp project to local storage </summary>
         /// <param name="xml"></param>
-        public async void SaveTmpData(XDocument xml)
+        public async Task SaveTmpData(XDocument xml)
         {
             StorageFolder local = ApplicationData.Current.LocalFolder;
             var tmpFile = await local.CreateFileAsync(m_tmp_file_name, CreationCollisionOption.ReplaceExisting);
@@ -62,6 +62,7 @@ namespace rMind.Storage
             }
             
             string text = await FileIO.ReadTextAsync(tmpFile);
+
             if (string.IsNullOrEmpty(text))
                 return new XDocument();
 

@@ -91,13 +91,12 @@ namespace MyRoboMind
         /// </summary>
         /// <param name="sender">Источник запроса приостановки.</param>
         /// <param name="e">Сведения о запросе приостановки.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Сохранить состояние приложения и остановить все фоновые операции
+            //TODO: Сохранить состояние приложения и остановить все фоновые операции            
             var project = rMindProject.GetInstance();
-            project.SaveState();
-
+            await project.SaveState();
             deferral.Complete();
         }
     }

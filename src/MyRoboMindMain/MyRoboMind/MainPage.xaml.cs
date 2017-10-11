@@ -49,10 +49,9 @@ namespace MyRoboMind
 
             BreadCrumbs.ItemsSource = project.DeviceController.BreadCrumbs;
 
-            Loaded += (s, e) =>
+            Loaded += async (s, e) =>
             {
-                project.RestoreState();
-                project.DeviceController.Draw();
+                await project.RestoreState();
             };
 
             Window.Current.Activated += async (s, e) => {
