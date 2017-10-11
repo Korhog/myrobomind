@@ -68,9 +68,13 @@ namespace rMind.Elements
 
         public virtual void RemoveWire(rMindBaseWire wire)
         {
-            m_canvas.Children.Remove(wire.A.Template);
-            m_canvas.Children.Remove(wire.B.Template);
-            m_canvas.Children.Remove(wire.Line);
+            if (m_subscribed)
+            {
+                m_canvas.Children.Remove(wire.A.Template);
+                m_canvas.Children.Remove(wire.B.Template);
+                m_canvas.Children.Remove(wire.Line);
+            }
+
             m_wire_list.Remove(wire);
         }
 

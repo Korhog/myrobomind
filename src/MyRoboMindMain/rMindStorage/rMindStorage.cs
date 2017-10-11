@@ -50,12 +50,20 @@ namespace rMind.Storage
         /// <summary> Load temp project from local storage </summary>
         public async Task<XDocument> LoadTmpData()
         {
+            StorageFile tmpFile;
             StorageFolder local = ApplicationData.Current.LocalFolder;
-            var tmpFile = await local.GetFileAsync(m_tmp_file_name);
-            if (tmpFile == null)
-                return null;
-
+            try
+            {
+                tmpFile = await local.GetFileAsync(m_tmp_file_name);
+            }
+            catch
+            {
+                return new XDocument();
+            }
+            
             string text = await FileIO.ReadTextAsync(tmpFile);
+            if (string.IsNullOrEmpty(text))
+                return new XDocument();
 
             XDocument doc = XDocument.Parse(text);
             return doc;

@@ -181,6 +181,25 @@ namespace rMind.Elements
 
             item.SetPosition(pos);
         }
+
+        // controller reset
+        public virtual void Reset()
+        {
+            if (m_subscribed)
+            {
+                m_canvas.Children.Clear();
+            }
+
+            while (m_wire_list.Count > 0)
+                m_wire_list[0].Delete();
+
+            foreach (var item in m_items)
+            {
+                item.Reset();
+            }
+
+            m_items.Clear();
+        }
     }
 }
 

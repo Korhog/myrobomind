@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Popups;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,6 +17,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Foundation.Metadata;
 using Windows.UI.ViewManagement;
 
+using rMind.Project;
 using rMind.CanvasEx;
 using rMind.Elements;
 using rMind.Content.Quad;
@@ -30,9 +32,6 @@ namespace MyRoboMind
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        rMindBaseController controller;
-        rMindCanvasController canvas_controller;
-
         rMindBaseElement Create(rMindBaseController controller, double x, double y)
         {
             var container = new rMindBaseElement(controller);
@@ -45,11 +44,16 @@ namespace MyRoboMind
         {
             InitializeComponent();
             
-            canvas_controller = new rMindCanvasController(canvas, scroll);
-            BreadCrumbs.ItemsSource = canvas_controller.BreadCrumbs;
+            var project = rMind.Project.rMindProject.GetInstance();
+            project.SetupDevice(canvas, scroll);
 
-            controller = new rMindBaseController(canvas_controller);
-            canvas_controller.SetController(controller);
+            BreadCrumbs.ItemsSource = project.DeviceController.BreadCrumbs;
+
+            Loaded += (s, e) =>
+            {
+                project.RestoreState();
+                project.DeviceController.Draw();
+            };
 
             Window.Current.Activated += async (s, e) => {
                 if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
@@ -57,12 +61,12 @@ namespace MyRoboMind
                     var statusBar = StatusBar.GetForCurrentView();
                     await statusBar.HideAsync();
                 }
-            };
+            };            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var cont = canvas_controller.CurrentController;
+            var cont = rMindProject.GetInstance().DeviceController.CurrentController;
             if (cont == null)
                 return;
 
@@ -80,7 +84,7 @@ namespace MyRoboMind
 
         private void Button_B_Click(object sender, RoutedEventArgs e)
         {
-            var cont = canvas_controller.CurrentController;
+            var cont = rMindProject.GetInstance().DeviceController.CurrentController;
             if (cont == null)
                 return;
 
@@ -105,19 +109,14 @@ namespace MyRoboMind
             container.SetPosition(cont.GetScreenCenter(container));
         }
 
-        private void Button_Subscribe(object sender, RoutedEventArgs e)
-        {
-            canvas_controller.SetController(controller);
-        }
-
         private void Button_Unsubscribe(object sender, RoutedEventArgs e)
         {
-            canvas_controller.SetController(null);
+            rMindProject.GetInstance().DeviceController.SetController(null);
         }
 
         private void Button_Back(object sender, RoutedEventArgs e)
         {
-            canvas_controller.Back();
+            rMind.Project.rMindProject.GetInstance().DeviceController.Back();
         }
 
         private void BreadCrumbClick(object sender, ItemClickEventArgs e)
@@ -126,21 +125,29 @@ namespace MyRoboMind
             if (o == null)
                 return;
 
-            canvas_controller.SetController(o);
+            rMind.Project.rMindProject.GetInstance().DeviceController.SetController(o);
         }
 
         private void Button_Save_Click(object sender, RoutedEventArgs e)
         {
-            var data = canvas_controller.GetXML();
-            var storage = rMind.Storage.rMindStorage.GetInstance();
-            storage.SaveTmpData(data);
+            rMindProject.GetInstance().SaveState();
         }
 
-        private async void Button_Save_Load(object sender, RoutedEventArgs e)
+        private async void onLoadClick(object sender, RoutedEventArgs e)
         {
-            var storage = rMind.Storage.rMindStorage.GetInstance();
-            var doc = await storage.LoadTmpData();
-            canvas_controller.LoadFromXML(doc);
+            var diag = new MessageDialog("Reset project?") { Title = "Azaza" };
+            
+            diag.Commands.Add(new UICommand() { Label = "Yes", Id = 0 });
+            diag.Commands.Add(new UICommand() { Label = "No", Id = 1 });
+
+            var res = await diag.ShowAsync();
+            if ((int)res.Id == 0)
+                rMindProject.GetInstance().RestoreState();
+        }
+
+        private void onResetClick(object sender, RoutedEventArgs e)
+        {
+            rMindProject.GetInstance().Reset();
         }
     }
 }

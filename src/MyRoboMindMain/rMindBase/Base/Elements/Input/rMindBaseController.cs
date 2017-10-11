@@ -66,18 +66,16 @@ namespace rMind.Elements
             m_canvas.Children.Add(m_test);
 
 
-            // events            
-            m_scroll.PointerMoved += onPointerMove;
-            m_scroll.DoubleTapped += (s, e) => { };
+            // events 
             m_canvas_center = new Vector2(m_canvas.Width / 2.0, m_canvas.Height / 2.0);
 
             m_canvas.PointerReleased += onPointerUp;
+            m_canvas.PointerWheelChanged += onWheel;
 
-            m_scroll.PointerPressed += onPointerPress;
-            m_scroll.PointerWheelChanged += onWheel;
-
+            m_scroll.PointerMoved += onPointerMove;
+            m_scroll.PointerPressed += onPointerPress;  
             m_scroll.PointerExited += onPointerExit;
-
+            m_scroll.PointerEntered += onPointerEnter;
             m_scroll.Loaded += onLoad;
 
             Window.Current.CoreWindow.KeyDown += onKeyDown;
@@ -94,17 +92,16 @@ namespace rMind.Elements
 
         public void UnsubscribeInput()
         {
-            // events                
-            m_scroll.PointerMoved -= onPointerMove;
-
+            // events   
             m_canvas.PointerReleased -= onPointerUp;
+            m_canvas.PointerWheelChanged -= onWheel;
 
+            m_scroll.PointerMoved -= onPointerMove;
             m_scroll.PointerPressed -= onPointerPress;
-            m_scroll.PointerWheelChanged -= onWheel;
-
             m_scroll.Loaded -= onLoad;
-
             m_scroll.PointerExited -= onPointerExit;
+            m_scroll.PointerEntered -= onPointerEnter;
+            m_scroll.Loaded -= onLoad;
 
             Window.Current.CoreWindow.KeyDown -= onKeyDown;
             Window.Current.CoreWindow.KeyUp -= onKeyUp;
@@ -133,14 +130,6 @@ namespace rMind.Elements
                 SetSelectedItem(null);   
             }
 
-            if (point.Properties.PointerUpdateKind == PointerUpdateKind.MiddleButtonReleased)
-            {
-                if (m_overed_item != null)
-                {
-                    m_overed_item.Delete();
-                }
-            }
-
             if (m_items_state.IsDragDot())
             {
                 var attachNode = m_items_state.OveredNode ?? m_items_state.MagnetNode;
@@ -163,6 +152,11 @@ namespace rMind.Elements
             m_items_state.DragedItem = null;
             m_canvas.ManipulationMode = ManipulationModes.System;
             m_manipulation_mode = rMindManipulationMode.None;            
+        }
+
+        protected virtual void onPointerEnter(object sender, PointerRoutedEventArgs e)
+        {
+            SetDragItem(null, e);
         }
 
         protected virtual void onPointerExit(object sender, PointerRoutedEventArgs e)
@@ -304,7 +298,14 @@ namespace rMind.Elements
 
         protected virtual void onWheel(object sender, PointerRoutedEventArgs e)
         {
-            e.Handled = true;
+            if (m_scroll == null) return;
+            if (e.KeyModifiers == Windows.System.VirtualKeyModifiers.Shift)
+            {
+                e.Handled = true;
+                var wheelDelta = e.GetCurrentPoint(m_scroll).Properties.MouseWheelDelta;
+                m_scroll.ChangeView(m_scroll.HorizontalOffset + wheelDelta, null, null);
+                return;
+            }
         }
 
         protected virtual void onKeyDown(CoreWindow window, KeyEventArgs e)

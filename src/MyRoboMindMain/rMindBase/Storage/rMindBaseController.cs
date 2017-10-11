@@ -102,8 +102,10 @@ namespace rMind.Elements
         {
             rElementType type = rElementType.RET_NONE;
             Enum.TryParse(itemNode.Attribute("type")?.Value, out type);
-            var item = CreateElementByElementType(type); 
+            var item = CreateElementByElementType(type, true); 
             item.Deserialize(itemNode);
+            Draw(item);
+            item.Template.UpdateLayout();            
         }
 
         protected virtual void DeserializeWires(XElement wiresNode)

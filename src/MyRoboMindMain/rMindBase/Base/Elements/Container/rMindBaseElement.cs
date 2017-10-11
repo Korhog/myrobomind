@@ -133,6 +133,7 @@ namespace rMind.Elements
             e.Handled = true;
             Parent.SetPointerTimestamp(e);
             Parent.SetOveredItem(null);
+
             if (m_selected)
                 return;         
         }
@@ -142,11 +143,6 @@ namespace rMind.Elements
             if (Parent.CheckIsOvered(this))
             {
                 Parent.SetDragItem(null, e);
-                if (!m_has_translate)
-                {
-                    SetSelected(true);
-                    Parent.SetSelectedItem(this, e.KeyModifiers == Windows.System.VirtualKeyModifiers.Shift);
-                }
             }            
         }
 
@@ -156,6 +152,8 @@ namespace rMind.Elements
             if (Parent.CheckIsOvered(this))
             {                
                 Parent.SetDragItem(this, e);
+                SetSelected(true);
+                Parent.SetSelectedItem(this, e.KeyModifiers == Windows.System.VirtualKeyModifiers.Shift);
             }
             m_has_translate = false;
         }
@@ -312,6 +310,11 @@ namespace rMind.Elements
             var bottom = top + rect.Height;
 
             return Position.X > left && (Position.X + Width) < right && Position.Y > top && (Position.Y + Height < bottom);
+        }
+
+        public virtual void Reset()
+        {
+            m_inner_controller?.Reset();    
         }
     }
 }

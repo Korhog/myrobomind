@@ -19,8 +19,9 @@ namespace rMind.CanvasEx
         rMindBaseController m_root_controller;
         rMindBaseController m_current_controller;
 
-        public rMindBaseController CurrentController {  get { return m_current_controller; } }       
+        public rMindBaseController CurrentController {  get { return m_current_controller; } }
 
+        bool m_draw = false;
         Canvas m_canvas;
         ScrollViewer m_scroll;
 
@@ -31,7 +32,7 @@ namespace rMind.CanvasEx
             m_canvas = canvas;
             m_scroll = scroll;
 
-            m_bread_crumbs = new ObservableCollection<rMindBaseController>();
+            m_bread_crumbs = new ObservableCollection<rMindBaseController>();           
         }
 
         public void SetController(rMindBaseController controller)
@@ -46,7 +47,7 @@ namespace rMind.CanvasEx
 
                 m_current_controller?.Unsubscribe();
                 m_current_controller = controller;
-                m_current_controller.Subscribe(m_canvas, m_scroll);
+                if (m_draw) m_current_controller.Subscribe(m_canvas, m_scroll);
 
                 var remove = m_bread_crumbs.Where(x => m_bread_crumbs.IndexOf(x) > idx).ToList();
                 foreach (var item in remove)
@@ -60,7 +61,7 @@ namespace rMind.CanvasEx
                 return;
 
             m_current_controller = controller;
-            m_current_controller.Subscribe(m_canvas, m_scroll);
+            if (m_draw) m_current_controller.Subscribe(m_canvas, m_scroll);
             m_bread_crumbs.Add(m_current_controller);
         }
 
@@ -97,16 +98,34 @@ namespace rMind.CanvasEx
         }
 
         public void LoadFromXML(XDocument doc)
-        {
+        {            
             var root = doc.Elements().FirstOrDefault();
 
             if (m_root_controller == null)
-                return;
+                return;           
 
+            m_root_controller.Reset();
             m_root_controller.Deserialize(root);
-
         }
 
         public ObservableCollection<rMindBaseController> BreadCrumbs { get { return m_bread_crumbs; } }
+
+        /// <summary>
+        /// Commit 
+        /// </summary>
+        public void Draw()
+        {
+            m_draw = true;
+            SetController(m_root_controller);
+        }
+
+        public void Reset()
+        {
+            if (m_root_controller == null)
+                return;
+            
+            m_root_controller.Reset();
+            SetController(m_root_controller);
+        }
     }
 }

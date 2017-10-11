@@ -42,11 +42,11 @@ namespace rMind.Elements
         /// <summary>
         /// Add new element
         /// </summary>
-        public virtual rMindBaseElement AddElement(rMindBaseElement item)
+        public virtual rMindBaseElement AddElement(rMindBaseElement item, bool silent = false)
         {
             m_items.Add(item);
 
-            if (m_subscribed)
+            if (m_subscribed && !silent)
             {
                 Draw(item);
             }
@@ -166,16 +166,16 @@ namespace rMind.Elements
             );
         }
 
-        public virtual rMindBaseElement CreateElementByElementType(rElementType type)
+        public virtual rMindBaseElement CreateElementByElementType(rElementType type, bool silent = false)
         {
             rMindBaseElement element = null;
             switch (type)
             {
                 case rElementType.RET_NONE:
-                    element = new Content.rMindHeaderRowContainer(this);
-                    AddElement(element);
+                    element = new Content.rMindHeaderRowContainer(this);                    
                     break;                
-            }
+            }            
+            AddElement(element, silent);
 
             return element;
         }
