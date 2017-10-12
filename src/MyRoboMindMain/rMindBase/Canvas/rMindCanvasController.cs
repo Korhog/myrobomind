@@ -16,6 +16,8 @@ namespace rMind.CanvasEx
 
     public class rMindCanvasController
     {
+        public string NodeName { get; set; }
+
         rMindBaseController m_root_controller;
         rMindBaseController m_current_controller;
 
@@ -29,6 +31,8 @@ namespace rMind.CanvasEx
 
         public rMindCanvasController(Canvas canvas, ScrollViewer scroll)
         {
+            NodeName = "scheme";
+
             m_canvas = canvas;
             m_scroll = scroll;
 
@@ -86,19 +90,22 @@ namespace rMind.CanvasEx
             return null;                   
         }
 
-        public XDocument GetXML()
+        public XElement GetXML()
         {
             if (m_root_controller == null)
                 return null;
 
-            var doc = new XDocument();
+            var doc = new XElement(NodeName);
             var node = m_root_controller.Serialize();
             doc.AddFirst(node);
             return doc;
         }
 
-        public void LoadFromXML(XDocument doc)
-        {            
+        public void LoadFromXML(XElement doc)
+        {
+            if (doc == null)
+                return;
+
             var root = doc.Elements().FirstOrDefault();
 
             if (m_root_controller == null)

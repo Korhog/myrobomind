@@ -22,16 +22,21 @@ namespace MyRoboMind.Pages
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
     /// </summary>
-    public sealed partial class DevicePage : Page
+    public sealed partial class LogicPage : Page
     {
-        public DevicePage()
+        public LogicPage()
         {
             this.InitializeComponent();
 
             var project = rMind.Project.rMindProject.GetInstance();
-            project.SetupDevice(canvas, scroll);
+            project.SetupLogic(canvas, scroll);
 
-            BreadCrumbs.ItemsSource = project.DeviceController.BreadCrumbs;
+            BreadCrumbs.ItemsSource = project.LogicController.BreadCrumbs;
+
+            Loaded += (sender, o) =>
+            {
+                project.LogicController.Draw();
+            };
         }
 
         private void BreadCrumbClick(object sender, ItemClickEventArgs e)
@@ -45,7 +50,7 @@ namespace MyRoboMind.Pages
 
         private void OnAddClick(object sender, RoutedEventArgs e)
         {
-            var cont = rMindProject.GetInstance().DeviceController.CurrentController;
+            var cont = rMindProject.GetInstance().LogicController.CurrentController;
             if (cont == null)
                 return;
 

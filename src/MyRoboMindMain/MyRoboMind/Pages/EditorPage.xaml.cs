@@ -24,8 +24,13 @@ namespace MyRoboMind.Pages
     {
         public EditorPage()
         {
-            this.InitializeComponent();
-            DeviceFrame.Navigate(typeof(MainPage), null);
+            InitializeComponent();
+            DeviceFrame.Navigate(typeof(DevicePage), null);
+            LogicFrame.Navigate(typeof(LogicPage), null);
+
+            Loaded += async (sender, e) => {
+                await rMind.Project.rMindProject.GetInstance().RestoreState();
+            };
         }
     }
 }

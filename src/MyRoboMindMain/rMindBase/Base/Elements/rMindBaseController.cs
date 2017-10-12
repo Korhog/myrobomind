@@ -193,7 +193,7 @@ namespace rMind.Elements
             while (m_wire_list.Count > 0)
                 m_wire_list[0].Delete();
 
-            foreach (var item in m_items)
+            foreach (var item in m_items.Where(x => x.Storable))
             {
                 item.Reset();
             }
