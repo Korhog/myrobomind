@@ -27,6 +27,8 @@ namespace rMind.CanvasEx
         Canvas m_canvas;
         ScrollViewer m_scroll;
 
+        public float Zoom { get { return m_scroll?.ZoomFactor ?? 1.0f; } }
+
         ObservableCollection<rMindBaseController> m_bread_crumbs;
 
         public rMindCanvasController(Canvas canvas, ScrollViewer scroll)

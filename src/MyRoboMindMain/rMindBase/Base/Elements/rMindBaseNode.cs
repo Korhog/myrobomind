@@ -11,6 +11,7 @@ namespace rMind.Nodes
 {  
     using Draw;
     using Elements;
+    using rMind.Input;
 
     public enum rMindNodeType
     {
@@ -79,11 +80,11 @@ namespace rMind.Nodes
     {
         public rMindNodeType NodeType;
         public rMindNodeOriantation NodeOrientation;
-        public rMindNodeAttachMode AttachMode;
+        public rMindNodeAttachMode AttachMode { get; set; }
         public rMindNodeConnectionType ConnectionType;
     }
 
-    public class rMindBaseNode : rMindItemUI, IDrawElement
+    public partial class rMindBaseNode : rMindItemUI, IDrawElement, IInteractElement
     {
         public int Index { get { return m_parent.Nodes.IndexOf(this); } }
 
@@ -296,33 +297,6 @@ namespace rMind.Nodes
 
         }
 
-        private void onPointerPress(object sender, PointerRoutedEventArgs e)
-        {
-            e.Handled = true;
-            var wire = GetController()?.CreateWire();
-            if (wire != null)
-            {
-                Attach(wire.A);
-                wire.SetEnabledHitTest(false);                
-                GetController()?.SetDragWireDot(wire.B, e);                
-            }
-        }
-
-        void SubscribeInput()
-        {
-            m_hit_area.PointerEntered += onPointerEnter;
-            m_hit_area.PointerExited += onPointerExit;
-            m_hit_area.PointerPressed += onPointerPress;
-            m_hit_area.PointerReleased += onPointerUp;            
-        }
-
-        void UnsubscribeInput()
-        {
-            m_hit_area.PointerEntered -= onPointerEnter;
-            m_hit_area.PointerExited -= onPointerExit;
-            m_hit_area.PointerPressed -= onPointerPress;
-            m_hit_area.PointerReleased -= onPointerUp;            
-        }
         #endregion
 
         protected override void Glow(bool state)

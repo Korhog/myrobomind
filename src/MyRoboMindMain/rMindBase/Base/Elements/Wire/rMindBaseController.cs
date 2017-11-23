@@ -91,13 +91,8 @@ namespace rMind.Elements
             item.Detach();
             BakeNodes(node);
 
-            item.Wire.SetEnabledHitTest(false);
             var p = e.GetCurrentPoint(m_canvas);
             item.SetPosition(new Vector2(p.Position.X, p.Position.Y));
-            m_items_state.StartPointerPosition = new Vector2(p.Position.X, p.Position.Y);
-            m_items_state.StartPosition = item.Position;
-
-            SetManipulation(false, e);
         }
     }
 }

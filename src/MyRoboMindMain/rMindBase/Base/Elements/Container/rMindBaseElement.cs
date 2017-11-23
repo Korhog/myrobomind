@@ -18,6 +18,7 @@ namespace rMind.Elements
     using Storage;
     using ColorContainer;
     using Nodes;
+    using Input;
 
     public enum rElementType
     {
@@ -27,7 +28,7 @@ namespace rMind.Elements
     /// <summary>
     /// Base controller element 
     /// </summary>   
-    public partial class rMindBaseElement : rMindBaseItem, IDrawContainer, IStorageObject
+    public partial class rMindBaseElement : rMindBaseItem, IDrawContainer, IStorageObject, IInteractElement
     {
         protected bool m_storable = true;
         public bool Storable { get { return m_storable; } set { m_storable = value; } }
@@ -123,63 +124,48 @@ namespace rMind.Elements
         #region input        
         private void onPointerEnter(object sender, PointerRoutedEventArgs e)
         {
-            if (m_locked) return;
+            //if (m_locked) return;
 
-            e.Handled = true;
-            Parent.SetOveredItem(this);
-            if (m_selected)
-                return;        
+            //e.Handled = true;
+            //Parent.SetOveredItem(this);
+            //if (m_selected)
+            //    return;        
         }
 
 
         private void onPointerExit(object sender, PointerRoutedEventArgs e)
         {
-            if (m_locked) return;
-            // e.Handled = true;
-            Parent.SetPointerTimestamp(e);
-            Parent.SetOveredItem(null);
+            //if (m_locked) return;
+            //// e.Handled = true;
+            //Parent.SetPointerTimestamp(e);
+            //Parent.SetOveredItem(null);
 
-            if (m_selected)
-                return;         
+            //if (m_selected)
+            //    return;         
         }
 
         private void onPointerUp(object sender, PointerRoutedEventArgs e)
         {
-            if (m_locked) return;
-            if (Parent.CheckIsOvered(this))
-            {
-                Parent.SetDragItem(null, e);
-            }            
+            //if (m_locked) return;
+            //if (Parent.CheckIsOvered(this))
+            //{
+            //    Parent.SetDragItem(null, e);
+            //}            
         }
 
         private void onPointerPress(object sender, PointerRoutedEventArgs e)
         {
-            if (m_locked) return;
-            // e.Handled = true;
-            if (Parent.CheckIsOvered(this))
-            {                
-                Parent.SetDragItem(this, e);
-                SetSelected(true);
-                Parent.SetSelectedItem(this, e.KeyModifiers == Windows.System.VirtualKeyModifiers.Shift);
-            }
-            m_has_translate = false;
+            //if (m_locked) return;
+            //// e.Handled = true;
+            //if (Parent.CheckIsOvered(this))
+            //{                
+            //    Parent.SetDragItem(this, e);
+            //    SetSelected(true);
+            //    Parent.SetSelectedItem(this, e.KeyModifiers == Windows.System.VirtualKeyModifiers.Shift);
+            //}
+            //m_has_translate = false;
         }
 
-        void SubscribeInput()
-        {
-            m_base.PointerEntered += onPointerEnter;
-            m_base.PointerExited += onPointerExit;
-            m_base.PointerPressed += onPointerPress;
-            m_base.PointerReleased += onPointerUp;
-        }
-
-        void UnsubscribeInput()
-        {
-            m_base.PointerEntered -= onPointerEnter;
-            m_base.PointerExited -= onPointerExit;
-            m_base.PointerPressed -= onPointerPress;
-            m_base.PointerReleased -= onPointerUp;
-        }
         #endregion
 
         #region nodes

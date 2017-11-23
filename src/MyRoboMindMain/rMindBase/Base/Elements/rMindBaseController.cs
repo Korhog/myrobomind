@@ -156,10 +156,52 @@ namespace rMind.Elements
             }
         }
 
+        /// <summary> Отпускаем нод, который тянем </summary>
+        public void DropWireDot()
+        {
+            var attachNode = m_items_state.OveredNode ?? m_items_state.MagnetNode;
+
+            if (attachNode == null)
+            {
+                m_items_state.DragedWireDot.Wire.Delete();
+                m_items_state.DragedWireDot = null;
+            }
+            else
+            {
+                attachNode.Attach(m_items_state.DragedWireDot);
+                m_items_state.DragedWireDot.Wire.SetEnabledHitTest(true);
+            }
+
+            m_magnet.Hide();
+        }
+
+        public void TranslateWireDot(Vector2 translation)
+        {
+            var item = m_items_state.DragedWireDot;
+            item.Translate(translation);
+
+            m_items_state.MagnetNode = BakedNodes
+                .Where(pair => Vector2.Length(pair.Key - item.Position) < (100 / m_scroll.ZoomFactor))
+                .OrderBy(pair => Vector2.Length(pair.Key - item.Position))
+                .Select(pair => pair.Value)
+                .FirstOrDefault();
+
+            if (m_items_state.MagnetNode == null)
+            {
+                m_magnet.Hide();
+            }
+            else
+            {
+                m_magnet.Show();
+                m_magnet.Magnet(item.Position, m_items_state.MagnetNode.GetOffset());
+            }   
+        }
+
         protected void DragWireDot(PointerRoutedEventArgs e)
         {
             var p = e.GetCurrentPoint(m_canvas);
             Vector2 offset = new Vector2(p) - m_items_state.StartPointerPosition;
+
             var item = m_items_state.DragedWireDot;
             var pos = m_items_state.StartPosition + offset;
             // var seek nodes 
@@ -177,7 +219,7 @@ namespace rMind.Elements
             {
                 m_magnet.Show();
                 m_magnet.Magnet(pos, m_items_state.MagnetNode.GetOffset());
-            }                          
+            }
 
             item.SetPosition(pos);
         }

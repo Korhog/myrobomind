@@ -8,9 +8,10 @@ namespace rMind.Elements
 {
     using Draw;
     using Nodes;
+    using rMind.Input;
     using Types;
     /// <summary> Ending of wire </summary>
-    public class rMindBaseWireDot : rMindItemUI, IDrawElement
+    public partial class rMindBaseWireDot : rMindItemUI, IDrawElement, IInteractElement
     {
         rMindBaseWire m_parent;
         public rMindBaseWire Wire { get { return m_parent; } }
@@ -52,48 +53,6 @@ namespace rMind.Elements
         {            
             return new Vector2(0, 0);            
         }
-
-        #region input        
-        private void onPointerEnter(object sender, PointerRoutedEventArgs e)
-        {
-            //e.Handled = true;
-            Glow(true);
-        }
-
-
-        private void onPointerExit(object sender, PointerRoutedEventArgs e)
-        {
-            //e.Handled = true;
-            Glow(false);
-        }
-
-        private void onPointerUp(object sender, PointerRoutedEventArgs e)
-        {
-            e.Handled = true;           
-        }
-
-        private void onPointerPress(object sender, PointerRoutedEventArgs e)
-        {
-            e.Handled = true;            
-            GetController().SetDragWireDot(this, e);                      
-        }
-
-        void SubscribeInput()
-        {
-            m_area.PointerEntered += onPointerEnter;
-            m_area.PointerExited += onPointerExit;
-            m_area.PointerPressed += onPointerPress;
-            m_area.PointerReleased += onPointerUp;
-        }
-
-        void UnsubscribeInput()
-        {
-            m_area.PointerEntered -= onPointerEnter;
-            m_area.PointerExited -= onPointerExit;
-            m_area.PointerPressed -= onPointerPress;
-            m_area.PointerReleased -= onPointerUp;
-        }
-        #endregion
 
         public override Vector2 SetPosition(Vector2 vector)
         {

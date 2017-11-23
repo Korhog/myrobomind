@@ -117,6 +117,9 @@
     <Compile Include="Base\Elements\Container\rMindBaseController.cs" />
     <Compile Include="Base\Elements\Container\rMindBaseItem.cs" />
     <Compile Include="Base\Elements\Input\rMindBaseController.cs" />
+    <Compile Include="Base\Elements\Input\rMindBaseElement.cs" />
+    <Compile Include="Base\Elements\Input\rMindBaseNode.cs" />
+    <Compile Include="Base\Elements\Input\rMindBaseWireDot.cs" />
     <Compile Include="Base\Elements\Input\ScrollViewerEx.cs" />
     <Compile Include="Base\Elements\Menu\rMindBaseController.cs" />
     <Compile Include="Base\Elements\rMindDebugContainer.cs" />
@@ -132,6 +135,7 @@
     <Compile Include="Base\Elements\rMindBaseController.cs" />
     <Compile Include="Base\Elements\Container\rMindBaseElement.cs" />
     <Compile Include="Base\Elements\rMindBaseNode.cs" />
+    <Compile Include="Base\Interfaces\IInteractElement.cs" />
     <Compile Include="Canvas\rMindCanvas.cs" />
     <Compile Include="Canvas\rMindCanvasController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
