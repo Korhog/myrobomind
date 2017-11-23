@@ -23,9 +23,13 @@ namespace rMind.Project
 
         void InitBoard()
         {
-            m_board = new rMindQuadContainer(this);
+            m_board = new rMindQuadContainer(this)
+            {
+                Locked = true,
+                Storable = false
+            };
+
             m_board.SetPosition(5000, 3000);
-            m_board.Storable = false;
 
             rMindHorizontalLine line;
             m_board.CreateLine<rMindVerticalLine>();

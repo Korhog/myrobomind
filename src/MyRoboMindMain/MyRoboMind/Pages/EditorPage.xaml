@@ -7,10 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rmind="using:rMind.Elements"
     mc:Ignorable="d" >
-    
-
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Pivot Background="#2D2D2F">
+    <Grid Background="#2D2D2F">
+        <Pivot>
             <Pivot.Style>                
                 <Style TargetType="Pivot">                    
                     <Setter Property="Margin" Value="0"/>

@@ -1,23 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRoboMind", "MyRoboMind\MyRoboMind.csproj", "{047CEDB9-F0E1-45D8-A62C-B729F5C85482}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMindCore", "rMindCore\rMindCore.csproj", "{EF958129-26FB-4B57-9B28-021D4B0005C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMind.Core", "rMindCore\rMind.Core.csproj", "{EF958129-26FB-4B57-9B28-021D4B0005C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMindBase", "rMindBase\rMindBase.csproj", "{709002B9-916F-481F-981B-6F4F0C2B51DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMind.Base", "rMindBase\rMind.Base.csproj", "{709002B9-916F-481F-981B-6F4F0C2B51DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMindTheme", "rMindTheme\rMindTheme.csproj", "{458F5C99-D7E2-481A-BAEF-DB0D694A0F8A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMind.Theme", "rMindTheme\rMind.Theme.csproj", "{458F5C99-D7E2-481A-BAEF-DB0D694A0F8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMindBaseControls", "rMindBaseControls\rMindBaseControls.csproj", "{DDE69CFE-2F1D-46ED-A414-EB48870FF997}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMind.BaseControls", "rMindBaseControls\rMind.BaseControls.csproj", "{DDE69CFE-2F1D-46ED-A414-EB48870FF997}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMindStorage", "rMindStorage\rMindStorage.csproj", "{926D5C3D-0424-454E-B78B-B50731744D7B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMind.Storage", "rMindStorage\rMind.Storage.csproj", "{926D5C3D-0424-454E-B78B-B50731744D7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMindProject", "rMindProject\rMindProject.csproj", "{EFBDB85E-D783-4435-B2F2-EA00F41C0EF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMind.Project", "rMindProject\rMind.Project.csproj", "{EFBDB85E-D783-4435-B2F2-EA00F41C0EF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMindControls", "rMindControls\rMindControls.csproj", "{47CA55A3-E638-4407-8764-ED489E187A15}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMind.Controls", "rMindControls\rMind.Controls.csproj", "{47CA55A3-E638-4407-8764-ED489E187A15}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{9757EAB5-E438-4F5D-A97A-E857D5EAE4B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -166,6 +168,15 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EF958129-26FB-4B57-9B28-021D4B0005C2} = {9757EAB5-E438-4F5D-A97A-E857D5EAE4B1}
+		{709002B9-916F-481F-981B-6F4F0C2B51DB} = {9757EAB5-E438-4F5D-A97A-E857D5EAE4B1}
+		{458F5C99-D7E2-481A-BAEF-DB0D694A0F8A} = {9757EAB5-E438-4F5D-A97A-E857D5EAE4B1}
+		{DDE69CFE-2F1D-46ED-A414-EB48870FF997} = {9757EAB5-E438-4F5D-A97A-E857D5EAE4B1}
+		{926D5C3D-0424-454E-B78B-B50731744D7B} = {9757EAB5-E438-4F5D-A97A-E857D5EAE4B1}
+		{EFBDB85E-D783-4435-B2F2-EA00F41C0EF9} = {9757EAB5-E438-4F5D-A97A-E857D5EAE4B1}
+		{47CA55A3-E638-4407-8764-ED489E187A15} = {9757EAB5-E438-4F5D-A97A-E857D5EAE4B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BEF85059-025A-4685-AFD4-7481A9E427B8}

@@ -123,6 +123,8 @@ namespace rMind.Elements
         #region input        
         private void onPointerEnter(object sender, PointerRoutedEventArgs e)
         {
+            if (m_locked) return;
+
             e.Handled = true;
             Parent.SetOveredItem(this);
             if (m_selected)
@@ -132,6 +134,7 @@ namespace rMind.Elements
 
         private void onPointerExit(object sender, PointerRoutedEventArgs e)
         {
+            if (m_locked) return;
             // e.Handled = true;
             Parent.SetPointerTimestamp(e);
             Parent.SetOveredItem(null);
@@ -141,7 +144,8 @@ namespace rMind.Elements
         }
 
         private void onPointerUp(object sender, PointerRoutedEventArgs e)
-        {            
+        {
+            if (m_locked) return;
             if (Parent.CheckIsOvered(this))
             {
                 Parent.SetDragItem(null, e);
@@ -150,6 +154,7 @@ namespace rMind.Elements
 
         private void onPointerPress(object sender, PointerRoutedEventArgs e)
         {
+            if (m_locked) return;
             // e.Handled = true;
             if (Parent.CheckIsOvered(this))
             {                

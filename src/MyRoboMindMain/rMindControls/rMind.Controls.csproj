@@ -7,8 +7,8 @@
     <ProjectGuid>{47CA55A3-E638-4407-8764-ED489E187A15}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>rMindControls</RootNamespace>
-    <AssemblyName>rMindControls</AssemblyName>
+    <RootNamespace>rMind.Controls</RootNamespace>
+    <AssemblyName>rMind.Controls</AssemblyName>
     <DefaultLanguage>ru-RU</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
@@ -122,13 +122,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\rMindBase\rMindBase.csproj">
+    <ProjectReference Include="..\rMindBase\rMind.Base.csproj">
       <Project>{709002b9-916f-481f-981b-6f4f0c2b51db}</Project>
-      <Name>rMindBase</Name>
+      <Name>rMind.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\rMindStorage\rMindStorage.csproj">
+    <ProjectReference Include="..\rMindStorage\rMind.Storage.csproj">
       <Project>{926d5c3d-0424-454e-b78b-b50731744d7b}</Project>
-      <Name>rMindStorage</Name>
+      <Name>rMind.Storage</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -168,6 +168,9 @@ namespace rMind.Elements
                 return;
             }
 
+            SetDragItem(null, e);
+            SetDragWireDot(null, e);
+
             var point = e.GetCurrentPoint(m_scroll);
             m_pointer_timestamp = point.Timestamp;
         }

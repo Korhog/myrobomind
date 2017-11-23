@@ -7,8 +7,8 @@
     <ProjectGuid>{EF958129-26FB-4B57-9B28-021D4B0005C2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>rMindCore</RootNamespace>
-    <AssemblyName>rMindCore</AssemblyName>
+    <RootNamespace>rMind.Core</RootNamespace>
+    <AssemblyName>rMind.Core</AssemblyName>
     <DefaultLanguage>ru-RU</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
