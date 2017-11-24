@@ -76,6 +76,36 @@ namespace rMind.Elements
         {
             if (item == null)
             {
+                foreach (var selection in SelectedItems)
+                    selection.SetSelected(false);
+                SelectedItems.Clear();
+                return;
+            }
+
+            if (multi)
+            {
+                if (!SelectedItems.Contains(item))
+                {
+                    item.SetSelected(true);
+                    SelectedItems.Add(item);
+                }
+            }
+            else
+            {
+                if (!SelectedItems.Contains(item))
+                {
+                    foreach (var selection in SelectedItems)
+                    {
+                        selection.SetSelected(false);
+                    }
+                    SelectedItems.Clear();                    
+                    item.SetSelected(true);
+                    SelectedItems.Add(item);
+                } 
+            }
+            /*
+            if (item == null)
+            {
                 foreach (var it in m_selected_items)
                 {
                     it.SetSelected(false);
@@ -99,6 +129,7 @@ namespace rMind.Elements
                 item.SetSelected(true);
                 m_selected_items.Add(item);
             }
+            */
         }
 
         public void SetOveredItem(rMindBaseElement item)

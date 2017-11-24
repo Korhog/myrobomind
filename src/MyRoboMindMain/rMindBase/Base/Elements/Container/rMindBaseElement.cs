@@ -110,7 +110,10 @@ namespace rMind.Elements
 
             m_selector = new Border()
             {
-                Background = rMindColors.GetInstance().GetSolidBrush(rMindColors.GetSelectorBrush()),
+                BorderThickness = new Thickness(8),
+                Margin = new Thickness(-8),
+                BorderBrush = rMindColors.GetInstance().GetSolidBrush(rMindColors.GetSelectorBrush()),
+                //BorderBrush = rMindColors.GetInstance().GetSolidBrush(Colors.Black),
                 IsHitTestVisible = false,
                 Visibility = Visibility.Collapsed
             };

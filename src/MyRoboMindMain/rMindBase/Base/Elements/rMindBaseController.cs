@@ -56,7 +56,9 @@ namespace rMind.Elements
 
         // Controls
         rMindControllerState m_items_state;
-        List<rMindBaseElement> m_selected_items;
+        protected List<rMindBaseElement> m_selected_items;
+        public List<rMindBaseElement> SelectedItems { get { return m_selected_items; } }
+
         rMindBaseElement m_overed_item;
 
         // Menu
@@ -196,32 +198,17 @@ namespace rMind.Elements
                 m_magnet.Magnet(item.Position, m_items_state.MagnetNode.GetOffset());
             }   
         }
-
-        protected void DragWireDot(PointerRoutedEventArgs e)
+        
+        public void TranslateContainer(rMindBaseElement container, Vector2 translation)
         {
-            var p = e.GetCurrentPoint(m_canvas);
-            Vector2 offset = new Vector2(p) - m_items_state.StartPointerPosition;
-
-            var item = m_items_state.DragedWireDot;
-            var pos = m_items_state.StartPosition + offset;
-            // var seek nodes 
-            m_items_state.MagnetNode = BakedNodes
-                .Where(pair => Vector2.Length(pair.Key - pos) < (100 / m_scroll.ZoomFactor))
-                .OrderBy(pair => Vector2.Length(pair.Key - pos))
-                .Select(pair => pair.Value)
-                .FirstOrDefault();
-
-            if (m_items_state.MagnetNode == null)
+            if (SelectedItems.Contains(container))
             {
-                m_magnet.Hide();
-            }
-            else
-            {
-                m_magnet.Show();
-                m_magnet.Magnet(pos, m_items_state.MagnetNode.GetOffset());
+                foreach (var selection in SelectedItems)
+                    selection.Translate(translation);
+                return;
             }
 
-            item.SetPosition(pos);
+            container.Translate(translation);
         }
 
         // controller reset
