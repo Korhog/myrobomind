@@ -109,6 +109,9 @@
     <Compile Include="Pages\EditorPage.xaml.cs">
       <DependentUpon>EditorPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\LogicPage.xaml.cs">
+      <DependentUpon>LogicPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +194,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\LogicPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
@@ -198,21 +205,29 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\rMindBase\rMindBase.csproj">
+    <ProjectReference Include="..\rMind.Driver\rMind.Driver.csproj">
+      <Project>{8092e8ba-3044-443d-b39a-a850fdb4b8f2}</Project>
+      <Name>rMind.Driver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\rMindBase\rMind.Base.csproj">
       <Project>{709002b9-916f-481f-981b-6f4f0c2b51db}</Project>
-      <Name>rMindBase</Name>
+      <Name>rMind.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\rMindProject\rMindProject.csproj">
+    <ProjectReference Include="..\rMindControls\rMind.Controls.csproj">
+      <Project>{47ca55a3-e638-4407-8764-ed489e187a15}</Project>
+      <Name>rMind.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\rMindProject\rMind.Project.csproj">
       <Project>{efbdb85e-d783-4435-b2f2-ea00f41c0ef9}</Project>
-      <Name>rMindProject</Name>
+      <Name>rMind.Project</Name>
     </ProjectReference>
-    <ProjectReference Include="..\rMindStorage\rMindStorage.csproj">
+    <ProjectReference Include="..\rMindStorage\rMind.Storage.csproj">
       <Project>{926d5c3d-0424-454e-b78b-b50731744d7b}</Project>
-      <Name>rMindStorage</Name>
+      <Name>rMind.Storage</Name>
     </ProjectReference>
-    <ProjectReference Include="..\rMindTheme\rMindTheme.csproj">
+    <ProjectReference Include="..\rMindTheme\rMind.Theme.csproj">
       <Project>{458f5c99-d7e2-481a-baef-db0d694a0f8a}</Project>
-      <Name>rMindTheme</Name>
+      <Name>rMind.Theme</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

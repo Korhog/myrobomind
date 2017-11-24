@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{458F5C99-D7E2-481A-BAEF-DB0D694A0F8A}</ProjectGuid>
+    <ProjectGuid>{8092E8BA-3044-443D-B39A-A850FDB4B8F2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>rMindTheme</RootNamespace>
-    <AssemblyName>rMindTheme</AssemblyName>
+    <RootNamespace>rMind.Driver</RootNamespace>
+    <AssemblyName>rMind.Driver</AssemblyName>
     <DefaultLanguage>ru-RU</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -90,6 +90,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
+    <GenerateLibraryLayout>false</GenerateLibraryLayout>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -106,19 +107,25 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Color\ColorHelper.cs" />
-    <Compile Include="Color\IColorScheme.cs" />
-    <Compile Include="Color\rMindColors.cs" />
-    <Compile Include="Color\rMindSchemeDark.cs" />
-    <Compile Include="Color\rMindSchemeLight.cs" />
+    <Compile Include="DriverController.cs" />
+    <Compile Include="Entities\Driver.cs" />
+    <Compile Include="Entities\DriverDB.cs" />
+    <Compile Include="Entities\Translation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Color\rMindScheme.cs" />
-    <EmbeddedResource Include="Properties\rMindTheme.rd.xml" />
+    <EmbeddedResource Include="Properties\rMind.Driver.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>5.2.3</Version>
+      <Version>6.0.1</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>10.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\DB.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

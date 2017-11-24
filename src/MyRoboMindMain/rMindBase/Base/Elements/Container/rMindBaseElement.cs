@@ -18,17 +18,23 @@ namespace rMind.Elements
     using Storage;
     using ColorContainer;
     using Nodes;
+    using Input;
 
     public enum rElementType
     {
-        RET_NONE
+        RET_NONE,
+        RET_DEVICE_OUTPUT
     }
 
     /// <summary>
     /// Base controller element 
     /// </summary>   
-    public partial class rMindBaseElement : rMindBaseItem, IDrawContainer, IStorageObject
-    {       
+    public partial class rMindBaseElement : rMindBaseItem, IDrawContainer, IStorageObject, IInteractElement
+    {
+        protected double border = 8;
+
+        protected bool m_storable = true;
+        public bool Storable { get { return m_storable; } set { m_storable = value; } }
 
         protected rElementType m_element_type;
         public rElementType ElementType { get { return m_element_type; } }
@@ -107,72 +113,61 @@ namespace rMind.Elements
 
             m_selector = new Border()
             {
+                Margin = new Thickness(-border),
                 Background = rMindColors.GetInstance().GetSolidBrush(rMindColors.GetSelectorBrush()),
                 IsHitTestVisible = false,
                 Visibility = Visibility.Collapsed
             };
 
-            Template.Children.Add(m_base);
             Template.Children.Add(m_selector);
-
-            Canvas.SetZIndex(m_selector, 10);
+            Template.Children.Add(m_base);  
         }
 
         #region input        
         private void onPointerEnter(object sender, PointerRoutedEventArgs e)
         {
-            e.Handled = true;
-            Parent.SetOveredItem(this);
-            if (m_selected)
-                return;        
+            //if (m_locked) return;
+
+            //e.Handled = true;
+            //Parent.SetOveredItem(this);
+            //if (m_selected)
+            //    return;        
         }
 
 
         private void onPointerExit(object sender, PointerRoutedEventArgs e)
         {
-            e.Handled = true;
-            Parent.SetPointerTimestamp(e);
-            Parent.SetOveredItem(null);
+            //if (m_locked) return;
+            //// e.Handled = true;
+            //Parent.SetPointerTimestamp(e);
+            //Parent.SetOveredItem(null);
 
-            if (m_selected)
-                return;         
+            //if (m_selected)
+            //    return;         
         }
 
         private void onPointerUp(object sender, PointerRoutedEventArgs e)
-        {            
-            if (Parent.CheckIsOvered(this))
-            {
-                Parent.SetDragItem(null, e);
-            }            
+        {
+            //if (m_locked) return;
+            //if (Parent.CheckIsOvered(this))
+            //{
+            //    Parent.SetDragItem(null, e);
+            //}            
         }
 
         private void onPointerPress(object sender, PointerRoutedEventArgs e)
         {
-            // e.Handled = true;
-            if (Parent.CheckIsOvered(this))
-            {                
-                Parent.SetDragItem(this, e);
-                SetSelected(true);
-                Parent.SetSelectedItem(this, e.KeyModifiers == Windows.System.VirtualKeyModifiers.Shift);
-            }
-            m_has_translate = false;
+            //if (m_locked) return;
+            //// e.Handled = true;
+            //if (Parent.CheckIsOvered(this))
+            //{                
+            //    Parent.SetDragItem(this, e);
+            //    SetSelected(true);
+            //    Parent.SetSelectedItem(this, e.KeyModifiers == Windows.System.VirtualKeyModifiers.Shift);
+            //}
+            //m_has_translate = false;
         }
 
-        void SubscribeInput()
-        {
-            m_base.PointerEntered += onPointerEnter;
-            m_base.PointerExited += onPointerExit;
-            m_base.PointerPressed += onPointerPress;
-            m_base.PointerReleased += onPointerUp;
-        }
-
-        void UnsubscribeInput()
-        {
-            m_base.PointerEntered -= onPointerEnter;
-            m_base.PointerExited -= onPointerExit;
-            m_base.PointerPressed -= onPointerPress;
-            m_base.PointerReleased -= onPointerUp;
-        }
         #endregion
 
         #region nodes
@@ -275,7 +270,13 @@ namespace rMind.Elements
         {
             m_border_radius = value;
             m_base.CornerRadius = value;
-            m_selector.CornerRadius = value;
+            m_selector.CornerRadius = new CornerRadius()
+            {
+                TopLeft = value.TopLeft == 0 ? 0 : value.TopLeft + border,
+                BottomLeft = value.BottomLeft == 0 ? 0 : value.BottomLeft + border,
+                BottomRight = value.BottomRight == 0 ? 0 : value.BottomRight + border,
+                TopRight = value.TopRight == 0 ? 0 : value.TopRight + border
+            };
         }
         public CornerRadius BorderRadius { get { return m_border_radius; } set { SetBorderRadius(value); } }
 

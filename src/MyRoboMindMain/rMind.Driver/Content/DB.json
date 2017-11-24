@@ -1,0 +1,10 @@
+{
+    "Drivers": [
+        {
+            "Name": "led",
+            "SemanticName": "светодиод",
+            "Description": "desc",
+            "Type": 1
+        }
+    ]
+}

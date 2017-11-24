@@ -56,7 +56,9 @@ namespace rMind.Elements
 
         // Controls
         rMindControllerState m_items_state;
-        List<rMindBaseElement> m_selected_items;
+        protected List<rMindBaseElement> m_selected_items;
+        public List<rMindBaseElement> SelectedItems { get { return m_selected_items; } }
+
         rMindBaseElement m_overed_item;
 
         // Menu
@@ -156,16 +158,33 @@ namespace rMind.Elements
             }
         }
 
-        protected void DragWireDot(PointerRoutedEventArgs e)
+        /// <summary> Отпускаем нод, который тянем </summary>
+        public void DropWireDot()
         {
-            var p = e.GetCurrentPoint(m_canvas);
-            Vector2 offset = new Vector2(p) - m_items_state.StartPointerPosition;
+            var attachNode = m_items_state.OveredNode ?? m_items_state.MagnetNode;
+
+            if (attachNode == null)
+            {
+                m_items_state.DragedWireDot.Wire.Delete();
+                m_items_state.DragedWireDot = null;
+            }
+            else
+            {
+                attachNode.Attach(m_items_state.DragedWireDot);
+                m_items_state.DragedWireDot.Wire.SetEnabledHitTest(true);
+            }
+
+            m_magnet.Hide();
+        }
+
+        public void TranslateWireDot(Vector2 translation)
+        {
             var item = m_items_state.DragedWireDot;
-            var pos = m_items_state.StartPosition + offset;
-            // var seek nodes 
+            item.Translate(translation);
+
             m_items_state.MagnetNode = BakedNodes
-                .Where(pair => Vector2.Length(pair.Key - pos) < (100 / m_scroll.ZoomFactor))
-                .OrderBy(pair => Vector2.Length(pair.Key - pos))
+                .Where(pair => Vector2.Length(pair.Key - item.Position) < (100 / m_scroll.ZoomFactor))
+                .OrderBy(pair => Vector2.Length(pair.Key - item.Position))
                 .Select(pair => pair.Value)
                 .FirstOrDefault();
 
@@ -176,10 +195,20 @@ namespace rMind.Elements
             else
             {
                 m_magnet.Show();
-                m_magnet.Magnet(pos, m_items_state.MagnetNode.GetOffset());
-            }                          
+                m_magnet.Magnet(item.Position, m_items_state.MagnetNode.GetOffset());
+            }   
+        }
+        
+        public void TranslateContainer(rMindBaseElement container, Vector2 translation)
+        {
+            if (SelectedItems.Contains(container))
+            {
+                foreach (var selection in SelectedItems)
+                    selection.Translate(translation);
+                return;
+            }
 
-            item.SetPosition(pos);
+            container.Translate(translation);
         }
 
         // controller reset
@@ -193,7 +222,7 @@ namespace rMind.Elements
             while (m_wire_list.Count > 0)
                 m_wire_list[0].Delete();
 
-            foreach (var item in m_items)
+            foreach (var item in m_items.Where(x => x.Storable))
             {
                 item.Reset();
             }

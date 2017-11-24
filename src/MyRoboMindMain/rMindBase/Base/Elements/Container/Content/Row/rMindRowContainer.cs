@@ -155,7 +155,15 @@ namespace rMind.Content
 
         public virtual rMindRow AddRow()
         {
-            return AddRow(new rMindRow());
+            return AddRow(new rMindRow()
+            {
+                Content = new Rectangle()
+                {
+                    Margin = m_static ? new Thickness(2) : new Thickness(10, 2, 2, 2),
+                    Fill = new SolidColorBrush(Colors.CadetBlue),
+                    IsHitTestVisible = false
+                }
+            });
         }
 
         public virtual rMindRow AddRow(rMindRow row)
@@ -183,16 +191,12 @@ namespace rMind.Content
                 row.OutputNode.SetCell(2, idx_row);
             }
 
-            row.Content = new Rectangle()
+            if (row.Content != null)
             {
-                Margin = m_static ? new Thickness(2) : new Thickness(10, 2, 2, 2),
-                Fill = new SolidColorBrush(Colors.CadetBlue),
-                IsHitTestVisible = false
-            };
-
-            Grid.SetColumn(row.Content, 1);
-            Grid.SetRow(row.Content, idx_row);
-            Template.Children.Add(row.Content);
+                Grid.SetColumn(row.Content, 1);
+                Grid.SetRow(row.Content, idx_row);
+                Template.Children.Add(row.Content);
+            }
 
             if (!m_static)
             {

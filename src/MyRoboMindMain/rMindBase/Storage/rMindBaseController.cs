@@ -49,7 +49,7 @@ namespace rMind.Elements
         protected virtual XElement ItemsNode()
         {
             var itemsNode = new XElement("items");
-            foreach (var item in m_items)
+            foreach (var item in m_items.Where(x => x.Storable))
             {
                 var itemNode = item.Serialize();
                 if (itemNode == null)

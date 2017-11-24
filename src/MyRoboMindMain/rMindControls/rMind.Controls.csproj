@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EF958129-26FB-4B57-9B28-021D4B0005C2}</ProjectGuid>
+    <ProjectGuid>{47CA55A3-E638-4407-8764-ED489E187A15}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>rMindCore</RootNamespace>
-    <AssemblyName>rMindCore</AssemblyName>
+    <RootNamespace>rMind.Controls</RootNamespace>
+    <AssemblyName>rMind.Controls</AssemblyName>
     <DefaultLanguage>ru-RU</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
@@ -106,14 +106,30 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="BreadCrumbs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\rMindCore.rd.xml" />
+    <EmbeddedResource Include="Properties\rMindControls.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.4.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\rMindBase\rMind.Base.csproj">
+      <Project>{709002b9-916f-481f-981b-6f4f0c2b51db}</Project>
+      <Name>rMind.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\rMindStorage\rMind.Storage.csproj">
+      <Project>{926d5c3d-0424-454e-b78b-b50731744d7b}</Project>
+      <Name>rMind.Storage</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

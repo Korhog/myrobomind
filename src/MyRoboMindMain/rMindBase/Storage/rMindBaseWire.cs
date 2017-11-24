@@ -36,11 +36,17 @@ namespace rMind.Elements
         #region Deserialize
         protected bool TryAttachDot(rMindBaseWireDot dot, XElement options)
         {
+            if (options == null)
+                return false;
+
             int itemIdx = 0;
             int nodeIdx = 0;
 
-            if ( int.TryParse(options.Attribute("item").Value, out itemIdx) && int.TryParse(options.Attribute("node").Value, out nodeIdx))
+            if (int.TryParse(options.Attribute("item").Value, out itemIdx) && int.TryParse(options.Attribute("node").Value, out nodeIdx))
             {
+                if (itemIdx == -1 || nodeIdx == -1)
+                    return false;
+
                 var controller = GetController();
                 if (controller == null)
                     return false;

@@ -21,8 +21,6 @@ namespace rMind.Elements
     /// </summary>
     public partial class rMindBaseController : Storage.IStorageObject
     {
-        Vector2 m_start_point;
-
         Rectangle m_selector_rect;
 
         protected virtual Rectangle CreateSelectorRect()
@@ -51,46 +49,50 @@ namespace rMind.Elements
             }
         }
         
-        public void StartSelection(PointerPoint p)
+        public void StartSelection()
         {
-            if (!m_subscribed)
-                return;
-
+            UpdateSelectorRect();
             if (!m_canvas.Children.Contains(SelectorRect))
-            {
                 m_canvas.Children.Add(SelectorRect);
-            }
-
-            m_start_point = new Vector2(p);
-            UpdateSelectorRect(p);
+            
             m_manipulation_mode = rMindManipulationMode.Select;
-            m_canvas.ManipulationMode = ManipulationModes.None;
         }
 
         public void StopSelection()
         {
             if (!m_subscribed)
-                return;
+                return;           
+
+
+            m_manipulation_mode = rMindManipulationMode.None;
+            SelectItems();
 
             if (m_canvas.Children.Contains(SelectorRect))
             {
                 m_canvas.Children.Remove(SelectorRect);
-            }
-
-            m_manipulation_mode = rMindManipulationMode.None;
-            SelectItems();
+            }            
         }
 
-        public void UpdateSelectorRect(PointerPoint p)
+        public void UpdateSelectorRect()
         {
-            var pos = new Vector2(p);
-
             var rect = SelectorRect;
 
-            Canvas.SetLeft(rect, Math.Min(pos.X, m_start_point.X));
-            Canvas.SetTop(rect, Math.Min(pos.Y, m_start_point.Y));
-            rect.Width = Math.Abs(pos.X - m_start_point.X);
-            rect.Height = Math.Abs(pos.Y - m_start_point.Y);
+            Canvas.SetLeft(
+                rect, 
+                Math.Min(
+                    m_manipulation_data.BeginVector.X,
+                    m_manipulation_data.CurrentVector.X
+                )
+            );
+            Canvas.SetTop(
+                rect, 
+                Math.Min(
+                    m_manipulation_data.BeginVector.Y,
+                    m_manipulation_data.CurrentVector.Y
+                )
+            );
+            rect.Width = Math.Abs(m_manipulation_data.BeginVector.X - m_manipulation_data.CurrentVector.X);
+            rect.Height = Math.Abs(m_manipulation_data.BeginVector.Y - m_manipulation_data.CurrentVector.Y);
         }
 
         protected void SelectItems()

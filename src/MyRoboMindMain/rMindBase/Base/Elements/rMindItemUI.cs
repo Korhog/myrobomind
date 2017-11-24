@@ -7,6 +7,11 @@ namespace rMind.Elements
 
     public class rMindItemUI
     {
+        protected bool m_locked = false;
+        
+        // Не доступна для управления.
+        public bool Locked { get { return m_locked; } set { m_locked = value; } }
+
         protected bool m_has_translate;
         protected bool m_expanded = true;
         public bool Expanded { get { return m_expanded; } }

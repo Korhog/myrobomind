@@ -6,11 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rmind="using:rMind.Elements"
-    mc:Ignorable="d">
-    
-
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Pivot Background="#2D2D2F">
+    mc:Ignorable="d" >
+    <Grid Background="#2D2D2F">
+        <Pivot>
             <Pivot.Style>                
                 <Style TargetType="Pivot">                    
                     <Setter Property="Margin" Value="0"/>
@@ -132,14 +130,38 @@
             <PivotItem>
                 <PivotItem.Header>
                     <StackPanel>
-                        <FontIcon Glyph="&#xE00B;"/>
-                        <TextBlock Text="scheme"/>                       
+                        <FontIcon Glyph="&#xE964;"/>
+                        <TextBlock Text="logic"/>                       
                     </StackPanel>                    
+                </PivotItem.Header>
+                <Frame x:Name="LogicFrame"/>    
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <StackPanel>
+                        <FontIcon Glyph="&#xE753;"/>
+                        <TextBlock Text="workspace"/>
+                    </StackPanel>
                 </PivotItem.Header>
                 <Grid Background="#1D1D1D">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <FontIcon Glyph="&#xE00B;" Foreground="#05ffc5" />
-                        <TextBlock Text="когда то тут будет логика" Foreground="#05ffc5"/>
+                        <FontIcon Glyph="&#xE753;" Foreground="#05ffc5" />
+                        <TextBlock Text="когда то тут будет настройка среды ( переменные, функции )" Foreground="#05ffc5"/>
+                    </StackPanel>
+                </Grid>
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <StackPanel>
+                        <FontIcon Glyph="&#xE102;"/>
+                        <TextBlock Text="output"/>
+                    </StackPanel>
+                </PivotItem.Header>
+                <Grid Background="#1D1D1D">
+                    <Button Content="Test" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Green" Click="Test"/>
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <FontIcon Glyph="&#xE102;" Foreground="#05ffc5" />
+                        <TextBlock Text="когда то тут будет вывод кода" Foreground="#05ffc5"/>
                     </StackPanel>
                 </Grid>
             </PivotItem>
