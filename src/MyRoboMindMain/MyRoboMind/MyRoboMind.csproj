@@ -205,6 +205,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\rMind.Driver\rMind.Driver.csproj">
+      <Project>{8092e8ba-3044-443d-b39a-a850fdb4b8f2}</Project>
+      <Name>rMind.Driver</Name>
+    </ProjectReference>
     <ProjectReference Include="..\rMindBase\rMind.Base.csproj">
       <Project>{709002b9-916f-481f-981b-6f4f0c2b51db}</Project>
       <Name>rMind.Base</Name>

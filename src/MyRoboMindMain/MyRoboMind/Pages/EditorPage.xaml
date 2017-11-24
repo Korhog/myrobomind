@@ -158,6 +158,7 @@
                     </StackPanel>
                 </PivotItem.Header>
                 <Grid Background="#1D1D1D">
+                    <Button Content="Test" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Green" Click="Test"/>
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                         <FontIcon Glyph="&#xE102;" Foreground="#05ffc5" />
                         <TextBlock Text="когда то тут будет вывод кода" Foreground="#05ffc5"/>

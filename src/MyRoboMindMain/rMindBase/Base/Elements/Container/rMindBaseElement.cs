@@ -22,7 +22,8 @@ namespace rMind.Elements
 
     public enum rElementType
     {
-        RET_NONE
+        RET_NONE,
+        RET_DEVICE_OUTPUT
     }
 
     /// <summary>
@@ -30,6 +31,8 @@ namespace rMind.Elements
     /// </summary>   
     public partial class rMindBaseElement : rMindBaseItem, IDrawContainer, IStorageObject, IInteractElement
     {
+        protected double border = 8;
+
         protected bool m_storable = true;
         public bool Storable { get { return m_storable; } set { m_storable = value; } }
 
@@ -110,18 +113,14 @@ namespace rMind.Elements
 
             m_selector = new Border()
             {
-                BorderThickness = new Thickness(8),
-                Margin = new Thickness(-8),
-                BorderBrush = rMindColors.GetInstance().GetSolidBrush(rMindColors.GetSelectorBrush()),
-                //BorderBrush = rMindColors.GetInstance().GetSolidBrush(Colors.Black),
+                Margin = new Thickness(-border),
+                Background = rMindColors.GetInstance().GetSolidBrush(rMindColors.GetSelectorBrush()),
                 IsHitTestVisible = false,
                 Visibility = Visibility.Collapsed
             };
 
-            Template.Children.Add(m_base);
             Template.Children.Add(m_selector);
-
-            Canvas.SetZIndex(m_selector, 10);
+            Template.Children.Add(m_base);  
         }
 
         #region input        
@@ -271,7 +270,13 @@ namespace rMind.Elements
         {
             m_border_radius = value;
             m_base.CornerRadius = value;
-            m_selector.CornerRadius = value;
+            m_selector.CornerRadius = new CornerRadius()
+            {
+                TopLeft = value.TopLeft == 0 ? 0 : value.TopLeft + border,
+                BottomLeft = value.BottomLeft == 0 ? 0 : value.BottomLeft + border,
+                BottomRight = value.BottomRight == 0 ? 0 : value.BottomRight + border,
+                TopRight = value.TopRight == 0 ? 0 : value.TopRight + border
+            };
         }
         public CornerRadius BorderRadius { get { return m_border_radius; } set { SetBorderRadius(value); } }
 

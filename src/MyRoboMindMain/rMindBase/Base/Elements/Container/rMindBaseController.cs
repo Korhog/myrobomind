@@ -204,7 +204,10 @@ namespace rMind.Elements
             {
                 case rElementType.RET_NONE:
                     element = new Content.rMindHeaderRowContainer(this);                    
-                    break;                
+                    break;
+                case rElementType.RET_DEVICE_OUTPUT:
+                    element = new Content.rMindDeviceOutput(this);
+                    break;
             }            
             AddElement(element, silent);
 

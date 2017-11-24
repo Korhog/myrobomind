@@ -55,14 +55,7 @@ namespace MyRoboMind.Pages
                 return;
 
             var rand = new Random();
-            var container = cont.CreateElementByElementType(rElementType.RET_NONE);
-            container.AccentColor = rMind.ColorContainer.rMindColors.ColorRandom(100, 200);
-
-            var cnt = rand.Next(1, 5);
-            for (int i = 0; i < cnt; i++)
-            {
-                (container as rMind.Content.rMindHeaderRowContainer)?.AddRow();
-            }
+            var container = cont.CreateElementByElementType(rElementType.RET_DEVICE_OUTPUT);            
             container.SetPosition(cont.GetScreenCenter(container));
         }
     }

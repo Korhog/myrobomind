@@ -61,8 +61,7 @@
         </Grid.ColumnDefinitions>
         
         <!-- top side menu -->
-        <StackPanel VerticalAlignment="Top">
-
+        <StackPanel VerticalAlignment="Top">    
             <Button VerticalAlignment="Top" Click="Button_Back" ToolTipService.ToolTip="Back" 
                     Style="{StaticResource ResourceKey=SideMenuButton}" >
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE0A6;"  />
