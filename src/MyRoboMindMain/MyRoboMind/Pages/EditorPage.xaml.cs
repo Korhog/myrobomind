@@ -1,6 +1,7 @@
-﻿using rMind.Driver;
+﻿using System;
+using rMind.Driver;
 using rMind.Project;
-
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -22,12 +23,31 @@ namespace MyRoboMind.Pages
             Loaded += async (sender, e) => {
                 await DriverController.GetInstance().Load();
                 await rMindProject.GetInstance().RestoreState();
+            };          
+
+
+            var DB =rMindDataBase.GetInstance();
+            DB.StateChanged += async (sender, e) => { 
+
             };
         }
 
         private async void Test(object sender, RoutedEventArgs e)
         {
             var controller = DriverController.GetInstance();
+            await controller.Test();
+        }
+
+        private void OnDriverStudio(object sender, RoutedEventArgs e)
+        {
+            DriverStudioController.RunDriverStudio();
+        }
+
+        private async void Load(object sender, RoutedEventArgs e)
+        {
+
+            var controller = DriverController.GetInstance();
+            await controller.Load();
         }
     }
 }

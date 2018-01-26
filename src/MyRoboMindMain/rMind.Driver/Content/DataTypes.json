@@ -1,0 +1,13 @@
+{
+  "DataTypes": [
+    {
+      "BaseDataType": 0
+    },
+    {
+      "BaseDataType": 1
+    },
+    {
+      "BaseDataType": 2
+    }
+  ]
+}

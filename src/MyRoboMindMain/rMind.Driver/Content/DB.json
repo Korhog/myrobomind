@@ -1,10 +1,18 @@
 {
     "Drivers": [
         {
-            "Name": "led",
-            "SemanticName": "светодиод",
-            "Description": "desc",
-            "Type": 1
+            "Name": "LED",
+            "Type": 1,
+            "Pins": [
+                {
+                    "PinMode": 1,
+                    "Name": "IN1"
+                },
+                {
+                    "PinMode": 1,
+                    "Name": "IN2"
+                }
+            ]
         }
     ]
 }

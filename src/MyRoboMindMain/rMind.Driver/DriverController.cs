@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace rMind.Driver
@@ -38,30 +39,52 @@ namespace rMind.Driver
 
         }
 
-        public void Test()
+        public async Task Test()
         {
-            DriverDB db = new DriverDB();
-            db.Drivers = new List<Driver>();
-            db.Drivers.Add(new Driver
-            {
-                Name = "led",
-                Description = "desc",
-                SemanticName = "светодиод",
-                Type = DriverType.ExternalDevice
-            });
+            string name = "DC";
+            if (driverDB.Drivers.Any(x => x.Name == name))
+                return;
 
-            var json = JsonConvert.SerializeObject(db);           
+            var drv = new Driver
+            {
+                Name = name,
+                Type = DriverType.ExternalDevice
+            };
+
+            drv.Pins.Add(new Pin { Name = "IN1", PinMode = PinMode.OUTPUT });
+            drv.Pins.Add(new Pin { Name = "IN2", PinMode = PinMode.OUTPUT });
+            drv.Pins.Add(new Pin { Name = "PWM", PinMode = PinMode.OUTPUT });
+
+            driverDB.Drivers.Add(drv);
+
+            var json = JsonConvert.SerializeObject(driverDB);
+            await Save(json);
         }
 
         public async Task Load()
         {
-            var documentsPath = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
-            var path = System.IO.Path.Combine(documentsPath, "rMind.Driver", "Content", "DB.json");
+            StorageFile file;
+            StorageFolder local = ApplicationData.Current.LocalFolder;
+            try
+            {
+                file = await local.GetFileAsync("DB.json");
+            }
+            catch
+            {
+                var documentsPath = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
+                var path = System.IO.Path.Combine(documentsPath, "rMind.Driver", "Content", "DB.json");
+                file = await StorageFile.GetFileFromPathAsync(path);
+            }
 
-            var file = await StorageFile.GetFileFromPathAsync(path);
             var json = await FileIO.ReadTextAsync(file);
-
             driverDB = JsonConvert.DeserializeObject<DriverDB>(json);
+        }
+
+        public async Task Save(string json)
+        {
+            StorageFolder local = ApplicationData.Current.LocalFolder;
+            var tmpFile = await local.CreateFileAsync("DB.json", CreationCollisionOption.ReplaceExisting);
+            await FileIO.WriteTextAsync(tmpFile, json);            
         }
     }
 }
