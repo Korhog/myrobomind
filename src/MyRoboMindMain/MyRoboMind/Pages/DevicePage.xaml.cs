@@ -60,5 +60,10 @@ namespace MyRoboMind.Pages
             }
             container.SetPosition(cont.GetScreenCenter(container));
         }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
     }
 }

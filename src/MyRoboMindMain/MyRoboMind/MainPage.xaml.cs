@@ -54,6 +54,9 @@ namespace MyRoboMind
                 await project.RestoreState();
             };
 
+
+                
+
             Window.Current.Activated += async (s, e) => {
                 if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
                 {

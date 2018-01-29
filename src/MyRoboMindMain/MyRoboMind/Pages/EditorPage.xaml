@@ -158,13 +158,17 @@
                     </StackPanel>
                 </PivotItem.Header>
                 <Grid Background="#1D1D1D">
-                    <Button Content="Test" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Green" Click="Test"/>
-                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <FontIcon Glyph="&#xE102;" Foreground="#05ffc5" />
-                        <TextBlock Text="когда то тут будет вывод кода" Foreground="#05ffc5"/>
+                    <StackPanel>
+                        <Button Content="Feed" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Green" Click="Test"/>
+                        <Button Content="Load" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Green" Click="Load"/>
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <FontIcon Glyph="&#xE102;" Foreground="#05ffc5" />
+                            <TextBlock Text="когда то тут будет вывод кода" Foreground="#05ffc5"/>
+                        </StackPanel>
                     </StackPanel>
-                </Grid>
+                </Grid>                    
             </PivotItem>
         </Pivot>
+        <Button VerticalAlignment="Top" HorizontalAlignment="Right" Width="80" Height="80" Margin="10" Background="Red" Click="OnDriverStudio"/>
     </Grid>
 </Page>
