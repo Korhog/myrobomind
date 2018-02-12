@@ -22,7 +22,7 @@ namespace rMind.Driver
             {
                 DriverController.GetInstance();
 
-                Frame frame = new Frame { Width = 800, Height = 600 };
+                Frame frame = new Frame();
                 Window wnd = Window.Current;
                 wnd.Content = frame;
                 frame.Navigate(typeof(DriverStudioMainPage));

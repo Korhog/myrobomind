@@ -27,10 +27,28 @@ namespace rMind.Driver.Views
             this.InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void OnSideMenuClick(object sender, RoutedEventArgs e)
         {
+            sideMenu.IsPaneOpen = !sideMenu.IsPaneOpen;
+        }
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
             var db = rMindDataBase.GetInstance();
-            db.Test();
+            await db.Load();
+
+            foreach(var d in db.SystemDrv.Drivers)
+            {
+                mainTree.Items.Add(d);
+            }
+        }
+
+        private void OnMainTreeClick(object sender, ItemClickEventArgs e)
+        {
+            var v = e;
+            var s = sender;
         }
     }
 }

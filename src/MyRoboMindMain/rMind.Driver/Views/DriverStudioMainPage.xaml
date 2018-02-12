@@ -5,9 +5,53 @@
     xmlns:local="using:rMind.Driver.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:driver="using:rMind.Driver"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button Width="200" Height="40" Content="BTN" Click="Button_Click"/>
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/rMind.Driver/Style/TreeNode.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Background="Black">
+        <SplitView OpenPaneLength="200" x:Name="sideMenu" CompactPaneLength="48" DisplayMode="CompactInline">
+            <SplitView.Pane>
+                <StackPanel Background="#2d2d2d">
+                    <Button Content="Menu" Click="OnSideMenuClick" VerticalAlignment="Top" Height="40" HorizontalAlignment="Stretch" Foreground="LightGray"/>
+                    <ItemsControl>
+                    </ItemsControl>                    
+                </StackPanel>                   
+                
+            </SplitView.Pane>
+            
+            <SplitView.Content>
+                <Grid Margin="1,0,0,0">
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="White"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Width="250" Background="#1d1d1d">
+                        <TextBlock Text="Drivers" Height="40" HorizontalAlignment="Center"/>
+                        <ListView 
+                            Style="{StaticResource ResourceKey=TreeTemplateStyle}"
+                            x:Name="mainTree" 
+                            ItemClick="OnMainTreeClick" 
+                            IsItemClickEnabled="True">
+                        </ListView>
+                    </StackPanel>
+                    <Border Background="#1d1d1d" Grid.Column="1" Margin="1,0,0,0">
+                        <Frame x:Name="contentFrame"/>
+                    </Border>
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
     </Grid>
 </Page>
