@@ -13,6 +13,25 @@
                     "Name": "IN2"
                 }
             ]
+        },
+        {
+            "Name": "DC",
+            "Type": 1,
+            "Pins": [
+                {
+                    "PinMode": 1,
+                    "Name": "IN1"
+                },
+                {
+                    "PinMode": 1,
+                    "Name": "IN2"
+                },
+                {
+                    "PinMode": 1,
+                    "Name": "IN3"
+                }
+
+            ]
         }
     ]
 }

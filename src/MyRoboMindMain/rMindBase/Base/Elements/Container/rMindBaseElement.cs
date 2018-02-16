@@ -1,20 +1,20 @@
-﻿using rMind.Draw;
-using rMind.Types;
-using rMind.Theme;
-
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Input;
-using System;
+
+using Newtonsoft.Json;
 
 namespace rMind.Elements
 {
+    using Draw;
+    using Types;
+    using Theme;
     using Storage;
     using ColorContainer;
     using Nodes;
@@ -29,6 +29,7 @@ namespace rMind.Elements
     /// <summary>
     /// Base controller element 
     /// </summary>   
+    [JsonObject(MemberSerialization.OptIn)]
     public partial class rMindBaseElement : rMindBaseItem, IDrawContainer, IStorageObject, IInteractElement
     {
         protected double border = 8;
@@ -37,6 +38,7 @@ namespace rMind.Elements
         public bool Storable { get { return m_storable; } set { m_storable = value; } }
 
         protected rElementType m_element_type;
+        [JsonProperty]
         public rElementType ElementType { get { return m_element_type; } }
 
         protected ulong? m_pointer_timestamp;

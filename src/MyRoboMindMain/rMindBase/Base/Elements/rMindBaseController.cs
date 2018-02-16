@@ -1,9 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Shapes;
+using Newtonsoft.Json;
 
 namespace rMind.Elements
 {
@@ -36,13 +34,20 @@ namespace rMind.Elements
     /// <summary>
     /// Base scheme controller
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public partial class rMindBaseController : Storage.IStorageObject
     {
         /// <summary>
         /// Контейнер со всем блоками контроллера.
         /// </summary>
         protected List<rMindBaseElement> m_items;
+        [JsonProperty]
+        public List<rMindBaseElement> Items { get { return m_items; } }
+
+
         protected List<rMindBaseWire> m_wire_list;
+        [JsonProperty]
+        public List<rMindBaseElement> Wires { get { return m_items; } }
 
         protected rMindCanvasController m_parent;
 
@@ -66,6 +71,9 @@ namespace rMind.Elements
 
         // Ext
         rMindMagnet m_magnet;
+
+        // Test
+        string json;
 
         public rMindBaseController(rMindCanvasController parent)
         {
@@ -228,6 +236,42 @@ namespace rMind.Elements
             }
 
             m_items.Clear();
+        }
+
+        public void TryCopy()
+        {
+            if ((m_selected_items?.Count ?? 0) > 0)
+            {
+                json = Newtonsoft.Json.JsonConvert.SerializeObject(m_selected_items);
+            }
+        }
+
+        public void TryPaste()
+        {
+            if (!string.IsNullOrEmpty(json))
+            {
+                rMindBaseElement element = null; ;
+
+                var result = new List<rMindBaseElement>();
+                var list = JsonConvert.DeserializeObject<List<object>>(json);
+
+                foreach (var item in list)
+                {
+                    var s = item.ToString();
+                    var baseObject = JsonConvert.DeserializeObject<rMindBaseElement>(s);
+                    var type = baseObject?.ElementType ?? rElementType.RET_NONE;
+
+                    switch (type)
+                    {
+                        case rElementType.RET_NONE:
+                            element = JsonConvert.DeserializeObject<rMindBaseElement>(s);
+                            element?.Translate(new Vector2(20, 20));
+                            break;
+                    }
+                    if (element != null)
+                        AddElement(element);                    
+                }
+            }
         }
     }
 }

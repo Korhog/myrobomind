@@ -4,15 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{709002B9-916F-481F-981B-6F4F0C2B51DB}</ProjectGuid>
+    <ProjectGuid>{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>rMind.Base</RootNamespace>
-    <AssemblyName>rMind.Base</AssemblyName>
+    <RootNamespace>rMind.CodeGenerator</RootNamespace>
+    <AssemblyName>rMind.CodeGenerator</AssemblyName>
     <DefaultLanguage>ru-RU</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -106,78 +106,14 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Base\Elements\Container\Content\Quad\rMindHorizontalLine.cs" />
-    <Compile Include="Base\Elements\Container\Content\Quad\rMindLine.cs" />
-    <Compile Include="Base\Elements\Container\Content\Quad\rMindVerticalLine.cs" />
-    <Compile Include="Base\Elements\Container\Content\Row\rMindDeviceOutput.cs" />
-    <Compile Include="Base\Elements\Container\Content\Row\rMindHeaderRowContainer.cs" />
-    <Compile Include="Base\Elements\Container\Content\Quad\rMindQuadContainer.cs" />
-    <Compile Include="Base\Elements\Container\Content\Row\rMindRowContainer.cs" />
-    <Compile Include="Base\Elements\Container\Content\Row\rMindRow.cs" />
-    <Compile Include="Base\Elements\Container\Content\Row\rMindValueRow.cs" />
-    <Compile Include="Base\Elements\Container\rMindBaseController.cs" />
-    <Compile Include="Base\Elements\Container\rMindBaseItem.cs" />
-    <Compile Include="Base\Elements\Input\rMindBaseController.cs" />
-    <Compile Include="Base\Elements\Input\rMindBaseElement.cs" />
-    <Compile Include="Base\Elements\Input\rMindBaseNode.cs" />
-    <Compile Include="Base\Elements\Input\rMindBaseWireDot.cs" />
-    <Compile Include="Base\Elements\Input\ScrollViewerEx.cs" />
-    <Compile Include="Base\Elements\Menu\rMindBaseController.cs" />
-    <Compile Include="Base\Elements\rMindDebugContainer.cs" />
-    <Compile Include="Base\Elements\Selection\rMindBaseController.cs" />
-    <Compile Include="Base\Elements\Wire\rMindBaseController.cs" />
-    <Compile Include="Base\Elements\Wire\rMindBaseWire.cs" />
-    <Compile Include="Base\Elements\Wire\rMindBaseWireDot.cs" />
-    <Compile Include="Base\Elements\rMindItemUI.cs" />
-    <Compile Include="Base\Elements\Wire\rMindMagnet.cs" />
-    <Compile Include="Base\Interfaces\IContainer.cs" />
-    <Compile Include="Base\Interfaces\IDrawContainer.cs" />
-    <Compile Include="Base\Interfaces\IDrawElement.cs" />
-    <Compile Include="Base\Elements\rMindBaseController.cs" />
-    <Compile Include="Base\Elements\Container\rMindBaseElement.cs" />
-    <Compile Include="Base\Elements\rMindBaseNode.cs" />
-    <Compile Include="Base\Interfaces\IInteractElement.cs" />
-    <Compile Include="Canvas\rMindCanvas.cs" />
-    <Compile Include="Canvas\rMindCanvasController.cs" />
+    <Compile Include="ICodeGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Base\Types\Vector2.cs" />
-    <Compile Include="Storage\rMindBaseController.cs" />
-    <Compile Include="Storage\rMindBaseElement.cs" />
-    <Compile Include="Storage\rMindBaseWire.cs" />
-    <Compile Include="Storage\rMindHeaderRowContainer.cs" />
-    <Compile Include="Storage\rMindRow.cs" />
-    <Compile Include="Storage\rMindRowContainer.cs" />
-    <Compile Include="Template\rMindTemplate.cs" />
-    <Compile Include="Template\rMindTemplatePart.cs" />
-    <EmbeddedResource Include="Properties\rMindBase.rd.xml" />
+    <EmbeddedResource Include="Properties\rMind.CodeGenerator.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.1</Version>
+      <Version>6.0.6</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>10.0.3</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\rMindBaseControls\rMind.BaseControls.csproj">
-      <Project>{dde69cfe-2f1d-46ed-a414-eb48870ff997}</Project>
-      <Name>rMind.BaseControls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\rMindStorage\rMind.Storage.csproj">
-      <Project>{926d5c3d-0424-454e-b78b-b50731744d7b}</Project>
-      <Name>rMind.Storage</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\rMindTheme\rMind.Theme.csproj">
-      <Project>{458f5c99-d7e2-481a-baef-db0d694a0f8a}</Project>
-      <Name>rMind.Theme</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -28,6 +28,8 @@
 
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20, 60, 0, 0">
             <Button Content="Add" Click="OnAddClick"/>
+            <Button Content="Copy" Click="OnTryCopy" Margin="0,4,0,0"/>
+            <Button Content="Paste" Click="OnTryPaste" Margin="0,4,0,0"/>
             <ListView IsItemClickEnabled="True" ItemClick="ListView_ItemClick"/>
         </StackPanel>
 

@@ -3,28 +3,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:exp="using:rMind.Driver">
 
-    <Style x:Key="TreeTemplateStyle" TargetType="ItemsControl">
-        <Setter Property="ItemTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+    <DataTemplate x:Key="MyDataTemplate">
+        <Border>
+            <TextBlock Text="{Binding Caption}"/>
+        </Border>  
+    </DataTemplate>
 
-                        <Border>
-                            <TextBlock Text="{Binding Caption}"/>
-                        </Border>
-
-                        <ItemsControl                     
-                            Grid.Row="1"
-                            ItemsSource="{Binding Children}"
-                            Style="{StaticResource ResourceKey=TreeTemplateStyle}"/>
-                    </Grid>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
+    <Style x:Key="TreeTemplateStyle" TargetType="ListView">
+        <Setter Property="IsItemClickEnabled" Value="True"/>
+        <Setter Property="SelectionMode" Value="Single"/>
+        <Setter Property="ItemTemplate" Value="{StaticResource ResourceKey=MyDataTemplate}"/> 
     </Style>
 
 </ResourceDictionary>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRoboMind", "MyRoboMind\MyRoboMind.csproj", "{047CEDB9-F0E1-45D8-A62C-B729F5C85482}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{9757EAB5-E438-4F5D-A97A-E857D5EAE4B1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMind.Driver", "rMind.Driver\rMind.Driver.csproj", "{8092E8BA-3044-443D-B39A-A850FDB4B8F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMind.CodeGenerator", "rMind.CodeGenerator\rMind.CodeGenerator.csproj", "{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -183,6 +185,22 @@ Global
 		{8092E8BA-3044-443D-B39A-A850FDB4B8F2}.Release|x64.Build.0 = Release|x64
 		{8092E8BA-3044-443D-B39A-A850FDB4B8F2}.Release|x86.ActiveCfg = Release|x86
 		{8092E8BA-3044-443D-B39A-A850FDB4B8F2}.Release|x86.Build.0 = Release|x86
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}.Debug|ARM.ActiveCfg = Debug|ARM
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}.Debug|ARM.Build.0 = Debug|ARM
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}.Debug|x64.ActiveCfg = Debug|x64
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}.Debug|x64.Build.0 = Debug|x64
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}.Debug|x86.ActiveCfg = Debug|x86
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}.Debug|x86.Build.0 = Debug|x86
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}.Release|ARM.ActiveCfg = Release|ARM
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}.Release|ARM.Build.0 = Release|ARM
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}.Release|x64.ActiveCfg = Release|x64
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}.Release|x64.Build.0 = Release|x64
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}.Release|x86.ActiveCfg = Release|x86
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -196,6 +214,7 @@ Global
 		{EFBDB85E-D783-4435-B2F2-EA00F41C0EF9} = {9757EAB5-E438-4F5D-A97A-E857D5EAE4B1}
 		{47CA55A3-E638-4407-8764-ED489E187A15} = {9757EAB5-E438-4F5D-A97A-E857D5EAE4B1}
 		{8092E8BA-3044-443D-B39A-A850FDB4B8F2} = {9757EAB5-E438-4F5D-A97A-E857D5EAE4B1}
+		{2EF48971-A065-4D7B-A880-5DBAAEBE19F1} = {9757EAB5-E438-4F5D-A97A-E857D5EAE4B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BEF85059-025A-4685-AFD4-7481A9E427B8}

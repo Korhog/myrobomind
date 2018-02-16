@@ -13,7 +13,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/rMind.Driver/Style/TreeNode.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        </ResourceDictionary> 
     </Page.Resources>
 
     <Grid Background="Black">
@@ -39,12 +39,18 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Width="250" Background="#1d1d1d">
-                        <TextBlock Text="Drivers" Height="40" HorizontalAlignment="Center"/>
-                        <ListView 
-                            Style="{StaticResource ResourceKey=TreeTemplateStyle}"
-                            x:Name="mainTree" 
-                            ItemClick="OnMainTreeClick" 
-                            IsItemClickEnabled="True">
+                        <TextBlock Text="Drivers" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ListView                             
+                            ItemClick="OnSelectDriver"
+                            IsItemClickEnabled="True"
+                            x:Name="mainMenu">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="driver:TreeNode">
+                                    <Border>
+                                        <TextBlock Text="{Binding Caption}"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
                         </ListView>
                     </StackPanel>
                     <Border Background="#1d1d1d" Grid.Column="1" Margin="1,0,0,0">

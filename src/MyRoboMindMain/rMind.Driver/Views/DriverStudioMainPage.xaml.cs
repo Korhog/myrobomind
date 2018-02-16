@@ -39,16 +39,24 @@ namespace rMind.Driver.Views
             var db = rMindDataBase.GetInstance();
             await db.Load();
 
-            foreach(var d in db.SystemDrv.Drivers)
-            {
-                mainTree.Items.Add(d);
-            }
+            var menu = TreeNodeBuilder.Build(db.SystemDrv.Drivers);
+            mainMenu.ItemsSource = menu;
         }
 
-        private void OnMainTreeClick(object sender, ItemClickEventArgs e)
+
+
+        private void OnSelectDriver(object sender, ItemClickEventArgs e)
         {
-            var v = e;
-            var s = sender;
+            var item = e.ClickedItem as TreeNode;
+            if (item == null)
+                return;
+
+            switch (item.Type)
+            {
+                case NodeType.Driver:
+                    contentFrame.Navigate(typeof(DriverView), item.Driver);
+                    break;
+            }
         }
     }
 }

@@ -1,22 +1,28 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Newtonsoft.Json;
 
 namespace rMind.Elements
 {
     using Types;
 
+    [JsonObject(MemberSerialization.OptIn)]
     public class rMindItemUI
     {
-        protected bool m_locked = false;
-        
         // Не доступна для управления.
+        protected bool m_locked = false;       
+        [JsonProperty]
         public bool Locked { get { return m_locked; } set { m_locked = value; } }
 
         protected bool m_has_translate;
+
         protected bool m_expanded = true;
-        public bool Expanded { get { return m_expanded; } }
+        [JsonProperty]
+        public bool Expanded { get { return m_expanded; } set { m_expanded = value; } }
+
         protected Vector2 m_position;
-        public Vector2 Position { get { return m_position; } }
+        [JsonProperty]
+        public Vector2 Position { get { return m_position; } set { SetPosition(value); } }
 
         // Graphics
         protected Grid m_template; // main container for any elements

@@ -122,6 +122,9 @@
     <Compile Include="Views\DriverStudioMainPage.xaml.cs">
       <DependentUpon>DriverStudioMainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DriverView.xaml.cs">
+      <DependentUpon>DriverView.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\rMind.Driver.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +152,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Views\DriverStudioMainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DriverView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

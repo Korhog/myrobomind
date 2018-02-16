@@ -18,7 +18,14 @@ namespace rMind.Driver
     public class TreeNode
     {
         public string Caption { get; set; }
-        public NodeType Type { get; set; }             
+        public NodeType Type { get; set; }
+        public ObservableCollection<TreeNode> Children { get; set; }
+        public Driver Driver { get; set; }
+
+        public TreeNode()
+        {
+            Children = new ObservableCollection<TreeNode>();
+        }
     }
 
     public class TreeNodeBuilder
@@ -41,6 +48,7 @@ namespace rMind.Driver
         {
             var result = new TreeNode
             {
+                Driver = driver,
                 Caption = driver.Name,
                 Type = NodeType.Driver
             };

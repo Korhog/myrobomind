@@ -65,5 +65,23 @@ namespace MyRoboMind.Pages
         {
 
         }
+
+        private void OnTryCopy(object sender, RoutedEventArgs e)
+        {
+            var cont = rMindProject.GetInstance().DeviceController.CurrentController;
+            if (cont == null)
+                return;
+
+            cont.TryCopy();
+        }
+
+        private void OnTryPaste(object sender, RoutedEventArgs e)
+        {
+            var cont = rMindProject.GetInstance().DeviceController.CurrentController;
+            if (cont == null)
+                return;
+
+            cont.TryPaste();
+        }
     }
 }

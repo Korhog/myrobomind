@@ -1,11 +1,11 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+﻿using Newtonsoft.Json;
 
 namespace rMind.Elements
 {
     using Draw;
     using Types;
 
+    [JsonObject(MemberSerialization.OptIn)]
     public class rMindBaseItem : rMindItemUI, IDrawElement
     {
         protected rMindBaseController m_parent;
