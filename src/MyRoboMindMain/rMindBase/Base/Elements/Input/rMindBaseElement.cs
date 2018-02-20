@@ -45,7 +45,7 @@ namespace rMind.Elements
 
             e.Handled = true; 
 
-            zoom = GetController()?.CanvasController.Zoom ?? 1;
+            zoom = GetController()?.CanvasController?.Zoom ?? 1.0f;
             if (zoom == 0)
                 zoom = 1;
         }

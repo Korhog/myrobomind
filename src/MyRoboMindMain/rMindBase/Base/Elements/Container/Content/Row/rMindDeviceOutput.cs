@@ -18,19 +18,17 @@ namespace rMind.Content
             AddSetter();
             AddSetter();
 
-            var colors = rMind.ColorContainer.rMindColors.GetInstance();
-
             content = new Border
             {
                 IsHitTestVisible = false,
                 Margin = new Windows.UI.Xaml.Thickness(4, 0, 0, 0),
                 CornerRadius = new Windows.UI.Xaml.CornerRadius(0, 4, 4, 0),
-                Background = colors.GetSolidBrush((Color)ColorHelper.FromArgb(255, 51, 51, 51)),
+                Background = ColorContainer.rMindColors.Current().GetSolidBrush((Color)ColorHelper.FromArgb(255, 51, 51, 51)),
                 Child = new FontIcon()
                 {
                     Glyph = "\uE964",
                     FontSize = 32,
-                    Foreground = colors.GetSolidBrush(Colors.White)
+                    Foreground = ColorContainer.rMindColors.Current().GetSolidBrush(Colors.White)
                 }
             };
 

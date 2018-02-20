@@ -43,8 +43,9 @@ namespace rMind.Elements
 
         public void SetColor(Color color)
         {
-            m_area.Fill = ColorContainer.rMindColors.GetInstance().GetSolidBrush(color);
-            m_line.Stroke = ColorContainer.rMindColors.GetInstance().GetSolidBrush(color);
+            var colors = ColorContainer.rMindColors.Current();
+            m_area.Fill = colors.GetSolidBrush(color);
+            m_line.Stroke = colors.GetSolidBrush(color);
         }
 
         public void Hide()

@@ -146,7 +146,7 @@ namespace rMind.Content
             Template.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth = 80 });
             Template.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
 
-            m_base.BorderBrush = ColorContainer.rMindColors.GetInstance().GetSolidBrush(Colors.Black);
+            m_base.BorderBrush = ColorContainer.rMindColors.Current().GetSolidBrush(Colors.Black);
 
             Grid.SetColumnSpan(m_base, 3);
             Grid.SetColumnSpan(m_selector, 3);
@@ -260,9 +260,10 @@ namespace rMind.Content
             base.SetAccentColor(color);
 
             var shades = ColorForge.ColorHelper.GetColorShades(m_accent_color, 8);
-            var colors = ColorContainer.rMindColors.GetInstance();
 
-            NodeTheme = new rMind.Nodes.rMindNodeTheme()
+            var colors = ColorContainer.rMindColors.Current();
+
+            NodeTheme = new rMindNodeTheme()
             {
                 BaseFill = colors.GetSolidBrush(shades[3]),
                 BaseStroke = colors.GetSolidBrush(shades[1]),

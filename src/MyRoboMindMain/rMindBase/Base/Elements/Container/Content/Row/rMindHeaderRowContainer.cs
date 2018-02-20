@@ -15,7 +15,7 @@ namespace rMind.Content
 
     public partial class rMindHeaderRowContainer : rMindRowContainer
     {
-        Border m_header_rect;
+        Border m_header_rect;       
 
         
         protected HeaderButton m_expand_button;
@@ -36,7 +36,7 @@ namespace rMind.Content
                         },
                         Padding = new Thickness(8, 0, 8, 0),
                         BorderThickness = new Thickness(0, 0, 1, 0),
-                        Background = rMindColors.GetInstance().GetSolidBrush(Colors.Transparent),
+                        Background = ColorContainer.rMindColors.Current().GetSolidBrush(Colors.Transparent),
                         VerticalAlignment = VerticalAlignment.Stretch,
                         HorizontalAlignment = HorizontalAlignment.Left
                     };
@@ -119,7 +119,7 @@ namespace rMind.Content
                             FontSize = 14
                         },
                         Padding = new Thickness(8, 0, 8, 0),
-                        Background = rMindColors.GetInstance().GetSolidBrush(Colors.Transparent),
+                        Background = rMindColors.Current().GetSolidBrush(Colors.Transparent),
                         VerticalAlignment = VerticalAlignment.Stretch,
                         HorizontalAlignment = HorizontalAlignment.Right
                     };
@@ -174,8 +174,8 @@ namespace rMind.Content
             {
                 /*
                 var shades = ColorForge.ColorHelper.GetColorShades(m_accent_color, 6);
-                m_header_rect.Background = rMindColors.GetInstance().GetSolidBrush(shades[3]);
-                m_header_rect.BorderBrush = rMindColors.GetInstance().GetSolidBrush(shades[2]);
+                m_header_rect.Background = colors.GetSolidBrush(shades[3]);
+                m_header_rect.BorderBrush = colors.GetSolidBrush(shades[2]);
                 */
             }
         }
@@ -197,7 +197,6 @@ namespace rMind.Content
         public override void Init()
         {
             base.Init();
-            var colors = rMindColors.GetInstance();
 
             m_header_rect = new Border()
             {
@@ -216,7 +215,7 @@ namespace rMind.Content
                 Text = "Header",
                 FontWeight = FontWeights.Bold,
                 FontFamily = new FontFamily("Segoe UI"),
-                Foreground = colors.GetSolidBrush(Colors.White),
+                Foreground = ColorContainer.rMindColors.Current().GetSolidBrush(Colors.White),
                 TextAlignment = TextAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
                 IsHitTestVisible = false,
@@ -254,13 +253,15 @@ namespace rMind.Content
             base.SetAccentColor(color);
             var shades = ColorForge.ColorHelper.GetColorShades(m_accent_color, 8);
 
-            m_header_rect.Background = rMindColors.GetInstance().GetSolidBrush(shades[6]);            
-            m_header_rect.BorderBrush = rMindColors.GetInstance().GetSolidBrush(shades[5]);
-            m_header_label.Foreground = rMindColors.GetInstance().GetSolidBrush(shades[3]);
+            var colors = rMindColors.Current();
 
-            EditButton.Foreground = rMindColors.GetInstance().GetSolidBrush(shades[2]);
-            ExpandButton.Foreground = rMindColors.GetInstance().GetSolidBrush(shades[2]);
-            ExpandButton.BorderBrush = rMindColors.GetInstance().GetSolidBrush(shades[5]);
+            m_header_rect.Background = colors.GetSolidBrush(shades[6]);            
+            m_header_rect.BorderBrush = colors.GetSolidBrush(shades[5]);
+            m_header_label.Foreground = colors.GetSolidBrush(shades[3]);
+
+            EditButton.Foreground = colors.GetSolidBrush(shades[2]);
+            ExpandButton.Foreground = colors.GetSolidBrush(shades[2]);
+            ExpandButton.BorderBrush = colors.GetSolidBrush(shades[5]);
         }
 
         protected override void SetBorderThickness(Thickness value)

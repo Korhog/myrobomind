@@ -14,30 +14,26 @@ namespace rMind.ColorContainer
         Dictionary<Color, SolidColorBrush> m_solid_brushes;
 
         private Random m_random;
-        private static rMindColors m_instance;
-        static object sync = new Object();
+        private static rMindColors instance;
+        private static readonly object sync = new object();
+
+        public static rMindColors Current()
+        {
+            lock(sync)
+            {
+                if (instance == null)
+                {
+                    instance = new rMindColors();
+                }
+                return instance;
+            }
+        }
 
         rMindColors()
         {
             m_solid_brushes = new Dictionary<Color, SolidColorBrush>();
             m_random = new Random();
         }
-
-        public static rMindColors GetInstance()
-        {
-            if (m_instance == null)
-            {
-                lock (sync)
-                {
-                    if (m_instance == null)
-                    {
-                        m_instance = new rMindColors();
-                    }
-                }
-            }
-
-            return m_instance;
-        } 
         
         public SolidColorBrush GetSolidBrush(Color color)
         {
@@ -107,7 +103,8 @@ namespace rMind.ColorContainer
 
         public static Color ColorRandom(byte min, byte max)
         {
-            var rand = rMindColors.GetInstance().m_random;
+            var colors = new rMindColors();
+            var rand = colors.m_random;
 
             var R = (byte)rand.Next(min, max);
             var G = (byte)rand.Next(min, max);

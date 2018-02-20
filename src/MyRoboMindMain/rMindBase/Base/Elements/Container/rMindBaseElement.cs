@@ -110,13 +110,13 @@ namespace rMind.Elements
 
             m_base = new Border()
             {
-                Background = rMindScheme.Get().MainContainerBrush()
+                Background = rMindColors.Current().GetSolidBrush(rMindColors.ColorRandom())
             };
 
             m_selector = new Border()
             {
-                Margin = new Thickness(-border),
-                Background = rMindColors.GetInstance().GetSolidBrush(rMindColors.GetSelectorBrush()),
+                Margin = new Thickness(-border),                
+                Background = rMindColors.Current().GetSolidBrush(rMindColors.GetSelectorBrush()),
                 IsHitTestVisible = false,
                 Visibility = Visibility.Collapsed
             };
@@ -301,8 +301,8 @@ namespace rMind.Elements
         {
             m_accent_color = color;
             var shades = ColorForge.ColorHelper.GetColorShades(color, 8);
-            m_base.Background = rMindColors.GetInstance().GetSolidBrush(shades[7]);
-            m_base.BorderBrush = rMindColors.GetInstance().GetSolidBrush(shades[5]);
+            m_base.Background = rMindColors.Current().GetSolidBrush(shades[7]);
+            m_base.BorderBrush = rMindColors.Current().GetSolidBrush(shades[5]);
         }
 
         public bool InRect(Rectangle rect)

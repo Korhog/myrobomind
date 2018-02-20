@@ -17,7 +17,6 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MyRoboMind
 {
-    using rMind.Project;
     /// <summary>
     /// Обеспечивает зависящее от конкретного приложения поведение, дополняющее класс Application по умолчанию.
     /// </summary>
@@ -67,7 +66,7 @@ namespace MyRoboMind
                     // Если стек навигации не восстанавливается для перехода к первой странице,
                     // настройка новой страницы путем передачи необходимой информации в качестве параметра
                     // параметр
-                    rootFrame.Navigate(typeof(Pages.EditorPage), e.Arguments);
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 // Обеспечение активности текущего окна
                 Window.Current.Activate();
@@ -91,12 +90,10 @@ namespace MyRoboMind
         /// </summary>
         /// <param name="sender">Источник запроса приостановки.</param>
         /// <param name="e">Сведения о запросе приостановки.</param>
-        private async void OnSuspending(object sender, SuspendingEventArgs e)
+        private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Сохранить состояние приложения и остановить все фоновые операции            
-            var project = rMindProject.GetInstance();
-            await project.SaveState();
+            //TODO: Сохранить состояние приложения и остановить все фоновые операции
             deferral.Complete();
         }
     }

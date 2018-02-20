@@ -4,112 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MyRoboMind"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"    
-    xmlns:rmind="using:rMind.Elements"
-    xmlns:ext="using:rMind.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Page.Resources>
-        <Style TargetType="Button" x:Key="SideMenuButton">
-            <Setter Property="Height" Value="48"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Grid >
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualStateGroup.Transitions>
-                                        <VisualTransition To="PointerOver" GeneratedDuration="0:0:0.2"/>
-                                    </VisualStateGroup.Transitions>
-                                    <VisualState x:Name="Normal">
-                                        <Storyboard>
-                                            <ColorAnimation                                                         
-                                                        Storyboard.TargetName="ButtonBrush" 
-                                                        Storyboard.TargetProperty="Color" To="Transparent" />
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="PointerOver">
-                                        <Storyboard>
-                                            <ColorAnimation                                                         
-                                                    Storyboard.TargetName="ButtonBrush" 
-                                                    Storyboard.TargetProperty="Color" To="#22FFFFFF" />
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Grid.Background>
-                                <SolidColorBrush x:Name="ButtonBrush" Color="Transparent"/>
-                            </Grid.Background>
-                            <ContentPresenter 
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Background" Value="Transparent"/>
-        </Style>
-    </Page.Resources>
 
-    <Grid Background="#1D1D1D">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="48"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        
-        <!-- top side menu -->
-        <StackPanel VerticalAlignment="Top">    
-            <Button VerticalAlignment="Top" Click="Button_Back" ToolTipService.ToolTip="Back" 
-                    Style="{StaticResource ResourceKey=SideMenuButton}" >
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE0A6;"  />
-            </Button>
-            <Button VerticalAlignment="Top" Click="Button_Click" ToolTipService.ToolTip="Add row item"
-                    Style="{StaticResource ResourceKey=SideMenuButton}">
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE964;" />
-            </Button>
-            <Button VerticalAlignment="Top" Click="Button_Save_Click" ToolTipService.ToolTip="Save scheme"
-                    Style="{StaticResource ResourceKey=SideMenuButton}">
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE105;"  />
-            </Button>
-            <Button VerticalAlignment="Top" Click="onLoadClick" ToolTipService.ToolTip="Load scheme"
-                    Style="{StaticResource ResourceKey=SideMenuButton}">
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE159;" />
-            </Button>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="200">
+            <Button Content="Mind Editor" HorizontalAlignment="Stretch" Click="OnMindEditor" Margin="4" Height="50"/>
+            <Button Content="Driver Forge" HorizontalAlignment="Stretch" Click="OnMindForge" Margin="4" Height="50"/>
         </StackPanel>
-
-        <!-- bottom side menu -->
-        <StackPanel VerticalAlignment="Bottom">
-            <Button VerticalAlignment="Top" Click="onResetClick" ToolTipService.ToolTip="Reset" 
-                    Style="{StaticResource ResourceKey=SideMenuButton}">
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;"  />
-            </Button>
-        </StackPanel>
-
-        <ScrollViewer
-                Grid.Column="1"
-                ZoomMode="Enabled"              
-                VerticalScrollBarVisibility="Visible" 
-                HorizontalScrollBarVisibility="Visible" 
-                IsHorizontalRailEnabled="False"
-                IsVerticalRailEnabled="False"
-                x:Name="scroll" >
-            <Canvas 
-                    Width="10000"
-                    Height="6000"
-                    x:Name="canvas" 
-                    Background="White" 
-                    UseLayoutRounding="True">
-            </Canvas>
-        </ScrollViewer>
-
-        <ext:BreadCrumbs
-            Grid.Column="1" 
-            x:Name="BreadCrumbs"
-            ItemClick="BreadCrumbClick"
-            VerticalAlignment="Top" 
-            />
     </Grid>
 </Page>

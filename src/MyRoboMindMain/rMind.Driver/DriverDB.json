@@ -1,0 +1,56 @@
+{
+    "Folders": [
+        { "Caption": "Base" }
+    ],
+    "Drivers": [
+        {
+            "Name": "DEVICE",
+            "IDS": "DEVICE",
+            "Type": 0,
+            "Pins": []
+        },
+        {
+            "Name": "LED",
+            "IDS": "LED",
+            "Parent": "DEVICE",
+            "Type": 0,
+            "Pins": [
+                {
+                    "PinMode": 1,
+                    "Name": "IN1"
+                },
+                {
+                    "PinMode": 1,
+                    "Name": "IN2"
+                }
+            ]
+        },
+        {
+            "Name": "DC",
+            "IDS": "DC",
+            "Parent": "DEVICE",
+            "Type": 0,
+            "Pins": [
+                {
+                    "PinMode": 1,
+                    "Name": "IN1"
+                },
+                {
+                    "PinMode": 1,
+                    "Name": "IN2"
+                },
+                {
+                    "PinMode": 1,
+                    "Name": "IN3"
+                }
+            ]
+        },
+        {
+            "Name": "Math",
+            "IDS": "MATH",
+            "Parent": null,
+            "Type": 1,
+            "Pins": []
+        }
+    ]
+}

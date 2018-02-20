@@ -9,9 +9,11 @@ namespace rMind.Elements
     using Storage;
     using Draw;
     using Types;
+    using ColorContainer;
     /// <summary> Wire to connect nodes </summary>
     public partial class rMindBaseWire : IDrawElement, IStorageObject
     {
+        protected rMindColors colors;
         protected rMindBaseWireDot m_a_dot;
         protected rMindBaseWireDot m_b_dot;
 
@@ -45,9 +47,10 @@ namespace rMind.Elements
             m_bezie_figure = new PathFigure();
             m_bezie_geometry = new PathGeometry();
             m_bezie_geometry.Figures.Add(m_bezie_figure);
+            colors = ColorContainer.rMindColors.Current();
             m_bezie = new Path()
             {
-                Stroke = ColorContainer.rMindColors.GetInstance().GetSolidBrush(Windows.UI.Colors.SteelBlue),
+                Stroke = colors.GetSolidBrush(Windows.UI.Colors.SteelBlue),
                 StrokeThickness = 6,
                 IsHitTestVisible = false,
                 Data = m_bezie_geometry

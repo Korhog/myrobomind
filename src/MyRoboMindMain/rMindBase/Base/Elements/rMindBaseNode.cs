@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Shapes;
 namespace rMind.Nodes
 {  
     using Draw;
+    using ColorContainer;
     using Elements;
     using rMind.Input;
 
@@ -51,7 +52,8 @@ namespace rMind.Nodes
 
         public static rMindNodeTheme Theme(Color color)
         {
-            var colors = ColorContainer.rMindColors.GetInstance();
+
+            var colors = rMindColors.Current();
 
             return new rMindNodeTheme
             {
@@ -64,7 +66,7 @@ namespace rMind.Nodes
 
         public static rMindNodeTheme Theme()
         {
-            var colors = ColorContainer.rMindColors.GetInstance();
+            var colors = rMindColors.Current();
 
             return new rMindNodeTheme
             {
@@ -217,8 +219,6 @@ namespace rMind.Nodes
         {
             var r = m_connection_type == rMindNodeConnectionType.Container ? 10 : 3;
 
-            var colors = rMind.ColorContainer.rMindColors.GetInstance();
-
             m_hit_area = new Rectangle
             {
                 Fill = new SolidColorBrush(Colors.Transparent)
@@ -366,7 +366,6 @@ namespace rMind.Nodes
 
         public virtual void UpdateAccentColor()
         {
-            var colors = ColorContainer.rMindColors.GetInstance();
             var theme = Theme;
 
             m_area.Fill = theme.BaseFill;

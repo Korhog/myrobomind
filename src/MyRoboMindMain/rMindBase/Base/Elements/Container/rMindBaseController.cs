@@ -191,13 +191,17 @@ namespace rMind.Elements
             if (!m_subscribed)
                 return new Vector2(0, 0);
 
+            if (m_scroll == null) {
+                return new Vector2(40, 40);
+            }
+
             return new Vector2(
                 (m_scroll.HorizontalOffset + m_scroll.ActualWidth / 2 - (item == null ? 0 : item.Width / 2)) / m_scroll.ZoomFactor,
                 (m_scroll.VerticalOffset + m_scroll.ActualHeight / 2 - (item == null ? 0 : item.Height / 2)) / m_scroll.ZoomFactor
             );
         }
 
-        public virtual rMindBaseElement CreateElementByElementType(rElementType type, bool silent = false)
+        public virtual rMindBaseElement CreateElementByElementType(rElementType type, object createParams, bool silent = false)
         {
             rMindBaseElement element = null;
             switch (type)

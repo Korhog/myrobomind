@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CBFFEB10-DAD1-4880-AA97-D7886B3CCEEF}</ProjectGuid>
+    <ProjectGuid>{B67B2B74-302F-490D-9788-B72B19EB5604}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>rMind.Driver</RootNamespace>
-    <AssemblyName>rMind.Driver</AssemblyName>
+    <RootNamespace>rMind.Editor</RootNamespace>
+    <AssemblyName>rMind.Editor</AssemblyName>
     <DefaultLanguage>ru-RU</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
@@ -106,37 +106,53 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Driver\Driver.cs" />
-    <Compile Include="DriverDB.cs" />
-    <Compile Include="Pin.cs" />
+    <Compile Include="Views\MindEditorMindPage.xaml.cs">
+      <DependentUpon>MindEditorMindPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\rMind.Driver.rd.xml" />
+    <EmbeddedResource Include="Properties\rMind.Editor.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>11.0.1</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="NewFolder1\" />
+    <Page Include="Views\MindEditorMindPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DriverDB.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <ProjectReference Include="..\rMindBaseControls\rMind.BaseControls.csproj">
+      <Project>{dde69cfe-2f1d-46ed-a414-eb48870ff997}</Project>
+      <Name>rMind.BaseControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\rMindBase\rMind.Base.csproj">
+      <Project>{709002b9-916f-481f-981b-6f4f0c2b51db}</Project>
+      <Name>rMind.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\rMindControls\rMind.Controls.csproj">
+      <Project>{47ca55a3-e638-4407-8764-ed489e187a15}</Project>
+      <Name>rMind.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\rMindProject\rMind.Project.csproj">
+      <Project>{efbdb85e-d783-4435-b2f2-ea00f41c0ef9}</Project>
+      <Name>rMind.Project</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\rMindStorage\rMind.Storage.csproj">
+      <Project>{926d5c3d-0424-454e-b78b-b50731744d7b}</Project>
+      <Name>rMind.Storage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\rMindTheme\rMind.Theme.csproj">
+      <Project>{458f5c99-d7e2-481a-baef-db0d694a0f8a}</Project>
+      <Name>rMind.Theme</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties DriverDB_1json__JSONSchema="http://json.schemastore.org/mycode" />
-    </VisualStudio>
-  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

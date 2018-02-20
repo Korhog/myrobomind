@@ -73,7 +73,7 @@ namespace rMind.Elements
             m_canvas.ManipulationCompleted += OnManipulationCompleted;
             m_canvas.ManipulationDelta += OnManipulationDelta;
 
-            m_scroll.Loaded += onLoad;
+            if (m_scroll != null) m_scroll.Loaded += onLoad;
 
             m_canvas.PointerPressed += OnPointerPress;
             m_canvas.PointerReleased += onPointerExit;
@@ -84,7 +84,7 @@ namespace rMind.Elements
 
         void onLoad(object sender, RoutedEventArgs args)
         {
-            m_scroll.ChangeView(
+            m_scroll?.ChangeView(
                 (m_scroll.ExtentWidth - m_scroll.ViewportWidth) / 2.0,
                 (m_scroll.ExtentHeight - m_scroll.ViewportHeight) / 2.0,
                 1, true);
@@ -99,7 +99,7 @@ namespace rMind.Elements
             m_canvas.ManipulationCompleted -= OnManipulationCompleted;
             m_canvas.ManipulationDelta -= OnManipulationDelta;
 
-            m_scroll.Loaded -= onLoad;
+            if (m_scroll != null) m_scroll.Loaded -= onLoad;
 
             m_canvas.PointerPressed -= OnPointerPress;
             m_canvas.PointerReleased -= onPointerExit;
@@ -201,7 +201,7 @@ namespace rMind.Elements
             e.Handled = true;
             if (m_manipulation_mode == rMindManipulationMode.Select)
             {
-                m_manipulation_data.CurrentVector += new Vector2(e.Delta.Translation.X, e.Delta.Translation.Y) / CanvasController.Zoom;
+                m_manipulation_data.CurrentVector += new Vector2(e.Delta.Translation.X, e.Delta.Translation.Y) / (CanvasController?.Zoom ?? 1.0f);
                 UpdateSelectorRect();
                 return;
             }

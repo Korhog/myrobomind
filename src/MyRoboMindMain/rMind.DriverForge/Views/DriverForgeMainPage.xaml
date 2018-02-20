@@ -1,0 +1,76 @@
+﻿<Page
+    x:Class="rMind.DriverForge.Views.DriverForgeMainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:rMind.DriverForge.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="Black">
+        <SplitView OpenPaneLength="200" x:Name="sideMenu" CompactPaneLength="48" DisplayMode="CompactInline">
+            <SplitView.Pane>
+                <StackPanel Background="#2d2d3d">
+                    <Button Content="Menu" Click="OnSideMenuClick" VerticalAlignment="Top" Height="40" HorizontalAlignment="Stretch" Foreground="LightGray"/>
+                    
+                </StackPanel>
+
+            </SplitView.Pane>
+
+            <SplitView.Content>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <Border Height="40" Background="#2d2d3d">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Library" Foreground="White" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                                <Button Width="32" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,4" Click="OnCreate">
+                                    <FontIcon Glyph="&#xE109;" FontSize="12" Foreground="YellowGreen"/>
+                                </Button>
+
+                                <Button Width="32" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="4" Click="OnSave">
+                                    <FontIcon Glyph="&#xE118;" FontSize="12" Foreground="White"/>
+                                </Button>
+                            </Grid>
+                        </Border>
+                        
+                        <Border VerticalAlignment="Stretch" Background="#2d2d3d">
+                        <ListBox
+                            Background="Transparent"
+                                VerticalAlignment="Stretch" 
+                                x:Name="drivers"                                 
+                                SelectionChanged="OnDriverChange" >
+                                <ListBox.Resources>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Margin" Value="0,1,0,1"/>
+                                        <Setter Property="Padding" Value="4"/>
+                                    </Style>
+                                </ListBox.Resources>
+                                <ListBox.ItemTemplate>                                    
+                                    <DataTemplate>
+                                        <ContentPresenter HorizontalAlignment="Right">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
+                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                            <Button Click="OnDelete" Grid.Column="1" Content="[x]" Margin="10,0,0,0"/>
+                                        </StackPanel>
+                                        </ContentPresenter>
+                                    </DataTemplate>                                    
+                                </ListBox.ItemTemplate>                            
+                        </ListBox>
+                        </Border>                        
+                    </StackPanel>
+                    <Frame x:Name="content" Grid.Column="1"/>
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
+    </Grid>
+</Page>

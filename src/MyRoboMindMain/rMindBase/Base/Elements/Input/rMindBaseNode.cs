@@ -36,7 +36,7 @@ namespace rMind.Nodes
         {
             e.Handled = true;
             // Получаем зум фактор
-            zoom = GetController()?.CanvasController.Zoom ?? 1;
+            zoom = GetController()?.CanvasController?.Zoom ?? 1.0f;
             if (zoom == 0)
                 zoom = 1;
 

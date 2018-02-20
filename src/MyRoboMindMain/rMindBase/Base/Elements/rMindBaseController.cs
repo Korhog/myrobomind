@@ -97,7 +97,7 @@ namespace rMind.Elements
         /// <summary>
         /// Subscribe to canvas
         /// </summary>
-        public virtual void Subscribe(Canvas canvas, ScrollViewer scroll)
+        public virtual void Subscribe(Canvas canvas, ScrollViewer scroll = null)
         {
             if (m_subscribed)
                 Unsubscribe();
@@ -120,7 +120,7 @@ namespace rMind.Elements
             if (!m_items_state.Saved)
                 onLoad(null, null);
             else {
-                m_scroll.ChangeView(
+                m_scroll?.ChangeView(
                     m_items_state.HorizontalOffset,
                     m_items_state.VerticalOffset,
                     m_items_state.ZoomFactor,
@@ -132,9 +132,12 @@ namespace rMind.Elements
         protected virtual void SaveControllerState()
         {
             m_items_state.Saved = true;
-            m_items_state.ZoomFactor = m_scroll.ZoomFactor;
-            m_items_state.HorizontalOffset = m_scroll.HorizontalOffset;
-            m_items_state.VerticalOffset = m_scroll.VerticalOffset;            
+            if (m_scroll != null)
+            {
+                m_items_state.ZoomFactor = m_scroll.ZoomFactor;
+                m_items_state.HorizontalOffset = m_scroll.HorizontalOffset;
+                m_items_state.VerticalOffset = m_scroll.VerticalOffset;
+            }
         }
 
         /// <summary>
@@ -191,7 +194,7 @@ namespace rMind.Elements
             item.Translate(translation);
 
             m_items_state.MagnetNode = BakedNodes
-                .Where(pair => Vector2.Length(pair.Key - item.Position) < (100 / m_scroll.ZoomFactor))
+                .Where(pair => Vector2.Length(pair.Key - item.Position) < (100 / (m_scroll == null ? 1 : m_scroll.ZoomFactor)))
                 .OrderBy(pair => Vector2.Length(pair.Key - item.Position))
                 .Select(pair => pair.Value)
                 .FirstOrDefault();

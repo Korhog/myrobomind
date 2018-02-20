@@ -29,7 +29,7 @@ namespace rMind.Elements
         public Grid Template { get { return m_template; } }
 
         public rMindItemUI()
-        {
+        {         
             m_template = new Grid()
             {
                 UseLayoutRounding = true,

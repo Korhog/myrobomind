@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CBFFEB10-DAD1-4880-AA97-D7886B3CCEEF}</ProjectGuid>
+    <ProjectGuid>{CBFC1543-1D17-4BB9-9726-4E18773BA14B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>rMind.Driver</RootNamespace>
-    <AssemblyName>rMind.Driver</AssemblyName>
+    <RootNamespace>rMind.DriverForge</RootNamespace>
+    <AssemblyName>rMind.DriverForge</AssemblyName>
     <DefaultLanguage>ru-RU</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
@@ -106,37 +106,40 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Driver\Driver.cs" />
-    <Compile Include="DriverDB.cs" />
-    <Compile Include="Pin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\rMind.Driver.rd.xml" />
+    <Compile Include="Views\DriverForgeMainPage.xaml.cs">
+      <DependentUpon>DriverForgeMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DriverView.xaml.cs">
+      <DependentUpon>DriverView.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\rMind.DriverForge.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>11.0.1</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="NewFolder1\" />
+    <Page Include="Views\DriverForgeMainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DriverView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DriverDB.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <ProjectReference Include="..\rMind.Driver\rMind.Driver.csproj">
+      <Project>{cbffeb10-dad1-4880-aa97-d7886b3cceef}</Project>
+      <Name>rMind.Driver</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties DriverDB_1json__JSONSchema="http://json.schemastore.org/mycode" />
-    </VisualStudio>
-  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
