@@ -20,13 +20,49 @@ namespace rMind.Driver
         public string Name { get; set; }
 
         [JsonProperty]
+        public string ClassName { get; set; }
+
+        [JsonProperty]
         public string SemanticName { get; set; }
 
         [JsonProperty]
         public string Desc { get; set; }
 
+
+        ObservableCollection<Pin> pins;
+
         [JsonProperty]
-        public ObservableCollection<Pin> Pins { get; set; }
+        public ObservableCollection<Pin> Pins
+        {
+            get { return pins; }
+            set
+            {
+                if (value == null)
+                    return;
+                pins = value;
+            }
+        }
+
+        ObservableCollection<Method> methods;
+
+        [JsonProperty]
+        public ObservableCollection<Method> Methods
+        {
+            get { return methods; }
+            set
+            {
+                if (value == null)
+                    return;
+                methods = value;
+            }
+        }
+
+
+        public Driver()
+        {
+            pins = new ObservableCollection<Pin>();
+            methods = new ObservableCollection<Method>();
+        }
 
         /// <summary>
         /// Полная копия драйвера
@@ -34,14 +70,18 @@ namespace rMind.Driver
         public Driver Instanciate()
         {
             var result = new Driver()
-            {     
+            {
                 Name = "my driver",
-                Pins = new ObservableCollection<Pin>()
+                Pins = new ObservableCollection<Pin>(),
+                Methods = new ObservableCollection<Method>()
             };
 
             foreach (var pin in Pins)
                 result.Pins.Add(pin.Instanciate());
-            
+
+            foreach (var method in Methods)
+                result.Methods.Add(method.Instanciate());
+
             return result;
         } 
     }    

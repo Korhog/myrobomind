@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Navigation;
 namespace rMind.DriverForge.Views
 {
     using Driver;
+    using Dialogs;
     using System.Threading.Tasks;
     using Windows.UI;
 
@@ -30,14 +31,20 @@ namespace rMind.DriverForge.Views
         public DriverForgeMainPage()
         {
             this.InitializeComponent();
-            Loaded += async (sender, e) => 
-            {
-                var db = DriverDB.Current();
-                await db.InitDB();
+        }
 
-                drivers.ItemsSource = db.Drivers.Drivers;
-            };
-        }        
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            var db = DriverDB.Current();
+            await db.InitDB();
+
+            drivers.ItemsSource = db.Drivers.Drivers;
+            if (db.Drivers.Drivers.Count > 0)
+                drivers.SelectedIndex = 0;
+        }
+
 
         private void OnSideMenuClick(object sender, RoutedEventArgs e)
         {
@@ -47,84 +54,6 @@ namespace rMind.DriverForge.Views
         private async void OnSave(object sender, RoutedEventArgs e)
         {
             await DriverDB.Current().Save();
-        }
-
-        private async void OnCreate(object sender, RoutedEventArgs e)
-        {
-            StackPanel panel = new StackPanel();
-            StackPanel idsPanel = new StackPanel { Orientation = Orientation.Horizontal };
-
-
-            idsPanel.Children.Add(new TextBlock { Text = "IDS" });
-            var errorText = new TextBlock {
-                Text = "Error",
-                Foreground = new SolidColorBrush(Colors.Red),
-                Visibility = Visibility.Collapsed
-            };
-            idsPanel.Children.Add(errorText);
-
-            var idsBox = new TextBox();
-
-            panel.Children.Add(idsPanel);
-            panel.Children.Add(idsBox);
-
-            var parents = new string[] { "NONE" };
-            parents = parents.Union(DriverDB.Current().Drivers.Drivers.Select(x => x.IDS)).ToArray();
-
-            ComboBox cbParent = new ComboBox
-            {
-                ItemsSource = parents
-            };
-            panel.Children.Add(new TextBlock { Text = "Parent" });
-            panel.Children.Add(cbParent);
-
-            ContentDialog contentDialog = new ContentDialog()
-            {
-                PrimaryButtonText = "Create",
-                SecondaryButtonText = "Cancel",
-                Content = panel
-            };
-
-            contentDialog.PrimaryButtonClick += async (s, args) =>
-            {                
-                ContentDialogButtonClickDeferral deferral = args.GetDeferral();
-
-                var exists = DriverDB.Current().Drivers.Drivers.Any(x => x.IDS.ToLower() == idsBox.Text.ToLower());
-                if (exists)
-                {
-                    errorText.Visibility = Visibility.Visible;
-                    args.Cancel = true;
-                }         
-                deferral.Complete();
-            };
-
-            if (await contentDialog.ShowAsync() == ContentDialogResult.Primary)
-            {
-                var ids = idsBox.Text.ToUpper();
-                var parentIds = (string)cbParent.SelectedItem;
-                Driver parent = null;
-                if (!string.IsNullOrEmpty(parentIds) && parentIds != "NONE")
-                    parent = DriverDB.Current().Drivers.Drivers.Where(x => x.IDS == parentIds).FirstOrDefault();
-
-                Driver driver = null;
-                if (parent == null)
-                {
-                    driver = new Driver()
-                    {
-                        IDS = ids,
-                        Name = "New Driver"
-                    };
-                }
-                else
-                {
-                    driver = parent.Instanciate();
-                    driver.IDS = ids;                    
-                }
-
-                var db = DriverDB.Current();
-                db.Drivers.Drivers.Add(driver);
-                drivers.SelectedItem = drivers.Items.LastOrDefault();
-            }
         }
 
         private void OnDriverChange(object sender, SelectionChangedEventArgs e)
@@ -155,6 +84,53 @@ namespace rMind.DriverForge.Views
                 var db = DriverDB.Current();
                 db.Drivers.Drivers.Remove(driver);
             }
+        }
+
+        private async void OnCreateDriver(object sender, RoutedEventArgs e)
+        { 
+            CreateLibItemDialog contentDialog = new CreateLibItemDialog()
+            {
+                PrimaryButtonText = "Create",
+                SecondaryButtonText = "Cancel"
+            };
+
+            if (await contentDialog.ShowAsync() == ContentDialogResult.Primary)
+            {
+
+                if (contentDialog.IsFolder)
+                    return;
+
+                var ids = contentDialog.IDS;
+                var parentIds = contentDialog.ParentTemplate;
+                Driver parent = null;
+                if (!string.IsNullOrEmpty(parentIds) && parentIds != "NONE")
+                    parent = DriverDB.Current().Drivers.Drivers.Where(x => x.IDS == parentIds).FirstOrDefault();
+
+                Driver driver = null;
+                if (parent == null)
+                {
+                    driver = new Driver()
+                    {
+                        IDS = ids,
+                        Name = contentDialog.ElementName
+                    };
+                }
+                else
+                {
+                    driver = parent.Instanciate();
+                    driver.IDS = ids;
+                    driver.Name = contentDialog.ElementName;
+                }
+
+                var db = DriverDB.Current();
+                db.Drivers.Drivers.Add(driver);
+                drivers.SelectedItem = drivers.Items.LastOrDefault();
+            }
+        }
+
+        private void OnCreateFolder(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

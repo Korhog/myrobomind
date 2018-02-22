@@ -21,11 +21,11 @@ namespace rMind.DriverForge.Views
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
     /// </summary>
-    public sealed partial class DriverView : Page
+    public sealed partial class DriverViewMain : Page
     {
         Driver current;
 
-        public DriverView()
+        public DriverViewMain()
         {
             this.InitializeComponent();
         }
@@ -35,16 +35,34 @@ namespace rMind.DriverForge.Views
             base.OnNavigatedTo(e);
             current = e.Parameter as Driver;
             DataContext = current;
-
-            driverContent.Navigate(typeof(DriverViewMain), current);
         }
 
-        private void OnChangeView(object sender, SelectionChangedEventArgs e)
+        private void OnCreatePIN(object sender, RoutedEventArgs e)
         {
-            var page = ((string)((sender as ListBox)?.SelectedItem as ListBoxItem)?.Content).ToUpper();
+            current.Pins.Add(new Pin { PinMode = PinMode.INPUT });
+        }
 
-            if (page == "MAIN") driverContent.Navigate(typeof(DriverViewMain), current);
-            if (page == "METHODS") driverContent.Navigate(typeof(DriverViewMethods), current);
+        private async void OnRemovePIN(object sender, RoutedEventArgs e)
+        {
+            var pin = (sender as Button)?.DataContext as Pin;
+            if (pin == null)
+                return;
+
+            var res = Resources.ThemeDictionaries.Keys.ToArray();
+
+            ContentDialog contentDialog = new ContentDialog()
+            {
+                Title = "Warning",
+                Content = "Delete this PIN?",
+                PrimaryButtonText = "Yes",
+                SecondaryButtonText = "No"
+            };
+
+            if (await contentDialog.ShowAsync() == ContentDialogResult.Primary)
+            {
+                var db = DriverDB.Current();
+                current.Pins.Remove(pin);
+            }
         }
     }
 }

@@ -43,9 +43,11 @@ namespace rMind.CanvasEx
 
         public void SetController(rMindBaseController controller)
         {
+            if (controller != null && controller.CanvasController == null)
+                controller.SetParent(this);                
+
             if (m_root_controller == null)
                 m_root_controller = controller;
-
 
             if (m_bread_crumbs.Contains(controller))
             { // Переход по хлебным крошкам.

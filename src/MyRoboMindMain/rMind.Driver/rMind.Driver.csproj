@@ -108,7 +108,8 @@
   <ItemGroup>
     <Compile Include="Driver\Driver.cs" />
     <Compile Include="DriverDB.cs" />
-    <Compile Include="Pin.cs" />
+    <Compile Include="Driver\Method.cs" />
+    <Compile Include="Driver\Pin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\rMind.Driver.rd.xml" />
   </ItemGroup>
@@ -121,7 +122,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="NewFolder1\" />
+    <ProjectReference Include="..\rMindBase\rMind.Base.csproj">
+      <Project>{709002b9-916f-481f-981b-6f4f0c2b51db}</Project>
+      <Name>rMind.Base</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="DriverDB.json">

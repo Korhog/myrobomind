@@ -7,6 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <Style TargetType="ContentDialog">
+            <Setter Property="Background" Value="Red"/>
+        </Style>
+    </Page.Resources>
+
     <Grid Background="Black">
         <SplitView OpenPaneLength="200" x:Name="sideMenu" CompactPaneLength="48" DisplayMode="CompactInline">
             <SplitView.Pane>
@@ -20,24 +26,30 @@
             <SplitView.Content>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="260"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <StackPanel>
-                        <Border Height="40" Background="#2d2d3d">
+                        <Border Height="40" Background="#1d1d1f">
                             <Grid>
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="Library" Foreground="White" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-                                <Button Width="32" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,4" Click="OnCreate">
+                                <Button Width="32" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="4,4" IsEnabled="False">
+                                    <FontIcon Glyph="&#xE00E;" FontSize="12" Foreground="White"/>
+                                </Button>
+
+                                <TextBlock Text="Library" Grid.Column="1" Foreground="White" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                                <Button Width="32" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,4" Click="OnCreateDriver" >
                                     <FontIcon Glyph="&#xE109;" FontSize="12" Foreground="YellowGreen"/>
                                 </Button>
 
-                                <Button Width="32" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="4" Click="OnSave">
+                                <Button Width="32" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="4,4,0,4" Click="OnSave">
                                     <FontIcon Glyph="&#xE118;" FontSize="12" Foreground="White"/>
                                 </Button>
                             </Grid>
@@ -49,20 +61,28 @@
                                 VerticalAlignment="Stretch" 
                                 x:Name="drivers"                                 
                                 SelectionChanged="OnDriverChange" >
-                                <ListBox.Resources>
+                                <ListBox.ItemContainerStyle>
                                     <Style TargetType="ListBoxItem">
-                                        <Setter Property="Margin" Value="0,1,0,1"/>
-                                        <Setter Property="Padding" Value="4"/>
+                                        <Setter Property="Padding" Value="0"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
                                     </Style>
-                                </ListBox.Resources>
+                                </ListBox.ItemContainerStyle>
+
                                 <ListBox.ItemTemplate>                                    
                                     <DataTemplate>
-                                        <ContentPresenter HorizontalAlignment="Right">
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
-                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
-                                            <Button Click="OnDelete" Grid.Column="1" Content="[x]" Margin="10,0,0,0"/>
-                                        </StackPanel>
-                                        </ContentPresenter>
+                                        <Grid >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Margin="6" Text="{Binding Name, Mode=OneWay}" VerticalAlignment="Center" />
+
+                                            <Button Grid.Column="1" Click="OnDelete" x:Name="DEL" Margin="8,0,0,0" Width="32" Height="32" >
+                                                <FontIcon Glyph="&#xE947;" FontSize="12"/>
+                                            </Button>
+                                            
+                                        </Grid>
                                     </DataTemplate>                                    
                                 </ListBox.ItemTemplate>                            
                         </ListBox>

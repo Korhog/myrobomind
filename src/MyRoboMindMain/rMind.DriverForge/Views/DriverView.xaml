@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:rMind.DriverForge.Views"
+    xmlns:drv="using:rMind.Driver"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -13,47 +14,49 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Border Height="40" Background="#1d1d1f">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
-                <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold"/>
-                <TextBlock Text="{Binding SemanticName}" Margin="4,0,0,0"  Foreground="Gray" FontWeight="Light" />
-            </StackPanel>
+        <Border Background="#2d2d2f" 
+                BorderBrush="DeepSkyBlue"
+                Grid.Row="1"
+                BorderThickness="0,2,0,0">
+            <Frame x:Name="driverContent" />
         </Border>
 
-        <Grid  Grid.Row="1" Background="#2d2d2f">
-            <Grid.Resources>
-                <Style TargetType="TextBlock">
-                    <Setter Property="Foreground" Value="LightGray"/>
-                    <Setter Property="Margin" Value="20,10,0,0"/>
-                </Style>
+        <Border Height="40" Background="#1d1d1f">
+            <Grid VerticalAlignment="Center" Margin="10,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
 
-                <Style TargetType="TextBox">
-                    <Setter Property="Foreground" Value="LightGray"/>
-                    <Setter Property="Background" Value="#1d1d1d"/>
-                    <Setter Property="FocusVisualPrimaryBrush">
-                        <Setter.Value>
-                            <SolidColorBrush Color="#1d1d1d"/>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="Margin" Value="20,0"/>
-                </Style>
-            </Grid.Resources>
-            <StackPanel>
-                <TextBlock Text="IDS"/>
-                <TextBox Text="{Binding IDS, Mode=TwoWay}" Width="250" HorizontalAlignment="Left"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Grid.Column="0" Text="{Binding Name}" Foreground="White" FontWeight="SemiBold"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SemanticName}" Margin="4,0,0,0"  Foreground="Gray" FontWeight="Light" />
+                </StackPanel>
 
-                <TextBlock Text="Semantic name" />
-                <TextBox Text="{Binding SemanticName, Mode=TwoWay}" Width="250" HorizontalAlignment="Left"/>
+                <ListBox Grid.Column="1"
+                         Background="Transparent"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Bottom"
+                         SelectedIndex="0"
+                         SelectionChanged="OnChangeView"
+                         Margin="0,0,8, -2">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
 
-                <TextBlock Text="Description"/>
-                <TextBox  Text="{Binding Desc, Mode=TwoWay}" Height="80" TextWrapping="Wrap"/>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Height" Value="42"/>
+                            <Setter Property="Padding" Value="20, 0"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
 
-                <ListBox ItemsSource="{Binding Pins}" Margin="20,10,20,0" BorderBrush="#1d1d1d" BorderThickness="2"></ListBox>
-
-
-                <Button Content="Declare" Click="OnDeclare"  Margin="20,10,20,4"/>
-                <TextBox  Text="{Binding Desc, Mode=TwoWay}" Height="180" TextWrapping="Wrap"/>
-            </StackPanel>  
-        </Grid>
+                    <ListBoxItem>Main</ListBoxItem>
+                    <ListBoxItem>Methods</ListBoxItem>
+                </ListBox>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

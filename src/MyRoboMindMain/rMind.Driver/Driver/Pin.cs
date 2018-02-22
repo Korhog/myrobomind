@@ -9,6 +9,12 @@ namespace rMind.Driver
         INPUT_PULLUP
     }
 
+    public enum ValueMode
+    {
+        DIGITAL,
+        ANALOG
+    }
+
     /// <summary>
     /// Пин устройства
     /// </summary>
@@ -17,6 +23,9 @@ namespace rMind.Driver
     {
         [JsonProperty]
         public PinMode PinMode { get; set; } = PinMode.OUTPUT;
+
+        [JsonProperty]
+        public ValueMode ValueMode { get; set; } = ValueMode.DIGITAL;
 
         public Pin Instanciate()
         {

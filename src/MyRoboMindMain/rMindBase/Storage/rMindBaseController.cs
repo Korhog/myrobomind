@@ -77,6 +77,13 @@ namespace rMind.Elements
 
         #region Deserialize
 
+        public virtual void Deserialize(string xml)
+        {
+            var node = XElement.Parse(xml);
+            Deserialize(node);
+        }
+
+
         public virtual void Deserialize(XElement node)
         {
             if (node == null)

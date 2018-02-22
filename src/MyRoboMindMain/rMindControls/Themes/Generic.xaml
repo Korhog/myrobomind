@@ -11,7 +11,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListView">
-                    <Border Background="#1D1D1F">
+                    <Border Background="{TemplateBinding Background}">
                         <ItemsPresenter/>
                     </Border>
                 </ControlTemplate>

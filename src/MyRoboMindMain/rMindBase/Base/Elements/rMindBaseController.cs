@@ -52,6 +52,7 @@ namespace rMind.Elements
         protected rMindCanvasController m_parent;
 
         public rMindCanvasController CanvasController { get { return m_parent; } }
+        public void SetParent(rMindCanvasController parent) { m_parent = parent; }
 
         protected bool m_subscribed;
 
