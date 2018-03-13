@@ -21,6 +21,8 @@ namespace rMind.DriverForge.Views
     using rMind.Elements;
     using rMind.CanvasEx;
     using rMind.Content;
+    using rMind.Controls.Entities;
+    using rMind.DriverForge.Dialogs;
 
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
@@ -33,6 +35,66 @@ namespace rMind.DriverForge.Views
         public DriverViewMethods()
         {
             this.InitializeComponent();
+            treeSelector.SetRoot(Tree());
+            treeSelector.ItemSelect += (o) =>
+            {
+                var item = o as TreeSelectorItem;
+
+                if (canvasController.CurrentController == null) return;
+
+                var element = canvasController.CurrentController.CreateElementByElementType(rElementType.RET_NONE, null) as rMindHeaderRowContainer;
+                if (element == null)
+                    return;
+
+                element.AccentColor = rMind.ColorContainer.rMindColors.ColorRandom();
+                element.BorderRadius = new CornerRadius(3);
+                element.Header = item?.Name ?? "Header";
+                element.AddEffect();
+                
+
+                var rand = new Random();
+                var rows = rand.Next(2, 5);
+                for (int i = 0; i < rows; i++) {
+                    element.AddRow(new rMind.Content.Row.rMindRow
+                    {
+                        InputNodeType = Nodes.rMindNodeConnectionType.Value,
+                        OutputNodeType = Nodes.rMindNodeConnectionType.Container
+                    });
+                }
+
+                element.SetPosition(new Types.Vector2(100, 100));
+            };
+        }
+
+        TreeSelectorItem Tree()
+        {
+            var tree = new TreeSelectorItem();
+
+            TreeSelectorItem item;
+            TreeSelectorItem subItem;
+
+            tree.Children.Add(new TreeSelectorItem(tree) { Name = "Item 1" });
+            tree.Children.Add(new TreeSelectorItem(tree) { Name = "Item 2" });
+
+            item = new TreeSelectorItem(tree) { Name = "Item 3" };
+
+            item.Children.Add(new TreeSelectorItem(item) { Name = "SubItem 1" });
+            item.Children.Add(new TreeSelectorItem(item) { Name = "SubItem 2" });
+
+            subItem = new TreeSelectorItem(item) { Name = "SubItem 3" };
+
+            subItem.Children.Add(new TreeSelectorItem(subItem) { Name = "SubItem 3.1" });
+            subItem.Children.Add(new TreeSelectorItem(subItem) { Name = "SubItem 3.2" });
+
+            item.Children.Add(subItem);
+
+            item.Children.Add(new TreeSelectorItem(item) { Name = "SubItem 4" });
+
+
+            tree.Children.Add(item);
+            tree.Children.Add(new TreeSelectorItem(tree) { Name = "Item 4" });
+
+            return tree;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -100,9 +162,14 @@ namespace rMind.DriverForge.Views
             canvasController.SetController(controller);            
         }
 
-        private void OnCreateMethod(object sender, RoutedEventArgs e)
+        private async void OnCreateMethod(object sender, RoutedEventArgs e)
         {
-            current.Methods.Add(new Method());
+            var diag = new CreateMethodDialog();
+            var result = await diag.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                current.Methods.Add(new Method());
+            }
         }
     }
 }

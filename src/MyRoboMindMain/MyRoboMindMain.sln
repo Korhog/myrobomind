@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMind.DriverForge", "rMind.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMind.Driver", "rMind.Driver\rMind.Driver.csproj", "{CBFFEB10-DAD1-4880-AA97-D7886B3CCEEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRoboControls", "MyRoboControls\MyRoboControls.csproj", "{31F5CB7E-7585-4431-9BE7-20425408FB43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -239,6 +241,26 @@ Global
 		{CBFFEB10-DAD1-4880-AA97-D7886B3CCEEF}.Release|x64.Build.0 = Release|x64
 		{CBFFEB10-DAD1-4880-AA97-D7886B3CCEEF}.Release|x86.ActiveCfg = Release|x86
 		{CBFFEB10-DAD1-4880-AA97-D7886B3CCEEF}.Release|x86.Build.0 = Release|x86
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Debug|ARM.ActiveCfg = Debug|ARM
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Debug|ARM.Build.0 = Debug|ARM
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Debug|ARM.Deploy.0 = Debug|ARM
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Debug|x64.ActiveCfg = Debug|x64
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Debug|x64.Build.0 = Debug|x64
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Debug|x64.Deploy.0 = Debug|x64
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Debug|x86.ActiveCfg = Debug|x86
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Debug|x86.Build.0 = Debug|x86
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Debug|x86.Deploy.0 = Debug|x86
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Release|Any CPU.ActiveCfg = Release|x86
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Release|ARM.ActiveCfg = Release|ARM
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Release|ARM.Build.0 = Release|ARM
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Release|ARM.Deploy.0 = Release|ARM
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Release|x64.ActiveCfg = Release|x64
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Release|x64.Build.0 = Release|x64
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Release|x64.Deploy.0 = Release|x64
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Release|x86.ActiveCfg = Release|x86
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Release|x86.Build.0 = Release|x86
+		{31F5CB7E-7585-4431-9BE7-20425408FB43}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

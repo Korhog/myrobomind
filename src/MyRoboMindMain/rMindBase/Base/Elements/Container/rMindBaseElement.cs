@@ -72,6 +72,7 @@ namespace rMind.Elements
         // Properties        
         protected Color m_accent_color;
         protected Border m_base;
+        protected Rectangle m_shadow_mask;
         protected Border m_selector;
         protected bool m_selected;
         protected Dictionary<string, rMindBaseNode> m_nodes_link;        
@@ -112,6 +113,9 @@ namespace rMind.Elements
             {
                 Background = rMindColors.Current().GetSolidBrush(rMindColors.ColorRandom())
             };
+
+            m_shadow_mask = new Rectangle();
+            m_base.Child = m_shadow_mask;
 
             m_selector = new Border()
             {

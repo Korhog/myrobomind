@@ -107,9 +107,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Dialogs\CreateLibItemDialog.cs" />
+    <Compile Include="Dialogs\CreateMethodDialog.xaml.cs">
+      <DependentUpon>CreateMethodDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Boards\BoardViewMain.xaml.cs">
+      <DependentUpon>BoardViewMain.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DriverForgeMainPage.xaml.cs">
       <DependentUpon>DriverForgeMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Drivers\DriversView.xaml.cs">
+      <DependentUpon>DriversView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DriverView.xaml.cs">
       <DependentUpon>DriverView.xaml</DependentUpon>
@@ -128,6 +137,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Dialogs\CreateMethodDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\CreateLibItemDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -137,7 +150,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Boards\BoardViewMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DriverForgeMainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Drivers\DriversView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,6 +193,7 @@
       <Name>rMind.Theme</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

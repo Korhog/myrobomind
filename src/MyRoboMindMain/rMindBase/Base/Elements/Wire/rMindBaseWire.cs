@@ -39,7 +39,7 @@ namespace rMind.Elements
 
             m_line = new Polyline()
             {
-                Stroke = new SolidColorBrush(Windows.UI.Colors.CornflowerBlue),
+                Stroke = new SolidColorBrush(Windows.UI.Colors.WhiteSmoke),
                 StrokeThickness = 6,
                 IsHitTestVisible = false
             };
@@ -50,8 +50,8 @@ namespace rMind.Elements
             colors = ColorContainer.rMindColors.Current();
             m_bezie = new Path()
             {
-                Stroke = colors.GetSolidBrush(Windows.UI.Colors.SteelBlue),
-                StrokeThickness = 6,
+                Stroke = colors.GetSolidBrush(Windows.UI.Colors.GhostWhite),
+                StrokeThickness = 4,
                 IsHitTestVisible = false,
                 Data = m_bezie_geometry
             };

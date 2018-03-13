@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
+
+// Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
+
+namespace rMind.DriverForge.Views
+{
+    /// <summary>
+    /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
+    /// </summary>
+    public sealed partial class BoardViewMain : Page
+    {
+        public class PinDesc
+        {
+            
+        }
+
+        public class PinRowDesc
+        {
+            public PinDesc PinL { get; set; }
+            public PinDesc PinR { get; set; }
+
+            public PinRowDesc()
+            {
+                PinL = new PinDesc();
+                PinR = new PinDesc();
+            }
+        }
+
+        ObservableCollection<PinRowDesc> desc;
+             
+        public BoardViewMain()
+        {
+            this.InitializeComponent();
+            desc = new ObservableCollection<PinRowDesc>();
+            pinRows.ItemsSource = desc;
+
+        }
+
+        private void OnAddRow(object sender, RoutedEventArgs e)
+        {
+            desc.Add(new PinRowDesc());
+        }
+    }
+}

@@ -33,104 +33,29 @@ namespace rMind.DriverForge.Views
             this.InitializeComponent();
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-
-            var db = DriverDB.Current();
-            await db.InitDB();
-
-            drivers.ItemsSource = db.Drivers.Drivers;
-            if (db.Drivers.Drivers.Count > 0)
-                drivers.SelectedIndex = 0;
-        }
-
-
         private void OnSideMenuClick(object sender, RoutedEventArgs e)
         {
             sideMenu.IsPaneOpen = !sideMenu.IsPaneOpen;
-        }
+        }        
 
-        private async void OnSave(object sender, RoutedEventArgs e)
+        private void OnSelectPage(object sender, SelectionChangedEventArgs e)
         {
-            await DriverDB.Current().Save();
-        }
-
-        private void OnDriverChange(object sender, SelectionChangedEventArgs e)
-        {
-            var driver = (sender as ListBox)?.SelectedItem as Driver;
-            if (driver == null)
+            if (content == null)
                 return;
 
-            content.Navigate(typeof(DriverView), driver);
-        }
-
-        private async void OnDelete(object sender, RoutedEventArgs e)
-        {
-            var driver = (sender as Button)?.DataContext as Driver;
-            if (driver == null)
+            var tag = ((sender as ListBox)?.SelectedItem as ListBoxItem)?.Tag?.ToString() ?? "NONE";
+            if (tag == "NONE")
                 return;
 
-            ContentDialog contentDialog = new ContentDialog()
+            if (tag == "Drivers")
             {
-                Title = "Warning",
-                Content = "Delete this driver?",
-                PrimaryButtonText = "Yes",
-                SecondaryButtonText = "No"                
-            };
-
-            if (await contentDialog.ShowAsync() == ContentDialogResult.Primary)
-            {
-                var db = DriverDB.Current();
-                db.Drivers.Drivers.Remove(driver);
+                content.Navigate(typeof(DriversView));
             }
-        }
 
-        private async void OnCreateDriver(object sender, RoutedEventArgs e)
-        { 
-            CreateLibItemDialog contentDialog = new CreateLibItemDialog()
+            if (tag == "Boards")
             {
-                PrimaryButtonText = "Create",
-                SecondaryButtonText = "Cancel"
-            };
-
-            if (await contentDialog.ShowAsync() == ContentDialogResult.Primary)
-            {
-
-                if (contentDialog.IsFolder)
-                    return;
-
-                var ids = contentDialog.IDS;
-                var parentIds = contentDialog.ParentTemplate;
-                Driver parent = null;
-                if (!string.IsNullOrEmpty(parentIds) && parentIds != "NONE")
-                    parent = DriverDB.Current().Drivers.Drivers.Where(x => x.IDS == parentIds).FirstOrDefault();
-
-                Driver driver = null;
-                if (parent == null)
-                {
-                    driver = new Driver()
-                    {
-                        IDS = ids,
-                        Name = contentDialog.ElementName
-                    };
-                }
-                else
-                {
-                    driver = parent.Instanciate();
-                    driver.IDS = ids;
-                    driver.Name = contentDialog.ElementName;
-                }
-
-                var db = DriverDB.Current();
-                db.Drivers.Drivers.Add(driver);
-                drivers.SelectedItem = drivers.Items.LastOrDefault();
+                content.Navigate(typeof(BoardViewMain));
             }
-        }
-
-        private void OnCreateFolder(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

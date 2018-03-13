@@ -136,6 +136,10 @@
       <Project>{cbfc1543-1d17-4bb9-9726-4e18773ba14b}</Project>
       <Name>rMind.DriverForge</Name>
     </ProjectReference>
+    <ProjectReference Include="..\rMind.Driver\rMind.Driver.csproj">
+      <Project>{cbffeb10-dad1-4880-aa97-d7886b3cceef}</Project>
+      <Name>rMind.Driver</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

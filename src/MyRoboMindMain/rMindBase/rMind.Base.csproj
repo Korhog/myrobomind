@@ -125,6 +125,7 @@
     <Compile Include="Base\Elements\Menu\rMindBaseController.cs" />
     <Compile Include="Base\Elements\rMindDebugContainer.cs" />
     <Compile Include="Base\Elements\Selection\rMindBaseController.cs" />
+    <Compile Include="Base\Elements\VisualEffects\rMindBaseElement.cs" />
     <Compile Include="Base\Elements\Wire\rMindBaseController.cs" />
     <Compile Include="Base\Elements\Wire\rMindBaseWire.cs" />
     <Compile Include="Base\Elements\Wire\rMindBaseWireDot.cs" />

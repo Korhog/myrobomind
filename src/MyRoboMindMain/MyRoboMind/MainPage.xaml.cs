@@ -1,4 +1,5 @@
-﻿using Windows.ApplicationModel.Core;
+﻿using rMind.Driver;
+using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -25,8 +26,11 @@ namespace MyRoboMind
             titleBar.ButtonInactiveBackgroundColor = color;
         }
 
-        private void OnMindForge(object sender, RoutedEventArgs e)
+        private async void OnMindForge(object sender, RoutedEventArgs e)
         {
+            var db = DriverDB.Current();
+            await db.InitDB();
+
             Frame.Navigate(typeof(rMind.DriverForge.Views.DriverForgeMainPage));
         }
 

@@ -4,6 +4,11 @@
     xmlns:rmind="using:rMind.Elements"
     xmlns:local="using:rMind.Controls">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/rMind.Controls/Themes/SideMenuButton.xaml"/>
+        <ResourceDictionary Source="/rMind.Controls/Themes/TreeSelector.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
     <Style TargetType="local:BreadCrumbs">
         <Setter Property="SelectionMode" Value="None"/>
         <Setter Property="IsItemClickEnabled" Value="True"/>
@@ -66,4 +71,5 @@
             </Setter.Value>
         </Setter>        
     </Style>
+
 </ResourceDictionary>

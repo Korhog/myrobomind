@@ -30,11 +30,26 @@ namespace rMind.Elements
         public void BakeNodes(rMindBaseNode root)
         {
             BakedNodes.Clear();
+
+            // Собираем все ноды
+            var allNodes = new List<rMindBaseNode>();
+            foreach (var list in m_items.Select(x => x.Nodes))
+            {
+                allNodes.AddRange(list);
+            }
+
+            foreach (var node in allNodes)
+            {
+                
+            }
+
+
             foreach (var list in m_items.Select(x => x.Nodes))
             {
                 BakedNodes.AddRange(
                     list
                         .Where(node => node.CanAttach && node.Parent != root.Parent) 
+                        .Where(node => node.ConnectionType == root.ConnectionType)
                         .Select(node => 
                             new KeyValuePair<Vector2, rMindBaseNode>(node.GetOffset(), 
                             node

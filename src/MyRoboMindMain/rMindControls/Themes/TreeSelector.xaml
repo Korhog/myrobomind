@@ -1,0 +1,68 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:rMind.Controls">
+
+    <Style TargetType="local:TreeSelector" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:TreeSelector">
+                    <Border x:Name="PART_Overlay">
+                        <Border
+                            MaxHeight="400" 
+                            Margin="10" 
+                            VerticalAlignment="Top" 
+                            HorizontalAlignment="Left">
+                            <Border.Background>
+                                <AcrylicBrush 
+                                    TintColor="Black"
+                                    TintOpacity="0.7"
+                                    />
+                            </Border.Background>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Button Width="40" Height="40" x:Name="PART_MenuButton">
+                                    <FontIcon Glyph="&#xE109;" x:Name="PART_MenuIcon"/>
+                                </Button>
+
+                                <ListView Grid.Row="1"
+                                          SelectionMode="None"  
+                                          Visibility="Collapsed"
+                                          MinWidth="250"
+                                          IsItemClickEnabled="True"
+                                          ItemClick="OnTreeItemsClick" 
+                                          x:Name="PART_Items"
+                                          Margin="0,0,0,4"
+                                          ItemsSource="{Binding Children}">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Margin" Value="4,4,4,0"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock Text="{Binding Name}"/>
+                                                <FontIcon Glyph="&#xE00F;" Grid.Column="1" Visibility="{Binding Folder}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

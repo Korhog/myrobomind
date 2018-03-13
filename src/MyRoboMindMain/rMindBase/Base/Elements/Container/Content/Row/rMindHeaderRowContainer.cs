@@ -100,6 +100,8 @@ namespace rMind.Content
             SetBorderRadius(m_border_radius);
             SetBorderThickness(m_border_thickness);
             SetPosition(Position);
+
+            AddEffect();
         }
 
         protected HeaderButton m_edit_button;
