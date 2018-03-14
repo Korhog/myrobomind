@@ -7,6 +7,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/rMind.Controls/Themes/SideMenuButton.xaml"/>
         <ResourceDictionary Source="/rMind.Controls/Themes/TreeSelector.xaml"/>
+        <ResourceDictionary Source="/rMind.Controls/Themes/Tree.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="local:BreadCrumbs">
@@ -71,5 +72,4 @@
             </Setter.Value>
         </Setter>        
     </Style>
-
 </ResourceDictionary>

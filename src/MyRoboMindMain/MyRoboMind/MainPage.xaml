@@ -7,10 +7,40 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="200">
-            <Button Content="Mind Editor" HorizontalAlignment="Stretch" Click="OnMindEditor" Margin="4" Height="50"/>
-            <Button Content="Driver Forge" HorizontalAlignment="Stretch" Click="OnMindForge" Margin="4" Height="50"/>
+    <Grid Background="#1D1D2D">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+            <Button HorizontalAlignment="Stretch" Click="OnMindEditor" Margin="8" Height="100">
+                <StackPanel HorizontalAlignment="Stretch" Width="250">
+                    <TextBlock 
+                        FontSize="22"
+                        Text="Mind Editor" 
+                        TextAlignment="Center"/>
+                    <MenuFlyoutSeparator/>
+                    <TextBlock 
+                        Foreground="WhiteSmoke"
+                        FontSize="12"
+                        FontWeight="ExtraLight"
+                        Text="Create arduino devices and robots" 
+                        TextAlignment="Center"
+                        TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
+            <Button HorizontalAlignment="Stretch" Click="OnMindForge" Margin="8" Height="80">
+                <StackPanel  Width="250">
+                    <TextBlock 
+                        FontSize="22"
+                        Text="Driver Forge" 
+                        TextAlignment="Center"/>
+                    <MenuFlyoutSeparator/>
+                    <TextBlock 
+                        Foreground="WhiteSmoke"
+                        FontSize="12"
+                        FontWeight="ExtraLight"
+                        Text="Create and edit custom drivers and libraryes" 
+                        TextAlignment="Center"
+                        TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
     </Grid>
 </Page>

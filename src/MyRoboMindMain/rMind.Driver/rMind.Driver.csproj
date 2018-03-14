@@ -110,6 +110,8 @@
     <Compile Include="DriverDB.cs" />
     <Compile Include="Driver\Method.cs" />
     <Compile Include="Driver\Pin.cs" />
+    <Compile Include="Entities\TreeFolder.cs" />
+    <Compile Include="Entities\TreeItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\rMind.Driver.rd.xml" />
   </ItemGroup>
@@ -131,6 +133,9 @@
     <Content Include="DriverDB.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Container\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

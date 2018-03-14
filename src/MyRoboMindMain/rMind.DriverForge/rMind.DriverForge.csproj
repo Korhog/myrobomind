@@ -120,6 +120,9 @@
     <Compile Include="Views\Drivers\DriversView.xaml.cs">
       <DependentUpon>DriversView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Drivers\DriversViewMain.xaml.cs">
+      <DependentUpon>DriversViewMain.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DriverView.xaml.cs">
       <DependentUpon>DriverView.xaml</DependentUpon>
     </Compile>
@@ -159,6 +162,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Drivers\DriversView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Drivers\DriversViewMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

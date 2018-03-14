@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace rMind.Driver
 {
-    public interface ITreeItem {}
+    using Entities;
 
     [JsonObject(MemberSerialization.OptIn)]
     public class Driver : ITreeItem
@@ -23,11 +23,13 @@ namespace rMind.Driver
         public string ClassName { get; set; }
 
         [JsonProperty]
+
         public string SemanticName { get; set; }
 
         [JsonProperty]
         public string Desc { get; set; }
 
+        public ITreeItem Parent { get; set; }
 
         ObservableCollection<Pin> pins;
 
@@ -57,6 +59,9 @@ namespace rMind.Driver
             }
         }
 
+        public bool Folder { get { return false; } }
+
+        public ObservableCollection<ITreeItem> Children { get { return null; } }
 
         public Driver()
         {
@@ -84,16 +89,5 @@ namespace rMind.Driver
 
             return result;
         } 
-    }    
-
-    [JsonObject(MemberSerialization.OptIn)]
-    public class DriverFolder : ITreeItem
-    {
-        [JsonProperty]
-        public string Caption { get; set; }
-
-        public ObservableCollection<ITreeItem> Children { get; set; }
-
-        public string ICO { get; set; } = "\uE188";
     }
 }

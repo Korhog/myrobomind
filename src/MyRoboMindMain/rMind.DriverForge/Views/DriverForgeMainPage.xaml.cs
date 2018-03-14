@@ -49,7 +49,7 @@ namespace rMind.DriverForge.Views
 
             if (tag == "Drivers")
             {
-                content.Navigate(typeof(DriversView));
+                content.Navigate(typeof(Drivers.DriversViewMain));
             }
 
             if (tag == "Boards")

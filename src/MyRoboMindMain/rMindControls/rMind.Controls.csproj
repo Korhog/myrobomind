@@ -110,6 +110,7 @@
     <Compile Include="Entities\TreeSelectorItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SideMenuButton.cs" />
+    <Compile Include="Tree.cs" />
     <Compile Include="TreeSelector.cs" />
     <EmbeddedResource Include="Properties\rMindControls.rd.xml" />
   </ItemGroup>
@@ -128,6 +129,11 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
+    <Page Include="Themes\Tree.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="Themes\TreeSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -135,6 +141,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\rMind.Driver\rMind.Driver.csproj">
+      <Project>{cbffeb10-dad1-4880-aa97-d7886b3cceef}</Project>
+      <Name>rMind.Driver</Name>
+    </ProjectReference>
     <ProjectReference Include="..\rMindBase\rMind.Base.csproj">
       <Project>{709002b9-916f-481f-981b-6f4f0c2b51db}</Project>
       <Name>rMind.Base</Name>

@@ -1,16 +1,23 @@
 ﻿using Newtonsoft.Json;
+using rMind.Driver.Entities;
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace rMind.Driver
 {
+    /// <summary> База данных </summary>
+    [JsonObject(MemberSerialization.OptIn)]    
     public class DriverContext
     {
+        /// <summary> Старая версия драйверов </summary>
+        [JsonProperty]
         public ObservableCollection<Driver> Drivers { get; set; }
+
+        /// <summary> Дерево драйверов </summary>
+        [JsonProperty]
+        public TreeFolder Root { get; set; }
     } 
     
     public class DriverDB
@@ -51,6 +58,12 @@ namespace rMind.Driver
 
             var json = await FileIO.ReadTextAsync(file);
             context = JsonConvert.DeserializeObject<DriverContext>(json);
+            if (context.Root == null)
+            {
+                context.Root = new TreeFolder();
+            }
+
+            context.Root.Update();
         } 
 
         public async Task Save()
