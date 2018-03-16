@@ -14,16 +14,19 @@
     </Page.Resources>
 
     <Grid Background="Black">
-        <SplitView OpenPaneLength="200" x:Name="sideMenu" CompactPaneLength="48" DisplayMode="CompactOverlay" PanePlacement="Left">
-            <SplitView.PaneBackground>
-                <AcrylicBrush TintColor="#1a1a1f" TintOpacity="0.5"/>
-            </SplitView.PaneBackground>           
-            <SplitView.Pane>                
-                <StackPanel Background="Transparent">
+        <SplitView 
+            OpenPaneLength="200" 
+            x:Name="sideMenu" 
+            CompactPaneLength="48" 
+            DisplayMode="CompactOverlay" 
+            PaneBackground="#2C343E"            
+            PanePlacement="Left">        
+            <SplitView.Pane>
+                <StackPanel>
                     <Button 
                         Content="Menu" 
                         Click="OnSideMenuClick" 
-                        VerticalAlignment="Top" Height="40" HorizontalAlignment="Stretch" Foreground="LightGray">
+                        VerticalAlignment="Top" Height="50" HorizontalAlignment="Stretch" Foreground="LightGray">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="Template">
@@ -34,7 +37,6 @@
                                                     <Border Background="#1a1a1a">
                                                      <FontIcon Glyph="&#xE7FC;" Foreground="White" Width="48" />
                                                     </Border>
-
                                                 </StackPanel>
                                             </Border>
                                         </ControlTemplate>
@@ -51,17 +53,18 @@
                         </ListBox.Resources>
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
+                                <Setter Property="Height" Value="50"/>
                                 <Setter Property="Padding" Value="0"/>
                                 <Setter Property="VerticalContentAlignment" Value="Center"/>
                             </Style>
                         </ListBox.ItemContainerStyle>
-                        <ListBoxItem Height="40" Tag="Drivers">
+                        <ListBoxItem Tag="Drivers">
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE7FC;" Foreground="YellowGreen" Width="48"/>
                                 <TextBlock Foreground="White" Text="Boards"/>
                             </StackPanel>
                         </ListBoxItem>
-                        <ListBoxItem Height="40" Tag="Boards">
+                        <ListBoxItem Tag="Boards">
                             <StackPanel Orientation="Horizontal" >
                                 <FontIcon Glyph="&#xE964;" Foreground="YellowGreen" Width="48"/>
                                 <TextBlock Foreground="White" Text="Drivers"/>

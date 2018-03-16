@@ -106,6 +106,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\CreateItemDialog.xaml.cs">
+      <DependentUpon>CreateItemDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\CreateLibItemDialog.cs" />
     <Compile Include="Dialogs\CreateMethodDialog.xaml.cs">
       <DependentUpon>CreateMethodDialog.xaml</DependentUpon>
@@ -140,6 +143,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Dialogs\CreateItemDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\CreateMethodDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

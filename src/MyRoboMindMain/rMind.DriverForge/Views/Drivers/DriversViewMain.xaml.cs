@@ -1,5 +1,6 @@
 ﻿using rMind.Driver;
 using rMind.Driver.Entities;
+using rMind.DriverForge.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,15 +27,37 @@ namespace rMind.DriverForge.Views.Drivers
     {
         public DriversViewMain()
         {
-            this.InitializeComponent();            
+            this.InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Required;
+
             library.SetRoot(DriverDB.Current().Drivers.Root);
-            library.OnCreateButton += (o) =>
+            library.OnCreateButton += async (o) =>
             {
                 var folder = o as TreeFolder;
                 if (folder == null)
                     return;
 
-                folder.AddFolder(new TreeFolder { Name = "Folder" });
+                var diag = new CreateItemDialog();
+                var result = await diag.ShowAsync();
+
+                if (result == ContentDialogResult.Primary)
+                {
+                    if (diag.IsDriver)
+                    {
+                        folder.AddDriver(new Driver.Driver()
+                        {
+                            Name = "Name",
+                            SemanticName = "Semantic Name"
+                        });
+                    }
+                    else
+                    {
+                        folder.AddFolder(new TreeFolder {
+                            Parent = folder,
+                            Name = "Folder"
+                        });
+                    }
+                }
             };
         }
 

@@ -46,9 +46,26 @@ namespace rMind.Driver.Entities
             Children.Insert(idx, folder);
         }
 
-        public void AddDriver( )
+        public void AddDriver(Driver driver)
         {
+            if (Drivers == null)
+                Drivers = new ObservableCollection<Driver>();
+            Drivers.Add(driver);
+            Children.Add(driver);
+        }
 
+        public void Remove(ITreeItem item)
+        {
+            if (item is Driver)
+            {
+                Drivers.Remove(item as Driver);
+                Children.Remove(item);
+            }
+            else if (item is TreeFolder)
+            {
+                Folders.Remove(item as TreeFolder);
+                Children.Remove(item);
+            }
         }
 
         public bool Folder { get { return true; } }

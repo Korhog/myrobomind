@@ -64,7 +64,6 @@
                                 <Button Grid.Column="1" Click="OnDelete" x:Name="DEL" Margin="8,0,0,0" Width="32" Height="32" >
                                     <FontIcon Glyph="&#xE947;" FontSize="12"/>
                                 </Button>
-
                             </Grid> 
                         </DataTemplate>
                     </ListBox.ItemTemplate>
