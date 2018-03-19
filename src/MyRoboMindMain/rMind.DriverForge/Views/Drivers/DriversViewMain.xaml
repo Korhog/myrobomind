@@ -59,8 +59,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <controls:Tree x:Name="library" Background="#3C444E"/>
+        <controls:Tree 
+            x:Name="library" 
+            Background="#3C444E"/>
         <Button Height="50" Content="Save" Click="OnSave" VerticalAlignment="Bottom"/>
-        <ListViewItem Template="{StaticResource ListViewItemTemplate1}" Grid.Column="1"/>
+        <Frame x:Name="content" Grid.Column="1 "/>
     </Grid>
 </Page>

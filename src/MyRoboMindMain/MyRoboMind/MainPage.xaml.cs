@@ -14,11 +14,11 @@ namespace MyRoboMind
             this.InitializeComponent();
 
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
+            coreTitleBar.ExtendViewIntoTitleBar = false;
 
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
-            var color = ColorHelper.FromArgb(255, 29, 29, 45);
+            var color = Colors.Transparent;
             titleBar.ButtonBackgroundColor = color;
             titleBar.ButtonInactiveBackgroundColor = color;
             titleBar.BackgroundColor = color;

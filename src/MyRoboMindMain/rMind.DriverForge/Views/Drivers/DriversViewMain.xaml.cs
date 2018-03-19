@@ -59,6 +59,15 @@ namespace rMind.DriverForge.Views.Drivers
                     }
                 }
             };
+
+            library.OnSelectItem += (item) =>
+            {
+                var driver = item as Driver.Driver;
+                if (driver != null)
+                {
+                    content.Navigate(typeof(DriverViewMain), driver);
+                };
+            };
         }
 
         private async void OnSave(object sender, RoutedEventArgs e)

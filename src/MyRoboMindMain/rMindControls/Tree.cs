@@ -18,6 +18,7 @@ namespace rMind.Controls
     using Windows.UI.Xaml.Media.Animation;
 
     public delegate void OnCreateButtonDelegate(ITreeItem folder);
+    public delegate void OnSelectItemDelegate(ITreeItem item);
 
     public class MyTemplateSelector : DataTemplateSelector
     {
@@ -52,6 +53,7 @@ namespace rMind.Controls
         Border bucket;
 
         public event OnCreateButtonDelegate OnCreateButton;
+        public event OnSelectItemDelegate OnSelectItem;
 
         public Tree()
         {
@@ -103,7 +105,13 @@ namespace rMind.Controls
                     DataContext = f;
                     Slide(true);
                     return;
-                }               
+                }
+
+                var item = e.ClickedItem as Driver.Driver;
+                if (item != null)
+                {
+                    OnSelectItem?.Invoke(item);
+                }
             };
 
             items.DataContextChanged += (s, e) => {

@@ -120,11 +120,17 @@
     <Compile Include="Views\DriverForgeMainPage.xaml.cs">
       <DependentUpon>DriverForgeMainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Drivers\DriversView.xaml.cs">
-      <DependentUpon>DriversView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Drivers\DriversViewMain.xaml.cs">
       <DependentUpon>DriversViewMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Drivers\DriverViewInfo.xaml.cs">
+      <DependentUpon>DriverViewInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Drivers\DriverViewMain.xaml.cs">
+      <DependentUpon>DriverViewMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Drivers\Methods\MethodsView.xaml.cs">
+      <DependentUpon>MethodsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DriverView.xaml.cs">
       <DependentUpon>DriverView.xaml</DependentUpon>
@@ -168,11 +174,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Drivers\DriversView.xaml">
+    <Page Include="Views\Drivers\DriversViewMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Drivers\DriversViewMain.xaml">
+    <Page Include="Views\Drivers\DriverViewInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Drivers\DriverViewMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Drivers\Methods\MethodsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
