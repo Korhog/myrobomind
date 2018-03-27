@@ -1,4 +1,6 @@
-﻿using Windows.UI;
+﻿using System.Linq;
+
+using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
@@ -75,21 +77,22 @@ namespace rMind.Content
 
         protected void Expand()
         {
+            var rows = m_rows.Where(x => x is rMindRow).Select(x => x as rMindRow);
             if (m_expanded)
             {
                 (m_expand_button.Content as FontIcon).Glyph = "\uE970";
 
-                foreach (var row in m_rows)
+                foreach (var row in rows)
                 {
                     row.SetVisibility(false);
-                }
+                }                
                 m_expanded = false;
             }
             else
             {
                 (m_expand_button.Content as FontIcon).Glyph = "\uE96E";
 
-                foreach (var row in m_rows)
+                foreach (var row in rows)
                 {
                     row.SetVisibility(true);
                 }
@@ -151,6 +154,7 @@ namespace rMind.Content
             if (state == m_can_edit)
                 return;
 
+            m_can_edit = state;
             EditButton.Visibility = state ? Visibility.Visible : Visibility.Collapsed;
         }
 
@@ -231,7 +235,7 @@ namespace rMind.Content
             HeaderColor = Colors.IndianRed;
         }
 
-        protected override int GetRowIndex(rMindRow row)
+        protected override int GetRowIndex(IRow row)
         {
             return base.GetRowIndex(row) + 1;
         }

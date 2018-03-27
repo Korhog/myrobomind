@@ -11,6 +11,7 @@ namespace rMind.Content.Row
         {
             var node = new XElement("row");
 
+            node.Add(new XAttribute("rtype", RowType));
             node.Add(new XAttribute("inode", InputNodeType));
             node.Add(new XAttribute("onode", OutputNodeType));
 

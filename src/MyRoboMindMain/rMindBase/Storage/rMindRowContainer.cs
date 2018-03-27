@@ -64,7 +64,21 @@ namespace rMind.Content
 
             foreach(var rowNode in rowsNode.Elements("row"))
             {
-                AddRow();
+                RowType type = RowType.None;
+                Enum.TryParse(rowNode.Attribute("rtype")?.Value, out type);
+
+                switch (type)
+                {
+                    case RowType.Row:
+                        var row = new Row.rMindRow();
+                        row.Deserialize(rowNode);
+                        AddRow(row);
+                        break;
+
+                    case RowType.Separator:
+                        AddSeparator();
+                        break;
+                }
             }
         }
         #endregion

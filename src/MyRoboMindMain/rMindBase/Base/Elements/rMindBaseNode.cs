@@ -13,6 +13,8 @@ namespace rMind.Nodes
     using ColorContainer;
     using Elements;
     using rMind.Input;
+    using Windows.UI.Xaml;
+    using Windows.UI.Text;
 
     public enum rMindNodeType
     {
@@ -106,6 +108,8 @@ namespace rMind.Nodes
         }
 
         int m_row = 0;
+        int m_row_span = 1;
+
         int m_col = 0;
 
         public int Column {
@@ -130,6 +134,19 @@ namespace rMind.Nodes
             {
                 m_row = value;
                 Grid.SetRow(m_template, m_row);
+            }
+        }
+
+        public int RowSpan
+        {
+            get
+            {
+                return m_row_span;
+            }
+            set
+            {
+                m_row_span = value;
+                Grid.SetRowSpan(m_template, m_row_span);
             }
         }
 
@@ -177,24 +194,100 @@ namespace rMind.Nodes
 
         protected virtual void SetNodeOrientation(rMindNodeOriantation orientation)
         {
+            if (m_node_orientation == orientation)
+                return;
+
             m_node_orientation = orientation;
-            Windows.UI.Xaml.Thickness thickness;
+            Thickness thickness;
+
+            m_template.ColumnDefinitions.Clear();
+            m_template.RowDefinitions.Clear();
+
             switch(orientation)
             {
                 case rMindNodeOriantation.Left:
-                    thickness = new Windows.UI.Xaml.Thickness(2, 6, 2, 6);
+                    m_template.VerticalAlignment = VerticalAlignment.Center;
+                    m_template.HorizontalAlignment = HorizontalAlignment.Left;
+
+                    m_template.ColumnDefinitions.Add(new ColumnDefinition());
+                    m_template.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+                    Grid.SetColumn(m_area, 0);
+                    Grid.SetColumn(m_hit_area, 0);
+                    Grid.SetColumn(m_label, 1);
+
+                    Grid.SetRow(m_area, 0);
+                    Grid.SetRow(m_hit_area, 0);
+                    Grid.SetRow(m_label, 0);
+
+
+
+                    thickness = new Thickness(2, 6, 2, 6);
                     break;
                 case rMindNodeOriantation.Right:
-                    thickness = new Windows.UI.Xaml.Thickness(2, 6, 2, 6);
+                    m_template.VerticalAlignment = VerticalAlignment.Center;
+                    m_template.HorizontalAlignment = HorizontalAlignment.Right;
+
+                    m_template.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                    m_template.ColumnDefinitions.Add(new ColumnDefinition ());
+
+                    Grid.SetColumn(m_area, 1);
+                    Grid.SetColumn(m_hit_area, 1);
+                    Grid.SetColumn(m_label, 0);
+
+                    Grid.SetRow(m_area, 0);
+                    Grid.SetRow(m_hit_area, 0);
+                    Grid.SetRow(m_label, 0);
+
+                    thickness = new Thickness(2, 6, 2, 6);
                     break;
                 case rMindNodeOriantation.Top:
-                    thickness = new Windows.UI.Xaml.Thickness(6, 2, 6, 2);
+                    m_template.VerticalAlignment = VerticalAlignment.Top;
+                    m_template.HorizontalAlignment = HorizontalAlignment.Center;
+
+                    m_template.RowDefinitions.Add(new RowDefinition());
+                    m_template.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+                    Grid.SetColumn(m_area, 0);
+                    Grid.SetColumn(m_hit_area, 0);
+                    Grid.SetColumn(m_label, 0);
+
+                    Grid.SetRow(m_area, 0);
+                    Grid.SetRow(m_hit_area, 0);
+                    Grid.SetRow(m_label, 1);
+
+                    thickness = new Thickness(6, 2, 6, 2);
                     break;
                 case rMindNodeOriantation.Bottom:
-                    thickness = new Windows.UI.Xaml.Thickness(6, 2, 6, 2);
+                    m_template.VerticalAlignment = VerticalAlignment.Bottom;
+                    m_template.HorizontalAlignment = HorizontalAlignment.Center;
+
+                    m_template.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                    m_template.RowDefinitions.Add(new RowDefinition() );
+
+                    Grid.SetColumn(m_area, 0);
+                    Grid.SetColumn(m_hit_area, 0);
+                    Grid.SetColumn(m_label, 0);
+
+                    Grid.SetRow(m_area, 1);
+                    Grid.SetRow(m_hit_area, 1);
+                    Grid.SetRow(m_label, 0);
+
+                    thickness = new Thickness(6, 2, 6, 2);
                     break;
                 default:
-                    thickness = new Windows.UI.Xaml.Thickness(2, 6, 2, 6);
+                    m_template.ColumnDefinitions.Add(new ColumnDefinition());
+                    m_template.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+                    Grid.SetColumn(m_area, 0);
+                    Grid.SetColumn(m_hit_area, 0);
+                    Grid.SetColumn(m_label, 1);
+
+                    Grid.SetRow(m_area, 0);
+                    Grid.SetRow(m_hit_area, 0);
+                    Grid.SetRow(m_label, 0);
+
+                    thickness = new Thickness(2, 6, 2, 6);
                     break;
             }
 
@@ -207,6 +300,40 @@ namespace rMind.Nodes
         protected Rectangle m_area;
         protected Rectangle m_hit_area;
 
+        protected TextBlock m_label;
+        public string Label {
+            get { return m_label.Text; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    m_label.Visibility = Visibility.Collapsed;
+                }
+
+                m_label.Visibility = Visibility.Visible;
+                m_label.Text = value;
+            }
+        }
+
+        public Brush Fill {
+            get { return m_area.Fill; }
+            set
+            {
+                if (UseAccentColor) return;
+                m_area.Fill = value;
+            }
+        }
+
+        public Brush Stroke
+        {
+            get { return m_area.Stroke; }
+            set
+            {
+                if (UseAccentColor) return;
+                m_area.Stroke = value;
+            }
+        }
+
         public rMindBaseNode(rMindBaseElement parent) : base()
         {
             m_theme = rMindNodeTheme.Theme();
@@ -215,9 +342,22 @@ namespace rMind.Nodes
             Init();
         }
 
-        public void Init()
+        public virtual void Init()
         {
             var r = m_connection_type == rMindNodeConnectionType.Container ? 10 : 3;
+
+            m_label = new TextBlock
+            {
+                Visibility = Visibility.Collapsed,
+                IsHitTestVisible = false,
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(4, 0, 0, 0),
+                FontSize = 12,
+                FontWeight = FontWeights.SemiBold,
+                Foreground = new SolidColorBrush(Colors.White)
+            };
+
+            m_template.Children.Add(m_label);
 
             m_hit_area = new Rectangle
             {
@@ -251,10 +391,37 @@ namespace rMind.Nodes
         {
             var localOffset = Parent.GetOffset();
 
-            var cd = Parent.Template.ColumnDefinitions;
-            var w = cd.Where(col => cd.IndexOf(col) < Grid.GetColumn(Template))
-                .Select(col => col.ActualWidth)
-                .Sum() + cd[Grid.GetColumn(Template)].ActualWidth / 2;
+            var cd = Template.ColumnDefinitions;
+            var local_w = 0.0;             
+
+            double w = 0.0;
+
+            // горизонтальный оффсет
+            switch (m_node_orientation)
+            {
+                case rMindNodeOriantation.Left:
+                    if (Template.Visibility == Visibility.Collapsed)
+                        local_w = 0;
+                    else 
+                        local_w = cd
+                            .Where(col => cd.IndexOf(col) < Grid.GetColumn(m_area))
+                            .Sum(x => x.ActualWidth) + cd[Grid.GetColumn(m_area)].ActualWidth / 2;
+
+                    cd = Parent.Template.ColumnDefinitions;
+                    w = cd.Where(col => cd.IndexOf(col) < Grid.GetColumn(Template))
+                        .Select(col => col.ActualWidth)
+                        .Sum() + local_w;
+                    break;
+                    
+                case rMindNodeOriantation.Right:
+                    if (Template.Visibility == Visibility.Collapsed)
+                        local_w = 0;
+                    else
+                        local_w = cd[Grid.GetColumn(m_area)].ActualWidth / 2;
+
+                    w = Parent.Template.ActualWidth - local_w;
+                    break;
+            }  
 
             var h = 0.0;
             if (!Parent.Expanded)
@@ -263,11 +430,10 @@ namespace rMind.Nodes
             }
             else
             {
-
                 var rd = Parent.Template.RowDefinitions;
-                h = rd.Where(row => rd.IndexOf(row) < Grid.GetRow(Template))
-                    .Select(row => row.ActualHeight)
-                    .Sum() + rd[Grid.GetRow(Template)].ActualHeight / 2;
+                h = rd.Where(row => rd.IndexOf(row) < Grid.GetRow(Template)).Sum(row => row.ActualHeight);
+                var full_h = rd.Where(row => rd.IndexOf(row) < Grid.GetRow(Template) + RowSpan).Sum(row => row.ActualHeight);
+                h = h + (full_h - h) / 2;
             }
 
             return localOffset + new Types.Vector2(w, h);
@@ -366,10 +532,13 @@ namespace rMind.Nodes
 
         public virtual void UpdateAccentColor()
         {
-            var theme = Theme;
+            if (UseAccentColor)
+            {
+                var theme = Theme;
 
-            m_area.Fill = theme.BaseFill;
-            m_area.Stroke = theme.BaseStroke;
+                m_area.Fill = theme.BaseFill;
+                m_area.Stroke = theme.BaseStroke;
+            }
         }
 
         Windows.UI.Xaml.Thickness Margin {

@@ -26,5 +26,21 @@ namespace rMind.DriverForge.Views.Drivers
         {
             this.InitializeComponent();
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            var driver = e.Parameter as Driver.Driver;
+            methods.ItemsSource = driver.Methods;
+        }
+
+        private void OnCreateMethod(object sender, RoutedEventArgs e)
+        {
+            var driver = DataContext as Driver.Driver;
+            if (driver == null)
+                return;
+
+            driver.Methods.Add(new Driver.Method { Name = "Method" });
+        }
     }
 }

@@ -199,6 +199,15 @@ namespace rMind.Elements
             return node;
         }
 
+        protected virtual void AddNode(rMindBaseNode node)
+        {
+            if (string.IsNullOrEmpty(node.IDS))
+                node.IDS = "node" + m_nodes_link.Count.ToString();
+
+            m_nodes_link[node.IDS] = node;
+            Template.Children.Add(node.Template);
+        }
+
         public void RemoveNode(string ids)
         {
             if (!m_nodes_link.ContainsKey(ids))

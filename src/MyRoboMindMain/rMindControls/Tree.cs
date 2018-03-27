@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.UI.Xaml;
@@ -49,6 +49,22 @@ namespace rMind.Controls
         TranslateTransform slideSubTransform;
 
 
+        DataTemplate defaultTemplate = null;
+        public DataTemplate DefaultTemplate { get => defaultTemplate; set => defaultTemplate = value; }
+
+        DataTemplate itemTemplate = null;
+        public DataTemplate ItemTemplate { get => itemTemplate; set => itemTemplate = value; }
+
+        object itemsSource;
+        public object ItemsSource {
+            get => itemsSource;
+            set
+            {
+                itemsSource = value;
+                if (items == null) return;
+                items.ItemsSource = itemsSource;
+            }                
+        }
 
         Border bucket;
 
@@ -64,6 +80,20 @@ namespace rMind.Controls
         {
             base.OnApplyTemplate();
             items = GetTemplateChild("PART_Items") as ListView;
+
+            if (itemsSource != null)
+                items.ItemsSource = itemsSource;
+
+            var selector = items.ItemTemplateSelector as MyTemplateSelector;
+            if (selector != null)
+            {
+                if (itemTemplate != null)
+                    selector.ItemTemplate = itemTemplate;
+
+                if (defaultTemplate != null)
+                    selector.DefaultTemplate = defaultTemplate;
+            }
+
             slideTransform = GetTemplateChild("PART_SlideTransform") as TranslateTransform;
             slideSubTransform = GetTemplateChild("PART_SlideSubTransform") as TranslateTransform;
 
@@ -115,8 +145,9 @@ namespace rMind.Controls
             };
 
             items.DataContextChanged += (s, e) => {
-                var list = (s as ListView).Items;
                 var a = e;
+                if (itemsSource != null)
+                    items.ItemsSource = itemsSource;
             };
 
             items.DragItemsStarting += (s, e) =>

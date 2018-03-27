@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using rMind.Driver.Entities;
 using rMind.Elements;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace rMind.Driver
 
     /// <summary> Метод драйвера или платы </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class Method
+    public class Method : TreeItemBase
     {
         [JsonProperty]
         public string XML {

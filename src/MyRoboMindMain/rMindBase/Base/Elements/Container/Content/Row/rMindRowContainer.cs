@@ -21,7 +21,7 @@ namespace rMind.Content
     /// </summary>
     public partial class rMindRowContainer : rMindBaseElement
     {
-        protected List<rMindRow> m_rows;
+        protected List<IRow> m_rows;
         protected Button m_add_button;
         
 
@@ -38,7 +38,7 @@ namespace rMind.Content
             set { SetStatic(value); }
         }
 
-        protected virtual int GetRowIndex(rMindRow row)
+        protected virtual int GetRowIndex(IRow row)
         {
             return m_rows.IndexOf(row);
         }
@@ -51,7 +51,7 @@ namespace rMind.Content
 
         protected virtual void SetDeleteButtons(bool visible)
         {
-            foreach (var row in m_rows)
+            foreach (var row in m_rows.Where(x=>x is rMindRow).Select(x => x as rMindRow))
             {
                 if (visible)
                 {
@@ -136,7 +136,7 @@ namespace rMind.Content
 
         public rMindRowContainer(rMindBaseController parent) : base(parent)
         { 
-            m_rows = new List<rMindRow>();
+            m_rows = new List<IRow>();
         }
 
         public override void Init()
@@ -152,6 +152,13 @@ namespace rMind.Content
             Grid.SetColumnSpan(m_selector, 3);
         }
 
+        public void AddSeparator(int? height = null)
+        { 
+            var row = new rMindRowSeparator();
+            m_rows.Add(row);
+            // Если это не первая строка, то надо добавить строку в шаблон
+            Template.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(6) });
+        }
 
         public virtual rMindRow AddRow()
         {
@@ -181,13 +188,21 @@ namespace rMind.Content
 
             if (row.InputNodeType != rMindNodeConnectionType.None)
             {
-                row.InputNode = CreateNode(new Nodes.rMindNodeDesc { ConnectionType = row.InputNodeType });
+                if (row.InputNode == null)
+                    row.InputNode = CreateNode(new Nodes.rMindNodeDesc { ConnectionType = row.InputNodeType });
+                else
+                    AddNode(row.InputNode);
+
                 row.InputNode.SetCell(0, idx_row);
             }
                
             if (row.OutputNodeType != rMindNodeConnectionType.None)
             {
-                row.OutputNode = CreateNode(new Nodes.rMindNodeDesc { ConnectionType = row.OutputNodeType });
+                if (row.OutputNode == null)
+                    row.OutputNode = CreateNode(new Nodes.rMindNodeDesc { ConnectionType = row.OutputNodeType });
+                else
+                    AddNode(row.OutputNode);
+
                 row.OutputNode.SetCell(2, idx_row);
             }
 
@@ -241,7 +256,7 @@ namespace rMind.Content
         /// <summary> Обновляем индексы всех строк. </summary>
         protected void UpdateRowsIndexes()
         {
-            foreach (var row in m_rows)
+            foreach (var row in m_rows.Where(x=> x is rMindRow).Select(x => x as rMindRow))
                 row.SetRowIndex(GetRowIndex(row));
 
             if (!m_static)

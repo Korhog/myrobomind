@@ -145,12 +145,14 @@ namespace rMind.ColorForge
                 // fill color shades list
                 List<Color> colorShades = new List<Color>();
                 HSVColor hsv = ColorHelper.RGBtoHSV(baseColor);
-                hsv.V = 255; // alway use highest brightness to determine collection of shades
-                double v = hsv.V / max;
+                // hsv.V = 255; 
+                double v = 255 / max;
                 for (int i = 0; i < max; i++)
-                {
-                    hsv.V = v * i;
+                {                    
+                    hsv.V = 255 - v * i;
                     if (hsv.V > 255) hsv.V = 255;
+                    if (hsv.V < 0) hsv.V = 0;
+                    
                     colorShades.Add(ColorHelper.HSVtoRGB(hsv));
                 }
                 return colorShades;
@@ -158,34 +160,43 @@ namespace rMind.ColorForge
 
             public static HSVColor RGBtoHSV(Windows.UI.Color rgb)
             {
-                double max, min, chroma;
                 HSVColor hsv = new HSVColor();
-
+                double max, min, chroma;
+            
                 min = Math.Min(Math.Min(rgb.R, rgb.G), rgb.B);
                 max = Math.Max(Math.Max(rgb.R, rgb.G), rgb.B);
+            
+                hsv.V = max;
                 chroma = max - min;
 
-                if (chroma != 0)
+                if (chroma < 0.00001)
                 {
-                    if (rgb.R == max)
-                    {
-                        hsv.H = (rgb.G - rgb.B) / chroma;
-                        if (hsv.H < 0.0) hsv.H += 6.0;
-                    }
-                    else if (rgb.G == max)
-                    {
-                        hsv.H = ((rgb.B - rgb.R) / chroma) + 2.0;
-                    }
-                    else
-                    {
-                        hsv.H = ((rgb.R - rgb.G) / chroma) + 4.0;
-                    }
-                    hsv.H *= 60.0;
-                    hsv.S = chroma / max;
+                    hsv.S = 0;
+                    hsv.H = 0;
+                    return hsv;
                 }
 
-                hsv.V = max;
-                hsv.A = rgb.A;
+                if (max > 0.0)
+                { 
+                    hsv.S = (chroma / max);   
+                }
+                else
+                {
+                    hsv.S = 0.0;
+                    hsv.H = 0.0;   
+                    return hsv;
+                }
+
+                if (rgb.R >= max)    
+                    hsv.H = ( rgb.G - rgb.B) / chroma;       
+                else if ( rgb.G >= max )
+                    hsv.H = 2.0 + (rgb.B - rgb.R) / chroma; 
+                else
+                    hsv.H = 4.0 + (rgb.R - rgb.G) / chroma;
+                hsv.H *= 60.0;
+
+                if (hsv.H < 0.0)
+                    hsv.H += 360.0;
 
                 return hsv;
             }
@@ -235,7 +246,7 @@ namespace rMind.ColorForge
                 rgb.R += (byte)min;
                 rgb.G += (byte)min;
                 rgb.B += (byte)min;
-                rgb.A = (byte)hsv.A;
+                rgb.A = (byte)(hsv.A * 255);
 
                 return rgb;
             }
