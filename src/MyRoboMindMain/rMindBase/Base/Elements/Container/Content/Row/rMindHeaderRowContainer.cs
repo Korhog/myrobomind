@@ -17,9 +17,8 @@ namespace rMind.Content
 
     public partial class rMindHeaderRowContainer : rMindRowContainer
     {
-        Border m_header_rect;       
-
-        
+        protected Border m_header_rect;      
+                
         protected HeaderButton m_expand_button;
         
         protected HeaderButton ExpandButton

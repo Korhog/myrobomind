@@ -549,6 +549,15 @@ namespace rMind.Nodes
         }
 
         public bool CanAttach { get { return m_attach_mode == rMindNodeAttachMode.Multi || m_attached_dots.Count == 0; } }
+
+        /// <summary>get list of nodes connected by wires </summary>
+        public List<rMindBaseNode> GetReverseNodes()
+        {
+            return m_attached_dots
+                .Where(x => x.ReverseDot?.Node != null)
+                .Select(x => x.ReverseDot.Node)
+                .ToList();
+        }
     }
 
 }
