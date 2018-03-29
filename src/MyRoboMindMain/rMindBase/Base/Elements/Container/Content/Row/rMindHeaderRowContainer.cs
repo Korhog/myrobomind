@@ -253,6 +253,11 @@ namespace rMind.Content
                 m_header_rect.CornerRadius = value;
         }
 
+        protected override void AddRowDefinition()
+        {
+            Template.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+        }
+
         protected override void SetAccentColor(Color color)
         {
             base.SetAccentColor(color);

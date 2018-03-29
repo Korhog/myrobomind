@@ -173,15 +173,21 @@ namespace rMind.Content
             });
         }
 
-        public virtual rMindRow AddRow(rMindRow row)
+        protected virtual void AddRowDefinition()
         {
-            m_rows.Add(row);
             // Данная секция добавлена чисто для тестирования
-            if (m_rows.Count > 0)
+            if (m_rows.Count > 1)
             {
                 // Если это не первая строка, то надо добавить строку в шаблон
                 Template.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             }
+        }
+
+        public virtual rMindRow AddRow(rMindRow row)
+        {
+            m_rows.Add(row);
+            // Данная секция добавлена чисто для тестирования
+            AddRowDefinition();
 
             // Получаем строчку грида
             var idx_row = GetRowIndex(row);
