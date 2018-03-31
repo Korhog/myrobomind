@@ -354,6 +354,7 @@ namespace rMind.Nodes
                 Margin = new Thickness(4, 0, 0, 0),
                 FontSize = 12,
                 FontWeight = FontWeights.SemiBold,
+                FontFamily = new FontFamily("Consolas"),
                 Foreground = new SolidColorBrush(Colors.White)
             };
 

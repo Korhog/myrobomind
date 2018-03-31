@@ -32,7 +32,7 @@ namespace rMind.Elements
     [JsonObject(MemberSerialization.OptIn)]
     public partial class rMindBaseElement : rMindBaseItem, IDrawContainer, IStorageObject, IInteractElement
     {
-        protected double border = 8;
+        protected double border = 2;
 
         protected bool m_storable = true;
         public bool Storable { get { return m_storable; } set { m_storable = value; } }
