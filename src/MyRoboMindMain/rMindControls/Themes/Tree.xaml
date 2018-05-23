@@ -8,7 +8,7 @@
                 BorderThickness="0,0,0,1">
 
             <Border.BorderBrush>
-                <SolidColorBrush Color="#575C6A"/>
+                <RevealBorderBrush/>
             </Border.BorderBrush>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -21,7 +21,7 @@
                         Grid.ColumnSpan="2" 
                         BorderThickness="1,0,0,0">
                     <Border.BorderBrush>
-                        <SolidColorBrush Color="#575C6A"/>
+                        <RevealBorderBrush/>
                     </Border.BorderBrush>
 
                 </Border>
@@ -48,9 +48,12 @@
         </Border>
     </DataTemplate>
     <DataTemplate x:Key="Item">        
-        <Border BorderBrush="#575C6A"                 
-                Height="50"
+        <Border Height="50"                
                 BorderThickness="0,0,0,1">
+            <Border.BorderBrush>
+                <RevealBorderBrush/>
+            </Border.BorderBrush>
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>
@@ -66,9 +69,12 @@
                     </Ellipse.Fill>
                 </Ellipse>
 
-                <Border BorderBrush="#575C6A"
-                        Grid.Column="1"
+                <Border Grid.Column="1"
                         BorderThickness="1,0,0,0">
+                    <Border.BorderBrush>
+                        <RevealBorderBrush/>
+                    </Border.BorderBrush>
+
                     <StackPanel  Margin="10,0,0,0"
                                  VerticalAlignment="Center" >
                         <TextBlock Text="{Binding Name}" 

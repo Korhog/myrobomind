@@ -5,6 +5,7 @@
     xmlns:local="using:MyRoboMind"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    BorderThickness="3"
     mc:Ignorable="d">
 
     <Grid Background="#1D1D2D">

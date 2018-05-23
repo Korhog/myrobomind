@@ -18,10 +18,10 @@
             <Button Content="Save"/>
 
             <TextBlock Text="Name" Margin="0, 8, 0, 4"/>
-            <TextBox Text="{Binding Name}"/>
+            <TextBox Text="{Binding Name, Mode=TwoWay}"/>
 
             <TextBlock Text="Semantic Name"/>
-            <TextBox Text="{Binding SemanticName}"/>
+            <TextBox Text="{Binding SemanticName, Mode=TwoWay}"/>
         </StackPanel>
 
     </Grid>

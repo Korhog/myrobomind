@@ -25,6 +25,7 @@ namespace rMind.DriverForge.Views.Drivers
         public DriverViewMain()
         {
             this.InitializeComponent();
+            
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -35,6 +36,7 @@ namespace rMind.DriverForge.Views.Drivers
                 return;
 
             DataContext = driver;
+            Sections.SelectedItem = Sections.Items[0];
         }
 
         private void SelectPage(object sender, SelectionChangedEventArgs e)

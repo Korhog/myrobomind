@@ -99,6 +99,7 @@
 
         <Border Background="#212830" Grid.ColumnSpan="2" Grid.Row="2">
             <ListBox Grid.Column="1" 
+                 x:Name="Sections"
                  SelectionChanged="SelectPage"
                  HorizontalAlignment="Left" 
                  Background="Transparent"

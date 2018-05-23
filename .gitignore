@@ -286,3 +286,6 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+/src/MyRoboMindMain/rMindblocks/rMindblocks.csproj
+/src/MyRoboMindMain/NuGet/rMindblocks/rMindblocks.csproj
+/src/MyRoboMindMain/NuGet/rMindblocks/Properties/AssemblyInfo.cs

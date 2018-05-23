@@ -53,16 +53,21 @@
         </ControlTemplate>
     </Page.Resources>   
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="Transparent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <controls:Tree 
-            x:Name="library" 
-            Background="#3C444E"/>
-        <Button Height="50" Content="Save" Click="OnSave" VerticalAlignment="Bottom"/>
+        <Grid>
+            <Grid.Background>
+                <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="Black" TintOpacity="0.9"/>
+            </Grid.Background>
+            <controls:Tree 
+                x:Name="library" 
+                Background="Transparent"/>
+            <Button Height="50" Content="Save" Click="OnSave" VerticalAlignment="Bottom"/>
+        </Grid>
         <Frame x:Name="content" Grid.Column="1 "/>
     </Grid>
 </Page>

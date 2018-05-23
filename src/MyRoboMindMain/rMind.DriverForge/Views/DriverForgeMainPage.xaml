@@ -14,8 +14,14 @@
             x:Name="sideMenu" 
             CompactPaneLength="48" 
             DisplayMode="CompactOverlay" 
-            PaneBackground="#2C343E"            
-            PanePlacement="Left">        
+      
+            PanePlacement="Left">
+            <SplitView.PaneBackground>
+                <AcrylicBrush 
+                    TintColor="Black"
+                    TintOpacity="0.8"
+                    BackgroundSource="HostBackdrop"/>
+            </SplitView.PaneBackground>
             <SplitView.Pane>
                 <StackPanel>
                     <Button 
@@ -40,7 +46,7 @@
                             </Style>
                         </Button.Style>
                     </Button>
-                    <ListBox Background="Transparent" SelectionChanged="OnSelectPage" SelectedIndex="0">
+                    <ListBox Background="Transparent" SelectionChanged="OnSelectPage" x:Name="Menu" >
                         <controls:IconListBoxItem
                             GlyphWidth="48"
                             Tag="Drivers"

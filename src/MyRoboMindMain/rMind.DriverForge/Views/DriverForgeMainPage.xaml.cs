@@ -31,6 +31,7 @@ namespace rMind.DriverForge.Views
         public DriverForgeMainPage()
         {
             this.InitializeComponent();
+            Menu.SelectedItem = Menu.Items[0];
         }
 
         private void OnSideMenuClick(object sender, RoutedEventArgs e)

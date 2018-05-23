@@ -14,7 +14,7 @@ namespace MyRoboMind
             this.InitializeComponent();
 
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = false;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
 
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
