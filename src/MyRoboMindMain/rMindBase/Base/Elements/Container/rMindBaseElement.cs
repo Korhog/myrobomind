@@ -107,7 +107,7 @@ namespace rMind.Elements
 
         public override void Init()
         {
-            base.Init();
+            base.Init();           
 
             m_base = new Border()
             {
@@ -189,7 +189,8 @@ namespace rMind.Elements
         {
             var node = new rMindBaseNode(this)
             {
-                ConnectionType = desc.ConnectionType
+                ConnectionType = desc.ConnectionType,
+                NodeOrientation = desc.NodeOrientation
             };
 
             node.IDS = "node" + m_nodes_link.Count.ToString();

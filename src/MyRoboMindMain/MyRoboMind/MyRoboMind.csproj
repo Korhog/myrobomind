@@ -140,6 +140,10 @@
       <Project>{cbffeb10-dad1-4880-aa97-d7886b3cceef}</Project>
       <Name>rMind.Driver</Name>
     </ProjectReference>
+    <ProjectReference Include="..\rMind.Editor\rMind.Editor.csproj">
+      <Project>{b67b2b74-302f-490d-9788-b72b19eb5604}</Project>
+      <Name>rMind.Editor</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -47,7 +47,8 @@ namespace rMind.ColorContainer
 
         public static Color GetSelectorBrush()
         {
-            return ColorHelper.FromArgb(120, 255, 0, 0);
+            return Colors.LightSkyBlue;
+            //return ColorHelper.FromArgb(120, 255, 0, 0);
         }
 
         static byte Clamp(byte value, byte min, byte max)

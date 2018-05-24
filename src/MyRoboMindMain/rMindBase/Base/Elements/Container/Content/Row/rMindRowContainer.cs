@@ -195,7 +195,10 @@ namespace rMind.Content
             if (row.InputNodeType != rMindNodeConnectionType.None)
             {
                 if (row.InputNode == null)
-                    row.InputNode = CreateNode(new Nodes.rMindNodeDesc { ConnectionType = row.InputNodeType });
+                    row.InputNode = CreateNode(new Nodes.rMindNodeDesc {
+                        ConnectionType = row.InputNodeType,
+                        NodeOrientation = rMindNodeOriantation.Left
+                    });
                 else
                     AddNode(row.InputNode);
 
@@ -205,7 +208,10 @@ namespace rMind.Content
             if (row.OutputNodeType != rMindNodeConnectionType.None)
             {
                 if (row.OutputNode == null)
-                    row.OutputNode = CreateNode(new Nodes.rMindNodeDesc { ConnectionType = row.OutputNodeType });
+                    row.OutputNode = CreateNode(new Nodes.rMindNodeDesc {
+                        ConnectionType = row.OutputNodeType,
+                        NodeOrientation = rMindNodeOriantation.Right
+                    });
                 else
                     AddNode(row.OutputNode);
 

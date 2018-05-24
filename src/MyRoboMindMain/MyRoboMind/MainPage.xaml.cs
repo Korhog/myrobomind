@@ -4,6 +4,7 @@ using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using System.Reflection;
 
 namespace MyRoboMind
 {
@@ -34,9 +35,11 @@ namespace MyRoboMind
             Frame.Navigate(typeof(rMind.DriverForge.Views.DriverForgeMainPage));
         }
 
-        private void OnMindEditor(object sender, RoutedEventArgs e)
+        private async void OnMindEditor(object sender, RoutedEventArgs e)
         {
-
+            var db = DriverDB.Current();
+            await db.InitDB();
+            Frame.Navigate(typeof(rMind.Editor.Views.MindEditorMindPage));
         }
     }
 }

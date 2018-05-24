@@ -20,7 +20,12 @@
             </SplitView.Pane>
 
             <SplitView.Content>
-                <Grid/>
+                <Grid>
+                    <ScrollViewer x:Name="scroll">
+                        <Canvas x:Name="canvas" Width="1000" Height="900" Background="#2d2d2d"/>
+                    </ScrollViewer>
+                    <ext:BreadCrumbs x:Name="BreadCrumbs"/>
+                </Grid>
             </SplitView.Content>
         </SplitView>
     </Grid>

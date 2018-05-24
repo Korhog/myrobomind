@@ -372,7 +372,9 @@ namespace rMind.Nodes
                 RadiusX = r,
                 RadiusY = r,
                 StrokeThickness = 2,
-                IsHitTestVisible = false
+                IsHitTestVisible = false,
+                Fill = new SolidColorBrush(Colors.Black),
+                Stroke = new SolidColorBrush(Colors.White)
             };
 
             UpdateAccentColor();
