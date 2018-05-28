@@ -69,6 +69,7 @@ namespace rMind.Elements
 
         // Menu
         MenuFlyout m_flyout;
+        public MenuFlyout Flyout { get { return m_flyout; } }
 
         // Ext
         rMindMagnet m_magnet;

@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ext="using:rMind.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
     <Grid Background="Black">
@@ -22,9 +23,13 @@
             <SplitView.Content>
                 <Grid>
                     <ScrollViewer x:Name="scroll">
-                        <Canvas x:Name="canvas" Width="1000" Height="900" Background="#2d2d2d"/>
+                        <Canvas x:Name="canvas" Width="2000" Height="900" Background="#2d2d2d"/>
                     </ScrollViewer>
                     <ext:BreadCrumbs x:Name="BreadCrumbs"/>
+                    
+                    <controls:DropShadowPanel BlurRadius="30" OffsetX="5" OffsetY="4" VerticalAlignment="Center">
+                        <Button Width="30" Height="30"/>
+                    </controls:DropShadowPanel>                    
                 </Grid>
             </SplitView.Content>
         </SplitView>

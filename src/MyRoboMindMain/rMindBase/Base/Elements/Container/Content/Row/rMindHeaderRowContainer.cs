@@ -63,9 +63,10 @@ namespace rMind.Content
 
         protected virtual void SetCanExpand(bool state)
         {
-            if (state == m_can_expand)
+            if (m_can_expand == state)
                 return;
 
+            m_can_expand = state;
             ExpandButton.Visibility = state ? Visibility.Visible : Visibility.Collapsed;
         }
 
@@ -79,6 +80,9 @@ namespace rMind.Content
             var rows = m_rows.Where(x => x is rMindRow).Select(x => x as rMindRow);
             if (m_expanded)
             {
+                // Выходим если находимся в режиме добавления удаления.
+                if (!m_static) return;
+
                 (m_expand_button.Content as FontIcon).Glyph = "\uE970";
 
                 foreach (var row in rows)
@@ -232,6 +236,7 @@ namespace rMind.Content
             Template.Children.Add(m_header_label);
 
             HeaderColor = Colors.IndianRed;
+            AccentColor = rMindColors.ColorRandom();
         }
 
         protected override int GetRowIndex(IRow row)
@@ -285,6 +290,12 @@ namespace rMind.Content
             }
             else
                 m_header_rect.BorderThickness = value;
+        }
+
+        protected override void SetStatic(bool state)
+        {            
+            base.SetStatic(state);
+            if (!state) Expand();
         }
     }
 }

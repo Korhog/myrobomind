@@ -37,8 +37,8 @@ namespace MyRoboMind
 
         private async void OnMindEditor(object sender, RoutedEventArgs e)
         {
-            var db = DriverDB.Current();
-            await db.InitDB();
+            //var db = DriverDB.Current();
+            //await db.InitDB();
             Frame.Navigate(typeof(rMind.Editor.Views.MindEditorMindPage));
         }
     }

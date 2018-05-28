@@ -32,31 +32,14 @@ namespace rMind.Elements
             BakedNodes.Clear();
 
             // Собираем все ноды
-            var allNodes = new List<rMindBaseNode>();
-            foreach (var list in m_items.Select(x => x.Nodes))
-            {
-                allNodes.AddRange(list);
-            }
-
-            foreach (var node in allNodes)
-            {
-                
-            }
-
-
-            foreach (var list in m_items.Select(x => x.Nodes))
-            {
-                BakedNodes.AddRange(
-                    list
-                        .Where(node => node.CanAttach && node.Parent != root.Parent) 
-                        .Where(node => node.ConnectionType == root.ConnectionType)
-                        .Select(node => 
-                            new KeyValuePair<Vector2, rMindBaseNode>(node.GetOffset(), 
-                            node
-                        )
-                    )
-                );
-            }
+            var nodes = m_items
+                .SelectMany(x => x.Nodes)
+                .Where(node => node.CanAttach && node.Parent != root.Parent)
+                .Where(node => node.ConnectionType == root.ConnectionType)
+                .Where(node => node.NodeType != root.NodeType)
+                .Select(node => new KeyValuePair<Vector2, rMindBaseNode>(node.GetOffset(), node));
+            
+            BakedNodes.AddRange(nodes);
         }
 
         public virtual rMindBaseWire CreateWire()

@@ -15,6 +15,7 @@ namespace rMind.Content
     using Nodes;
     using Elements;
     using System.Xml.Linq;
+    using rMind.ColorContainer;
 
     /// <summary>
     /// Контейнер с возможностью добавлять строки с данными
@@ -55,21 +56,21 @@ namespace rMind.Content
             {
                 if (visible)
                 {
-                    if (row.DeleteButton == null)
-                    {
-                        row.DeleteButton.Click += OnDeleteRowClick;
-                        Grid.SetColumn(row.DeleteButton, 1);
-                    }
+#warning кастылим                    
+                    row.DeleteButton.Click += OnDeleteRowClick;
                     Grid.SetRow(row.DeleteButton, GetRowIndex(row));
                     Template.Children.Add(row.DeleteButton);
-                    row.Content.Margin = new Thickness(10, 2, 2, 2);
+                    if (row.Content != null)
+                        row.Content.Margin = new Thickness(10, 2, 2, 2);
                 }
                 else
                 {
                     if (row.DeleteButton == null)
                         continue;
+                    row.DeleteButton.Click -= OnDeleteRowClick;
                     Template.Children.Remove(row.DeleteButton);
-                    row.Content.Margin = new Thickness(2);
+                    if (row.Content != null)
+                        row.Content.Margin = new Thickness(2);
                 }
             }
         } 
@@ -80,7 +81,7 @@ namespace rMind.Content
 
             m_static = state;
             if (m_static)
-            {
+            {               
                 Template.Children.Remove(m_add_button);
                 Template.RowDefinitions.Remove(
                     Template.RowDefinitions[Template.RowDefinitions.Count - 1]
@@ -90,23 +91,26 @@ namespace rMind.Content
             {  
                 if (m_add_button == null)
                 {
-                    m_add_button = new Button()
+                    m_add_button = new rMind.BaseControls.Buttons.RoundButton()
                     {
                         Content = new FontIcon()
                         {
                             FontFamily = new FontFamily("Segoe MDL2 Assets"),
                             Glyph = "\uE109",
-                            Foreground = new SolidColorBrush(Colors.White),
-                            FontSize = 10
+                            Foreground = new SolidColorBrush(Colors.Black),
+                            FontSize = 12
                         },
                         HorizontalAlignment = HorizontalAlignment.Center,
                         VerticalAlignment = VerticalAlignment.Center,
-                        Background = new SolidColorBrush(Colors.Green),
-                        Padding = new Thickness(2)
-
+                        Background = new SolidColorBrush(Colors.LimeGreen),
+                        Margin = new Thickness(4),
+                        Width = 24,
+                        Height = 24,
+                        CornerRadius = new CornerRadius(12)
                     };
                     m_add_button.Click += OnAddRowClick;
                     Grid.SetColumn(m_add_button, 1);
+
                 }
 
                 Template.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
@@ -119,10 +123,7 @@ namespace rMind.Content
 
         protected virtual void OnAddRowClick(object sender, RoutedEventArgs e)
         {
-            AddRow(new rMindRow {
-                InputNodeType = rMindNodeConnectionType.Container,
-                OutputNodeType = rMindNodeConnectionType.Container
-            });
+            AddRow();
         }
 
         protected virtual void OnDeleteRowClick(object sender, RoutedEventArgs e)
@@ -162,15 +163,42 @@ namespace rMind.Content
 
         public virtual rMindRow AddRow()
         {
-            return AddRow(new rMindRow()
-            {
-                Content = new Rectangle()
+            rMindRow row = null;
+            if (AddRowTemplate == null)
+                row = new rMindRow()
                 {
-                    Margin = m_static ? new Thickness(2) : new Thickness(10, 2, 2, 2),
-                    Fill = new SolidColorBrush(Colors.CadetBlue),
-                    IsHitTestVisible = false
-                }
-            });
+                    InputNodeType = rMindNodeConnectionType.Value,
+                    Content = new Rectangle()
+                    {                        
+                        Margin = m_static ? new Thickness(2) : new Thickness(10, 2, 2, 2),
+                        Fill = new SolidColorBrush(Colors.CadetBlue),
+                        IsHitTestVisible = false
+                    }
+                };
+            else{
+                var temp = AddRowTemplate;
+                row = new Content.Row.rMindRow
+                {
+                    InputNode = new Nodes.rMindBaseNode(this)
+                    {
+                        NodeType = rMindNodeType.Input,
+                        ConnectionType = temp.InputNode.ConnectionType,
+                        NodeOrientation = temp.InputNode.NodeOrientation,
+                        AttachMode = temp.InputNode.AttachMode,
+                        Theme = temp.InputNode.Theme
+                    },
+                    OutputNode = new Nodes.rMindBaseNode(this)
+                    {
+                        NodeType = rMindNodeType.Output,
+                        ConnectionType = temp.OutputNode.ConnectionType,
+                        NodeOrientation = temp.OutputNode.NodeOrientation,
+                        AttachMode = temp.OutputNode.AttachMode,
+                        Theme = temp.OutputNode.Theme
+                    },
+                };
+            }
+
+            return AddRow(row);
         }
 
         protected virtual void AddRowDefinition()
@@ -180,6 +208,16 @@ namespace rMind.Content
             {
                 // Если это не первая строка, то надо добавить строку в шаблон
                 Template.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+            }
+        }
+
+        protected virtual void RemoveRowDefinition()
+        {
+            // Данная секция добавлена чисто для тестирования
+            if (m_rows.Count > 1)
+            {
+                // Если это не первая строка, то надо добавить строку в шаблон
+                Template.RowDefinitions.Remove(Template.RowDefinitions.LastOrDefault());
             }
         }
 
@@ -254,7 +292,7 @@ namespace rMind.Content
             {
                 Template.Children.Remove(row.DeleteButton);
             }
-
+            row.DeleteButton.Click -= OnDeleteRowClick;
             RemoveNode(row.InputNode);
             RemoveNode(row.OutputNode);
 
@@ -262,7 +300,6 @@ namespace rMind.Content
             Template.RowDefinitions.Remove(Template.RowDefinitions[GetRowIndex(row)]);
 
             m_rows.Remove(row);
-
             UpdateRowsIndexes();
         }
         /// <summary> Обновляем индексы всех строк. </summary>
@@ -273,10 +310,14 @@ namespace rMind.Content
 
             if (!m_static)
             {
-                if (m_rows.Count == 0)                
-                    m_base.Visibility = Visibility.Collapsed;                
+                if (m_rows.Count == 0)
+                    m_base.Visibility = Visibility.Collapsed;
                 else
-                    Grid.SetRowSpan(m_base, GetBaseRowSpan());
+                {
+                    var baseRowSpan = GetBaseRowSpan();
+                    Grid.SetRowSpan(m_base, baseRowSpan);
+                    Grid.SetRowSpan(m_selector, baseRowSpan);
+                }
 
                 Grid.SetRow(m_add_button, Template.RowDefinitions.Count - 1);
             }
@@ -292,7 +333,7 @@ namespace rMind.Content
 
             NodeTheme = new rMindNodeTheme()
             {
-                BaseFill = colors.GetSolidBrush(shades[3]),
+                BaseFill = colors.GetSolidBrush(shades[3]),                
                 BaseStroke = colors.GetSolidBrush(shades[1]),
                 OveredFill = colors.GetSolidBrush(shades[5]),
                 OveredStroke = colors.GetSolidBrush(shades[3])

@@ -107,26 +107,20 @@ namespace rMind.Elements
 
         public override void Init()
         {
-            base.Init();           
+            base.Init();
 
-            m_base = new Border()
-            {
-                Background = rMindColors.Current().GetSolidBrush(rMindColors.ColorRandom())
-            };
-
-            m_shadow_mask = new Rectangle();
-            m_base.Child = m_shadow_mask;
+            m_base = new Border();
 
             m_selector = new Border()
             {
                 Margin = new Thickness(-border),                
-                Background = rMindColors.Current().GetSolidBrush(rMindColors.GetSelectorBrush()),
+                Background = rMindColors.GetSelectorBrush(),
                 IsHitTestVisible = false,
                 Visibility = Visibility.Collapsed
             };
 
             Template.Children.Add(m_selector);
-            Template.Children.Add(m_base);  
+            Template.Children.Add(m_base);            
         }
 
         #region input        
@@ -257,7 +251,7 @@ namespace rMind.Elements
 
         #endregion
 
-        public void SetSelected(bool state)
+        public virtual void SetSelected(bool state)
         {
             m_selected = state;
             m_selector.Visibility = state ? Visibility.Visible : Visibility.Collapsed;

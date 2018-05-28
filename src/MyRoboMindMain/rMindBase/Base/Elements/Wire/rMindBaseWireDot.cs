@@ -20,6 +20,7 @@ namespace rMind.Elements
         public rMindBaseNode Node { get { return m_node; } }
 
         protected Rectangle m_area;
+        protected SolidColorBrush m_area_fill;
 
         public rMindBaseWireDot(rMindBaseWire parent) 
         {
@@ -29,9 +30,10 @@ namespace rMind.Elements
 
         public virtual void Init()
         {
+            m_area_fill = new SolidColorBrush(Colors.Black);
             m_area = new Rectangle()
             {
-                Fill = new SolidColorBrush(Colors.Black),
+                Fill = m_area_fill,
                 Width = 12,
                 Height = 12,
                 Margin = new Windows.UI.Xaml.Thickness(-6),
@@ -68,15 +70,19 @@ namespace rMind.Elements
             {
                 var r = node.ConnectionType == rMindNodeConnectionType.Container ? 6 : 0;
 
+                m_area.Fill = node.Theme.BaseStroke;
+
                 m_area.RadiusX = r;
                 m_area.RadiusY = r;
 
+                Wire.SetWireColor();
                 Wire.Update();
             }
             else
             {
                 m_area.RadiusX = 3;
-                m_area.RadiusY = 3;            
+                m_area.RadiusY = 3;
+                m_area.Fill = m_area_fill;
             }
 
             return this;
@@ -86,6 +92,7 @@ namespace rMind.Elements
         {
             m_area.RadiusX = 3;
             m_area.RadiusY = 3;
+            m_area.Fill = m_area_fill;
 
 
             if (Node != null)

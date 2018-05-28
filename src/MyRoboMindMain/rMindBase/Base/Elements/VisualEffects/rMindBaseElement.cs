@@ -30,6 +30,8 @@ namespace rMind.Elements
     {
         public virtual void AddEffect()
         {
+#warning еффекты пока работают через анус, поэтому не используем
+            return;
             var shadowHost = Template;
 
             Visual hostVisual = ElementCompositionPreview.GetElementVisual(shadowHost);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Windows.UI.Xaml.Controls;
 
 
@@ -17,30 +18,18 @@ namespace rMind.Elements
                 return;
             }
 
+            //m_flyout = new MenuFlyout();
+
             m_flyout = new MenuFlyout();
             m_flyout.Opening += OnFlyout;
 
+            
             var item = new MenuFlyoutItem()
             {
                 Text = "Удалить"
             };
             item.Click += (sender, e) => {
-                var actionItem = m_items_state.ActionItem as rMindBaseElement;
-                if (actionItem == null)
-                {
-                    m_items_state.ActionItem = null;
-                    return;
-                }
-                
-                if (m_selected_items.Contains(actionItem))
-                {
-                    DeleteSelection();
-                }
-                else
-                {
-                    actionItem.Delete();
-                } 
-                m_items_state.ActionItem = null;
+                DeleteSelection();
             };
             m_flyout.Items.Add(item);
 
@@ -49,23 +38,20 @@ namespace rMind.Elements
                 Text = "Статичный"
             };
             item.Click += (sender, e) => {
-                if (m_items_state.ActionItem == null)
-                    return;
-                var it = m_items_state.ActionItem as rMind.Content.rMindRowContainer;
-                if (it != null)
+                foreach (var it in m_selected_items.Where(x => x is Content.rMindRowContainer).Select(x => x as Content.rMindRowContainer))
                 {
-                    it.Static = !it.Static;   
+                    it.Static = !it.Static;
                 }
-                m_items_state.ActionItem = null;
             };
             m_flyout.Items.Add(item);
+            
 
             m_canvas.ContextFlyout = m_flyout;
         }
 
         protected virtual void OnFlyout(object sender, object e)
         {
-            m_items_state.ActionItem = m_overed_item;
+            m_items_state.ActionItem = null;
         }
 
         //

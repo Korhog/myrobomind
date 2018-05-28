@@ -96,8 +96,12 @@ namespace rMind.Nodes
         public rMindNodeTheme Theme { 
             get
             {
-                if (m_parent.NodeTheme != null)
+                if (m_parent.NodeTheme != null && m_use_accent_color)
                     return m_parent.NodeTheme;
+
+                if (m_theme == null)
+                    m_theme = rMindNodeTheme.Theme();
+
                 return m_theme;
             }
             set
@@ -163,7 +167,7 @@ namespace rMind.Nodes
             }
         }
 
-        rMindNodeType m_node_type = rMindNodeType.None;
+        public rMindNodeType NodeType { get; set; } = rMindNodeType.None;
         rMindNodeOriantation m_node_orientation = rMindNodeOriantation.None;
         rMindNodeAttachMode m_attach_mode = rMindNodeAttachMode.Single;
         rMindNodeConnectionType m_connection_type = rMindNodeConnectionType.Container;
@@ -336,7 +340,6 @@ namespace rMind.Nodes
 
         public rMindBaseNode(rMindBaseElement parent) : base()
         {
-            m_theme = rMindNodeTheme.Theme();
             m_parent = parent;
             m_attached_dots = new List<rMindBaseWireDot>();
             Init();
@@ -535,13 +538,10 @@ namespace rMind.Nodes
 
         public virtual void UpdateAccentColor()
         {
-            if (UseAccentColor)
-            {
-                var theme = Theme;
+            var theme = Theme;
 
-                m_area.Fill = theme.BaseFill;
-                m_area.Stroke = theme.BaseStroke;
-            }
+            m_area.Fill = theme.BaseFill;
+            m_area.Stroke = theme.BaseStroke;            
         }
 
         Windows.UI.Xaml.Thickness Margin {

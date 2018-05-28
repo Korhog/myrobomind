@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
 
 namespace rMind.ColorContainer
 {
@@ -45,10 +46,40 @@ namespace rMind.ColorContainer
             return brush;
         }
 
-        public static Color GetSelectorBrush()
+        public AcrylicBrush GetAcrylicBrush(Color color)
+        {
+
+            var brush = new AcrylicBrush
+            {
+                TintColor = color,
+                BackgroundSource = AcrylicBackgroundSource.Backdrop,
+                TintOpacity = 0.5,
+            };
+            return brush;
+        }
+
+        public static Color GetSelectorColor()
         {
             return Colors.LightSkyBlue;
             //return ColorHelper.FromArgb(120, 255, 0, 0);
+        }
+
+        public static Brush GetSelectorBrush()
+        {
+            /*
+            var brush = new LinearGradientBrush()
+            {
+                StartPoint = new Point(0, 0),
+                EndPoint = new Point(0, 1),
+                GradientStops = new GradientStopCollection {
+                    new GradientStop() {Color = Colors.BlueViolet, Offset = 0},
+                    new GradientStop() {Color = Colors.SkyBlue, Offset = 1}
+                }
+            };
+            */
+
+            var brush = new SolidColorBrush(Colors.LimeGreen);
+            return brush;
         }
 
         static byte Clamp(byte value, byte min, byte max)

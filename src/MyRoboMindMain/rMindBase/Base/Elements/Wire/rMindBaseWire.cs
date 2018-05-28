@@ -10,9 +10,13 @@ namespace rMind.Elements
     using Draw;
     using Types;
     using ColorContainer;
+    using Windows.UI;
+
     /// <summary> Wire to connect nodes </summary>
     public partial class rMindBaseWire : IDrawElement, IStorageObject
     {
+        protected bool m_direction_right;
+
         protected rMindColors colors;
         protected rMindBaseWireDot m_a_dot;
         protected rMindBaseWireDot m_b_dot;
@@ -51,7 +55,7 @@ namespace rMind.Elements
             m_bezie = new Path()
             {
                 Stroke = colors.GetSolidBrush(Windows.UI.Colors.GhostWhite),
-                StrokeThickness = 4,
+                StrokeThickness = 2,
                 IsHitTestVisible = false,
                 Data = m_bezie_geometry
             };
@@ -74,8 +78,13 @@ namespace rMind.Elements
         /// <summary> Update line </summary>
         public virtual void Update()
         {
-            m_bezie_figure.StartPoint = new Point(A.Position.X, A.Position.Y);
+            if (m_direction_right != (A.Position.X > B.Position.X))
+            {
+                m_direction_right = A.Position.X > B.Position.X;
+                SetWireColor();
+            }
 
+            m_bezie_figure.StartPoint = new Point(A.Position.X, A.Position.Y);
 
 
             var midPoint = Math.Min(A.Position.X, B.Position.X) + Math.Abs(A.Position.X - B.Position.X) / 2;
@@ -89,6 +98,34 @@ namespace rMind.Elements
             points.Add(new Point(B.Position.X, B.Position.Y));
 
             m_line.Points = points;
+        }
+
+        public virtual void SetWireColor()
+        {
+            if (m_a_dot.Node == null || m_b_dot.Node == null)
+            {
+                m_bezie.Stroke = rMindColors.Current().GetSolidBrush(Colors.White);
+                return;
+            }      
+
+            m_bezie.Stroke = new LinearGradientBrush()
+            {
+                StartPoint = new Point(0, 0),
+                EndPoint = new Point(1, 0),
+                GradientStops = new GradientStopCollection
+                    {
+                        new GradientStop
+                        {
+                            Color = m_direction_right ? B.Node.Theme.BaseStroke.Color : A.Node.Theme.BaseStroke.Color,
+                            Offset = 0
+                        },
+                         new GradientStop
+                        {
+                            Color = m_direction_right ? A.Node.Theme.BaseStroke.Color : B.Node.Theme.BaseStroke.Color,
+                            Offset = 1
+                        },
+                    }
+            };           
         }
 
         

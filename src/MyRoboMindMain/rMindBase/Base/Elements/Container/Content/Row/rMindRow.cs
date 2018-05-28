@@ -65,8 +65,8 @@ namespace rMind.Content.Row
         public FrameworkElement Content { get; set; }
 
         private Button CreateDeleteButton()
-        {
-            return new Button()
+        {             
+            var deleteButton = new rMind.BaseControls.Buttons.RoundButton()
             {
                 Content = new FontIcon()
                 {
@@ -75,13 +75,20 @@ namespace rMind.Content.Row
                     Foreground = new SolidColorBrush(Colors.White),
                     FontSize = 10
                 },
+                Radius = 30,
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center,
                 Background = new SolidColorBrush(Colors.Red),
-                Padding = new Thickness(2),
+
+                Width = 24,
+                Height = 24,
+                CornerRadius = new CornerRadius(12),
+
                 Margin = new Thickness(2),
                 Tag = this
             };
+            Grid.SetColumn(deleteButton, 1);
+            return deleteButton;            
         }
 
         public virtual void SetVisibility(bool state)
@@ -101,6 +108,6 @@ namespace rMind.Content.Row
             OutputNode?.SetCell(OutputNode.Column, index);
 
             if (Content != null) Grid.SetRow(Content, index);
-        }
+        }       
     }
 }
