@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using System.Xml.Linq;
 
 namespace rMind.Content
@@ -49,7 +50,18 @@ namespace rMind.Content
             var row = new Row.rMindRow()
             {
                 Content = null,
-                InputNodeType = rMind.Nodes.rMindNodeConnectionType.Value,
+                InputNode = new Nodes.rMindBaseNode(this)
+                {
+                    Theme = new Nodes.rMindNodeTheme
+                    {
+                        BaseFill = new SolidColorBrush(Colors.Black),
+                        BaseStroke = new SolidColorBrush(Colors.Lime),
+                    },
+                    NodeOrientation = rMind.Nodes.rMindNodeOriantation.Left,
+                    ConnectionType = rMind.Nodes.rMindNodeConnectionType.Value,
+                    AttachMode = rMind.Nodes.rMindNodeAttachMode.Single,
+                    NodeType = rMind.Nodes.rMindNodeType.Input
+                },
                 OutputNodeType = rMind.Nodes.rMindNodeConnectionType.None
             };
             

@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRoboControls", "MyRoboCon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rMindNodes", "rMindNodes\rMindNodes.csproj", "{75AF6FC0-7599-4FDA-BD4A-66B24247170A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHome", "SmartHome\SmartHome.csproj", "{EBE6E823-0CE0-4740-81ED-38355E8871DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -279,6 +281,26 @@ Global
 		{75AF6FC0-7599-4FDA-BD4A-66B24247170A}.Release|x64.Build.0 = Release|x64
 		{75AF6FC0-7599-4FDA-BD4A-66B24247170A}.Release|x86.ActiveCfg = Release|x86
 		{75AF6FC0-7599-4FDA-BD4A-66B24247170A}.Release|x86.Build.0 = Release|x86
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Debug|ARM.ActiveCfg = Debug|ARM
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Debug|ARM.Build.0 = Debug|ARM
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Debug|ARM.Deploy.0 = Debug|ARM
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Debug|x64.ActiveCfg = Debug|x64
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Debug|x64.Build.0 = Debug|x64
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Debug|x64.Deploy.0 = Debug|x64
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Debug|x86.ActiveCfg = Debug|x86
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Debug|x86.Build.0 = Debug|x86
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Debug|x86.Deploy.0 = Debug|x86
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Release|Any CPU.ActiveCfg = Release|x86
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Release|ARM.ActiveCfg = Release|ARM
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Release|ARM.Build.0 = Release|ARM
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Release|ARM.Deploy.0 = Release|ARM
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Release|x64.ActiveCfg = Release|x64
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Release|x64.Build.0 = Release|x64
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Release|x64.Deploy.0 = Release|x64
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Release|x86.ActiveCfg = Release|x86
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Release|x86.Build.0 = Release|x86
+		{EBE6E823-0CE0-4740-81ED-38355E8871DE}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
