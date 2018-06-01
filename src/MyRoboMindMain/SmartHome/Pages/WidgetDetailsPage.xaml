@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    
+
 
     <Grid>
         <Grid.RowDefinitions>
@@ -30,19 +30,9 @@
 
         <Button Style="{StaticResource NavigationBackButtonNormalStyle}"  Foreground="White" Click="OnBackClick" />
 
-        <VariableSizedWrapGrid Grid.Row="1" Margin="24" MaximumRowsOrColumns="4" Orientation="Horizontal" ItemHeight="200" ItemWidth="200" x:Name="grid">
-            <Border Background="LightGray" VariableSizedWrapGrid.ColumnSpan="2" VariableSizedWrapGrid.RowSpan="2"  Margin="4"/>
-            <Border Background="LightGray" VariableSizedWrapGrid.ColumnSpan="1" Margin="4"/>
-            <Border Background="LightGray" VariableSizedWrapGrid.ColumnSpan="1" Margin="4"/>
-            <Border Background="LightGray" VariableSizedWrapGrid.ColumnSpan="2" Margin="4"/>
-            <Border Background="LightGray" VariableSizedWrapGrid.ColumnSpan="1" Margin="4"/>
-            <Border Background="LightGray" VariableSizedWrapGrid.ColumnSpan="1" Margin="4"/>
-            <Border Background="LightGray" VariableSizedWrapGrid.ColumnSpan="1" Margin="4"/>
-            <Border Background="LightGray" VariableSizedWrapGrid.ColumnSpan="1" Margin="4"/>
-        </VariableSizedWrapGrid>
 
-        <!--ScrollViewer x:Name="scroll" IsZoomChainingEnabled="True" Grid.Row="1">
-            <Canvas x:Name="canvas" Background="#1d1d1d" Width="3000" Height="3000"/>
-        </-->
+        <ScrollViewer x:Name="scroll" IsZoomChainingEnabled="True" Grid.Row="1">
+            <Canvas x:Name="canvas" Background="#1d1d1f"/>
+        </ScrollViewer>
     </Grid>
 </Page>

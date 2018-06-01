@@ -85,7 +85,7 @@ namespace rMind.Nodes
         public rMindNodeType NodeType;
         public rMindNodeOriantation NodeOrientation;
         public rMindNodeAttachMode AttachMode { get; set; }
-        public rMindNodeConnectionType ConnectionType;
+        public rMindNodeConnectionType ConnectionType { get; set; }
     }
 
     public partial class rMindBaseNode : rMindItemUI, IDrawElement, IInteractElement
