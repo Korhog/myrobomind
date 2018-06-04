@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Unosquare.RaspberryIO;
+using Unosquare.RaspberryIO.Gpio;
+
 namespace rMind.SmartHome
 {
     [DisplayName("LED")]
     public class WLed : IOTDevice
     {
+
         /// <summary> Просто проверка </summary>
         [Receiver]
         public void Update() { }
